@@ -1,0 +1,36 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "Node.js+Express.js server with PostgreSQL db",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --watch src/index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [
+    "Node",
+    "Expess",
+    "PostgreSQL"
+  ],
+  "author": "jade-jasmine cohort",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
+    "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "@eslint/css": "^0.14.1",
+    "@eslint/js": "^9.39.2",
+    "@eslint/json": "^1.0.0",
+    "@eslint/markdown": "^7.5.1",
+    "eslint": "^9.39.2",
+    "globals": "^17.3.0"
+  }
+}
