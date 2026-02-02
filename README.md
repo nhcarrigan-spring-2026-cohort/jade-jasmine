@@ -8,12 +8,10 @@ Community Pantry Tracker is a centralized platform designed for food banks and c
 ## Team Jade-Jasmine
 
 ### Leadership
-- [Wil](https://github.com/wigsdev)
 - [Mista Log](https://github.com/Mista-Log)
 
 ### Participants
 - [ArbitraryPie](https://github.com/ArbitraryPie)
-- [audam](https://github.com/audam)
 - [`·.·★𝓱𝓪𝓷𝓪-𝓫𝓪𝓷𝓪𝓷𝓪★·.·´`](https://github.com/hbar1st)
 - [hayden-110](https://github.com/hayden-html)
 - [Nikil D Gr8](https://github.com/Nikil-D-Gr8)
