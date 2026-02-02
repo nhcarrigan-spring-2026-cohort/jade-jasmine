@@ -1,0 +1,19 @@
+{
+  "name": "jade-jasmine-foodbank-app",
+  "version": "1.0.0",
+  "description": "Repository for Team Jade Jasmine - Spring 2026 Cohort",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine/issues"
+  },
+  "homepage": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine#readme"
+}
