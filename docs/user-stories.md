@@ -21,12 +21,14 @@
 5. As a food bank administrator, I want to log in (as staff, so securely) so I can modify the food bank contact details or name or opening hours.
 6. As a food bank member of staff, I want to register as a user of the app so that the food bank admin can add me as an employee later.
 7. As a food bank member of staff, I want to reset my password as I may have forgotten it.
-8. As a food bank admin, I want to confirm that a specific user works for me by providing their user id. 
+8. As a food bank admin, I want to add or remove a specific user who works for me by via their user id in order to add or remove them from my food bank employee list.
 9. As a food bank member of staff, I want to add/delete/update food items (name, description, min-amount, category, barcode)
 10. As a food bank member of staff, I want to add/subtract food quantity/inventory
 11. As a food bank member of staff, I can create or delete a box (what it contains in terms of food)
-12. As a food bank member of staff, I want to add/subtract a box
-13. As a food bank member of staff, I need to create food categories (or delete/update them)
+12. As a food bank member of staff, I want to add/subtract/modify a box (add/subtract quantity and/or modify name)
+13. As a food bank member of staff, I want to modify the list of foods in a specific box (whether add more or delete some from this box)
+14. As a food bank member of staff, I need to create food categories (or delete/update them)
+15. As a food bank member of staff, I need to be informed if I already have a registered account with my email address so that I can either use it to login or reset the password if i forgot it.
 
 ** MVP would be for the user to give us the city and we search in our db directly for it rather than go through google's map api
 Note: Deleting a category or a box should not delete the food items that were associated with it.
