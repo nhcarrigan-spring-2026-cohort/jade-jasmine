@@ -6,4 +6,4 @@ some general instructions on how to get the api server up and running
 4- modify the values relevant to you (the SESSION_SECRET for eg or the PGPASSWORD)
 5- run `cd ~/jade-jasmine/apps/api-server` to move to the api-server path
 6- run `npm run dev` to start the postgreSQL service and the server
-7- a message should show up about the server listening on the port (you can now naviate to `http://localhost:<port>` and it should produce some json)
+7- a message should show up about the server listening on the port (you can now navigate to `http://localhost:<port>` and it should produce some json)
