@@ -6,7 +6,12 @@
   "scripts": {
     "start": "node --watch src/index.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "db:start": "docker compose -f ./docker-compose.yml up -d",
+    "db:stop": "docker compose -f ./docker-compose.yml down",
+    "db:logs": "docker compose -f ./docker-compose.yml logs -f db",
+    "db:shell": "bash -c 'source .env && docker compose exec db psql -U $PGUSER -d $PGDATABASE'",
+    "dev": "npm run db:start && npm start"
   },
   "keywords": [
     "Node",

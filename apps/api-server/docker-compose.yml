@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:alpine3.23
+    container_name: jade-jasmine-postgres    
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    ports:
+      - "${PGPORT}:${PGPORT}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data   
+    networks:
+      - jade_jasmine_net   # join the network
+
+
+volumes:
+  pgdata:
+   
+networks:
+  jade_jasmine_net:
+    name: jade_jasmine_net
+
