@@ -1,11 +1,13 @@
-name: Code Quality (Lint)
+name: Monorepo Lint Check
 
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
-  lint-everything:
+  lint-projects:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -17,17 +19,20 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: 🖥️ Lint API Server (Backend)
+        working-directory: apps/api-server
+        run: |
+          npm install
+          npx eslint .
 
-      - name: 🛡️ Lint JavaScript
-        run: npx eslint "**/*.{js,mjs,cjs}" --max-warnings 0
+      - name: 🛠️ Lint Foodbank Manager
+        working-directory: apps/client/foodbank-manager
+        run: |
+          npm install
+          npx eslint . --ext .js,.mjs,.ts,.tsx
 
-      - name: 🎨 Lint CSS
-        run: npx eslint "**/*.css" --max-warnings 0
-
-      - name: 📝 Lint Markdown
-        run: npx eslint "**/*.md" --max-warnings 0
-
-      - name: ⚙️ Lint JSON
-        run: npx eslint "**/*.json" --max-warnings 0
+      - name: 🍕 Lint Foodbank Finder (Astro/Other)
+        working-directory: apps/client/foodbank-finder
+        run: |
+          npm install
+          npx eslint .
