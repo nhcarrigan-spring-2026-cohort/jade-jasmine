@@ -1,11 +1,54 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <style>
+
+    .home-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-attributes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;  
+    }
+
+    .advanced-search-button {
+        display: block;
+        margin-top: 1rem;
+        
+    }
+
+    </style>
+
+
+</head>
+<body>
+
+    <img src="/menu-button-of-three-horizontal-lines-svgrepo-com.svg" alt="menu" width="32" height="32" />
+    <div class="home-page">
+
+        <div class="search-attributes">
+            <h1>Pantry Finder</h1>
+            <input type="text" placeholder="Search for pantries">
+            <button class="advanced-search-button" type="button">Advanced Search</button>
+            
+        </div>
+
+    
+
+
+
+
+    </div>
+</body>
+</html>
