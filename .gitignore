@@ -171,3 +171,5 @@ out
 
 # yarn v3
 .yarn/sdks
+
+.next
