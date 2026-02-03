@@ -1,0 +1,33 @@
+name: Code Quality (Lint)
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-everything:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: 🛡️ Lint JavaScript
+        run: npx eslint "**/*.{js,mjs,cjs}" --max-warnings 0
+
+      - name: 🎨 Lint CSS
+        run: npx eslint "**/*.css" --max-warnings 0
+
+      - name: 📝 Lint Markdown
+        run: npx eslint "**/*.md" --max-warnings 0
+
+      - name: ⚙️ Lint JSON
+        run: npx eslint "**/*.json" --max-warnings 0
