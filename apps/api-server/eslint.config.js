@@ -3,21 +3,40 @@ import globals from "globals";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import css from "@eslint/css";
-import { defineConfig } from "eslint/config";
 
-export default defineConfig([
+export default [
+  // 1. Global Ignores
   {
-    ignores: [
-      "node_modules/",
-      "dist/",
-      "build/",
-      "coverage/",
-      "package-lock.json"
-    ]
+    ignores: ["node_modules/", "dist/", "build/", "coverage/", "package-lock.json"]
   },
 
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.node } },
-  { files: ["**/*.json"], plugins: { json }, language: "json/json", extends: ["json/recommended"] },
-  { files: ["**/*.md"], plugins: { markdown }, language: "markdown/gfm", extends: ["markdown/recommended"] },
-  { files: ["**/*.css"], plugins: { css }, language: "css/css", extends: ["css/recommended"] },
-]);
+  // 2. JavaScript Configuration
+  js.configs.recommended, // This replaces the "extends" inside the object
+  {
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: { 
+      globals: {
+        ...globals.node,
+        ...globals.browser // Recommended to keep both if you use 'window' or 'process'
+      } 
+    },
+  },
+
+  // 3. Specialized Languages
+  { 
+    files: ["**/*.json"], 
+    plugins: { json }, 
+    language: "json/json" 
+    // Note: Make sure @eslint/json is installed
+  },
+  { 
+    files: ["**/*.md"], 
+    plugins: { markdown }, 
+    language: "markdown/gfm" 
+  },
+  { 
+    files: ["**/*.css"], 
+    plugins: { css }, 
+    language: "css/css" 
+  },
+];
