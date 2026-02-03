@@ -18,7 +18,7 @@ export default [
     },
     rules: {
       // 3. Add backend-specific preferences
-      "no-console": "warn",        // Good for servers to avoid cluttering logs
+      "no-console": "off",        // servers need debug logs
       "no-unused-vars": "error",   // Keeps your API clean
       "prefer-const": "error",     // Encourages immutable data patterns
     },
