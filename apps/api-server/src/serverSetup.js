@@ -1,10 +1,11 @@
 import { default as express } from "express";
 import crypto from "node:crypto";
 import cors from "cors";
-import "dotenv/config";
 import { AppError } from "./errors/AppError.js";
 import { ValidationError } from "./errors/ValidationError.js";
+import "dotenv/config";
 import { env } from "node:process";
+import { getUserByUsername } from "./db/queries.js";
 
 if (!env.SESSION_SECRET) {
   console.log("found no session secret in .env, so must create one");
@@ -19,8 +20,7 @@ const app = express();
 
 if (env.NODE_ENV === "production") {
   console.log("This is a production environment");
-
-  app.set("trust proxy", 1); // trust first proxy only because of deployment to Render?
+  app.set("trust proxy", 1); // trust first proxy only because of deployment to Render, remove otherwise
 }
 
 app.use(express.urlencoded({ extended: true }));
@@ -28,25 +28,35 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: env.CLIENT_ORIGIN,
-    credentials: true, // allow cookies,
-    allowedHeaders: ["Content-Type", "Authorization"], // may not need to specify Authorization
-    methods: ["GET", "POST", "PUT", "OPTIONS"], // may not need this
+    origin: (origin, callback) => {
+      // allow known clients as well as requests with no origin (like mobile apps, curl requests)
+      const allowedOrigins = env.CLIENT_ORIGINS.split(',')
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new AppError('Not allowed by CORS'));
+      }
+    },
+    credentials: false, 
+    allowedHeaders: ["Content-Type", "Authorization"], 
+    //methods: ["GET", "POST", "PUT", "OPTIONS"], // may not need this
   }),
 );
 
-app.use((req, res, next) => {
-  console.log(req.params);
-  next();
-});
+// need to initialize passport
+import passport from "./middleware/passport.js";
+app.use(passport.initialize());
 
-//TODO add middleware for setting up session with store in postgresql
 
 // just sets up the basic route that describes the api
 import { indexRouter } from "./routers/indexRouter.js";
 app.use("/", indexRouter);
 
-// Catch-all for unhandled routes (must be placed last but before error handler)
+// the router for the user related actions
+import userRouter from "./routers/userRouter.js";
+app.use("/user", userRouter);
+
+// Catch-all for unhandled routes (must be placed last but before the error handler)
 app.use((req, res) => {
   res.status(404).json({
     status: "fail",

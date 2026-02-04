@@ -10,8 +10,9 @@
     "db:start": "docker compose -f ./docker-compose.yml up -d",
     "db:stop": "docker compose -f ./docker-compose.yml down",
     "db:logs": "docker compose -f ./docker-compose.yml logs -f db",
-    "db:shell": "bash -c 'source .env && docker compose exec db psql -U $PGUSER -d $PGDATABASE'",
-    "dev": "npm run db:start && npm start"
+    "db:shell": "bash -c 'source .env && PGPASSWORD=\"$PGPASSWORD\" docker compose exec db psql -U \"$PGUSER\" -d \"$PGDATABASE\"'",
+    "db:setup": "bash -c 'source .env && PGPASSWORD=\"$PGPASSWORD\" psql -h \"$PG_HOST\" -p \"$PGPORT\" -U \"$PGUSER\" -d \"$PGDATABASE\" < ./src/db/setup-tables.sql'",
+    "dev": "npm run db:start && npm run db:setup && npm start"
   },
   "keywords": [
     "Node",
@@ -22,12 +23,15 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "connect-pg-simple": "^10.0.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "pg": "^8.18.0"
   },
   "devDependencies": {
