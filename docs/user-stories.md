@@ -15,12 +15,7 @@
 ### User Stories (for a a food bank/pantry admin/staff)
 
 1. As a food bank admin, I want to register my food bank so that I can use this app... (I give you my name, location, hours, website, contact info. This involves 2 steps. I must register the food bank itself and also register myself as the admin. We need to stop people from duplicating entries here by checking the address and charity number as one idea to make sure we don't have duplicate entries by different people)
-<<<<<<< HEAD
-||||||| parent of 265bc35 (docs(mvp): add new login mvp user story)
 2. As a food bank registered user, I want to be able to login with my userid and password in order to manage a food bank entry or a food entry etc.
-=======
-2. As a food bank registered user, I want to be able to login with my userid and password in order to manage a food bank entry or a food entry etc.git 
->>>>>>> 265bc35 (docs(mvp): add new login mvp user story)
 2. As a food bank admin, I want to reset my password because i may have forgotten it.
 3. As a food bank admin, I want to assign/promote an existing user to be a second food bank admin (in the case of someone leaving, they assign a new person who then deletes the old person as an admin. This has to be done with a unique user id? which is then displayed with a name to confirm before it is saved as such.)
 4. As a food bank admin, I want to delete one of the 2 admins. (needs to be confirmed before being done, but this doesn't actually remove the user record, it just removed the association between the user record and the food bank)
