@@ -1,9 +1,12 @@
 import SignupForm from "./components/signup-form";
+import { LoginForm } from "@/components/login-form";
 
 export default function Home() {
   return (
-    <div>
-      <SignupForm />
+    <div className="bg-blue-400 min-h-screen place-content-center">
+      <div className="">
+        <LoginForm className="max-w-xl mx-auto" />
+      </div>
     </div>
   );
 }

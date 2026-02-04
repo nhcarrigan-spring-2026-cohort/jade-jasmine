@@ -1,8 +1,5 @@
 "use client";
 
-export default function RegisterForm() {
-  return <form action=""></form>;
-}
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +17,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-export function SignupForm({
+export default function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
