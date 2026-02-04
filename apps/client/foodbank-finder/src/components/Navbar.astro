@@ -1,5 +1,6 @@
 ---
-
+import { BsSearch, BsList, BsX } from "react-icons/bs";
+import MobileMenu from "./MobileMenu.jsx";
 ---
 <nav class="navbar">
   <div class="logo">
@@ -9,7 +10,11 @@
     <li><a href="#">Home</a></li>
     <li><a href="#"><BsSearch /> Search for item</a></li>
   </ul>
+  <div class="mobile-menu-toggle">
+    <MobileMenu client:load />
+  </div>
 </nav>
+
 <style>
 .navbar {
     display: flex;
@@ -34,5 +39,16 @@
   .nav-links a {
     color: #333;
     text-decoration: none;
+  }
+  .mobile-menu-toggle {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .mobile-menu-toggle {
+      display: block;
+    }
   }
 </style>
