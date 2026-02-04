@@ -5,6 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Getting Started
 
 First, run the development server:
+make sure you've cd apps/client/foodbank-manager
 
 ```bash
 npm run dev

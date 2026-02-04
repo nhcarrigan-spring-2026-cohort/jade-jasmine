@@ -1,0 +1,38 @@
+name: Monorepo Lint Check
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-projects:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 🖥️ Lint API Server (Backend)
+        working-directory: apps/api-server
+        run: |
+          npm install
+          npx eslint .
+
+      - name: 🛠️ Lint Foodbank Manager
+        working-directory: apps/client/foodbank-manager
+        run: |
+          npm install
+          npx eslint . --ext .js,.mjs,.ts,.tsx
+
+      - name: 🍕 Lint Foodbank Finder (Astro/Other)
+        working-directory: apps/client/foodbank-finder
+        run: |
+          npm install
+          npx eslint .

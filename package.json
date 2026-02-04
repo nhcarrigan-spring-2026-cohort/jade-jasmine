@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine/issues"
   },
-  "homepage": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine#readme"
+  "homepage": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine#readme",
+  "workspaces": [
+    "apps/*"
+  ]
 }

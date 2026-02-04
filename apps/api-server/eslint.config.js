@@ -1,23 +1,31 @@
 import js from "@eslint/js";
 import globals from "globals";
-import json from "@eslint/json";
-import markdown from "@eslint/markdown";
-import css from "@eslint/css";
-import { defineConfig } from "eslint/config";
 
-export default defineConfig([
+export default [
+  // 1. Inherit the recommended JavaScript rules
+  js.configs.recommended,
+
   {
-    ignores: [
-      "node_modules/",
-      "dist/",
-      "build/",
-      "coverage/",
-      "package-lock.json"
-    ]
+    // 2. Target your backend files
+    files: ["**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      // CHANGE: Use node instead of browser
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // 3. Add backend-specific preferences
+      "no-console": "warn",        // Good for servers to avoid cluttering logs
+      "no-unused-vars": "error",   // Keeps your API clean
+      "prefer-const": "error",     // Encourages immutable data patterns
+    },
   },
 
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.node } },
-  { files: ["**/*.json"], plugins: { json }, language: "json/json", extends: ["json/recommended"] },
-  { files: ["**/*.md"], plugins: { markdown }, language: "markdown/gfm", extends: ["markdown/recommended"] },
-  { files: ["**/*.css"], plugins: { css }, language: "css/css", extends: ["css/recommended"] },
-]);
+  // 4. Global ignores for the backend
+  {
+    ignores: ["node_modules/", "dist/", "coverage/", ".env"],
+  },
+];
