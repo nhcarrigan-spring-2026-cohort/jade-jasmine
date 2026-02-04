@@ -66,7 +66,7 @@ Table food_inventory {
 Table box_inventory as PB {
   fb_id int [not null, ref:   - FB.id]
   box_id int [not null, ref: < boxes.id]
-  quantity int [default: 0]
+  quantity int [not null, default: 0]
 
   Indexes {
     (fb_id, box_id) [pk]
@@ -80,6 +80,7 @@ Table food {
   category int [not null, ref: > categories.id]
   box int [ref: <> boxes.id]
   barcode varchar(13)
+  min int [not null, default: 0, note: "the minimum amount before we need to order more"]
 }
 
 Table categories {
@@ -96,15 +97,10 @@ Table boxes {
   id int [increment,pk]
   fb_id int [ref: > FB.id]
   name varchar(35) [not null, note: "short desc of this box for display purposes"]
-  min int [note: "the minimum amount of boxes before we need to make more?"]
+  min int [not null, default: 0, note: "the minimum amount of boxes before we need to make more"]
 }
 
 Table user_passwords {
   user_id int [pk, not null, ref: - users.id]
   password varchar(64) [not null, note: "hashed passwords only"]
-}
-
-Table fb_passwords {
-  fb_id int [pk,not null, ref: - FB.id]
-  password varchar(64) [not null]
 }
