@@ -1,0 +1,38 @@
+---
+import { BsSearch, BsList, BsX } from "react-icons/bs";
+---
+<nav class="navbar">
+  <div class="logo">
+    <a href="/">Food Finder & Pantry Management</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#"><BsSearch /> Search for item</a></li>
+  </ul>
+</nav>
+<style>
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    color: #333;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .logo a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  .nav-links a {
+    color: #333;
+    text-decoration: none;
+  }
+</style>
