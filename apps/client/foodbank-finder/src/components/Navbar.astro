@@ -1,0 +1,55 @@
+---
+import { BsSearch } from "react-icons/bs";
+import MobileMenu from "./MobileMenu.astro";
+---
+
+<nav class="navbar">
+  <div class="logo">
+    <a href="/">Food Finder & Pantry Management</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#"><BsSearch /> Search for item</a></li>
+  </ul>
+  <div class="mobile-menu-toggle">
+    <MobileMenu />
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    color: #333;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .logo a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .nav-links {
+    display: none;
+    list-style: none;
+    gap: 1.25rem;
+  }
+  .nav-links a {
+    color: #333;
+    text-decoration: none;
+  }
+  .mobile-menu-toggle {
+    display: block;
+  }
+  @media (min-width: 48rem) {
+    .nav-links {
+      display: flex;
+    }
+    .mobile-menu-toggle {
+      display: none;
+    }
+  }
+</style>
