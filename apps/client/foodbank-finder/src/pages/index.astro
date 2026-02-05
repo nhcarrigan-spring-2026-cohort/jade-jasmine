@@ -8,18 +8,26 @@
     <title>Home Page</title>
 
     <style>
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
+   
     .home-page {
         min-height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
     }
 
     .search-attributes {
         display: flex;
         flex-direction: column;
         align-items: center;  
+        
     }
 
     .advanced-search-button {
@@ -28,23 +36,52 @@
         
     }
 
+    .open-menu {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin: 1rem;
+    }
+
+    header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+    }
+
+    .search-row {
+        display: flex;
+        padding: 1rem;
+    }
+
+ 
     </style>
 
 
 </head>
 <body>
 
-    <img src="/menu-button-of-three-horizontal-lines-svgrepo-com.svg" alt="menu" width="32" height="32" />
-    <div class="home-page">
-
-        <div class="search-attributes">
-            <h1>Pantry Finder</h1>
-            <input type="text" placeholder="Search for pantries">
-            <button class="advanced-search-button" type="button">Advanced Search</button>
-            
-        </div>
+<div class="home-page">
+    <header>
+        <button class="open-menu">
+        <img src="/menu-button-of-three-horizontal-lines-svgrepo-com.svg" alt="menu" width="48" height="48" />
+        </button>
+    </header>
 
     
+
+
+        <form class="search-attributes">
+            <h1 class="site-title">Pantry Finder</h1>
+            <div class="search-row">
+                <input class="search-entries" type="text" placeholder="Search for pantries" >    
+                <button class="submit" type="submit">Search</button> 
+            </div>  
+            <button class="advanced-search-button" type="button">Advanced Search</button>
+            
+        </form>
+
 
 
 
