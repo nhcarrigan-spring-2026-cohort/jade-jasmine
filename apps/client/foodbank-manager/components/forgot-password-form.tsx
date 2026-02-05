@@ -14,7 +14,9 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-export default function LoginForm({
+import Link from "next/link";
+
+export function ForgotPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -22,9 +24,10 @@ export default function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Forgot Password</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email below to reset your password. We&apos;ll send you a
+            link to reset your password.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -39,25 +42,11 @@ export default function LoginForm({
                   required
                 />
               </Field>
+
               <Field>
-                <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" required />
-              </Field>
-              <Field>
-                <Button type="submit">Login</Button>
-                <Button variant="outline" type="button">
-                  Login with Google
-                </Button>
+                <Button type="submit">Send Email</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  <Link href="/">Return To Login</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
