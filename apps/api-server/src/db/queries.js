@@ -83,7 +83,7 @@ export async function addNewUser(username, email, password) {
     return user;
   } catch (error) {
     await client.query("ROLLBACK");
-    console.error("Add User Transaction failed:", error);
+    logger.error("Add User Transaction failed:", error);
     throw error;
   } finally {
     client.release();

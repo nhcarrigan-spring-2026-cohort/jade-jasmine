@@ -1,6 +1,7 @@
 import AppError from "../errors/AppError.js";
 import AuthError from "../errors/AuthError.js";
 import * as userQueries from "../db/queries.js";
+import logger from "./utils/logger.js";
 
 // needed to hash the password value
 import bcrypt from "bcrypt";
@@ -12,7 +13,7 @@ import "dotenv/config";
 import { env } from "node:process";
 
 export async function signUp(req, res) {
-  console.log("trying to signUp")
+  logger.info("trying to signUp")
   const hashedPassword = await bcrypt.hash(
     req.body['new-password'],
     Number(env.HASH_SALT)
@@ -41,18 +42,18 @@ export async function signUp(req, res) {
 }
 
 export async function login(req, res) {
-  console.log("trying to login: ", req.body.username);
+  logger.info("trying to login: ", req.body.username);
   try {
     const user = await userQueries.getUserPassword(req.body.username);
     if (!user) {
-      console.log("the user's username is not in the db");
+      logger.warn("the user's username is not in the db");
       throw new AuthError("Incorrect username or password.");
     }
     // confirm password match?
     const match = await bcrypt.compare(req.body.password, user['user_password']);
     if (!match) {
       // passwords do not match!
-      console.log("it's the wrong password");
+      logger.warn("it's the wrong password");
       throw new AuthError("Incorrect username or password.");
     }
     const token = jwt.sign(
