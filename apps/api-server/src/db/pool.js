@@ -1,13 +1,14 @@
 import { Pool } from "pg";
 // import "dotenv/config"; //do i need this here?
 import { env } from "node:process";
+import logger from "../utils/logger.js";
 
 const connectionString = `postgresql://${env.PGUSER}:${env.PGPASSWORD}@${env.PGHOST}:${env.PGPORT}/${env.PGDATABASE}`;
 
-console.log("connection string: ", connectionString);
+logger.info("connection string: ", connectionString);
 
 // Add logging to see what's happening
-console.log("Environment check in db/init.ts:", {
+logger.info("Environment check in db/init.ts:", {
   NODE_ENV: env.NODE_ENV,
   DATABASE_URL: env.DATABASE_URL ? "EXISTS" : "MISSING",
   DATABASE_URL_length: env.DATABASE_URL?.length,

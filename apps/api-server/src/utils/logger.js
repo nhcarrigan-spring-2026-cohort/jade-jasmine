@@ -4,10 +4,6 @@ const logLevels = {
   error: 0,
   warn: 1,
   info: 2,
-  http: 3,
-  verbose: 4,
-  debug: 5,
-  silly: 6
 };
 
 const logFormat = winston.format.combine(
@@ -23,13 +19,22 @@ const logFormat = winston.format.combine(
 
 const logger = winston.createLogger({
   levels: logLevels,
-  level: "silly",
+  level: "info",
   format: logFormat,
   transports: [
-    new winston.transports.Console(), // for testing
     new winston.transports.File({ filename: "logs/error.log", level: "error" }), // high priority errors
     new winston.transports.File({ filename: "logs/combined.log" }),
   ],
 })
+
+//
+// If we're not in production then log to the `console` with the format:
+// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+//
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple(),
+  }));
+}
 
 export default logger;

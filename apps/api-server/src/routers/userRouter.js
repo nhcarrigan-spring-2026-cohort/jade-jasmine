@@ -32,7 +32,6 @@ userRouter.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const user = req.user;
-    console.log("after authentication ran: ", user);
     if (user) {
       res
         .status(200)
