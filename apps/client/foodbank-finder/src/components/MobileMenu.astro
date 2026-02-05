@@ -16,12 +16,26 @@ import { BsSearch, BsList, BsX } from "react-icons/bs";
     position: fixed;
     top: 0;
     right: 0;
-    width: 80%;
+    width: 60%;
     height: 100vh;
-    background-color: white;
+    background-color: ivory;
     transform: translate(100%);
     transition: transform 0.3s ease;
     z-index: 10;
+
+    ul {
+      list-style: none;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 1.25rem;
+      color: #333;
+    }
   }
 
   .mobile-sidebar.is-open {
