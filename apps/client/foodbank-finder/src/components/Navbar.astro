@@ -1,7 +1,8 @@
 ---
 import { BsSearch, BsList, BsX } from "react-icons/bs";
-import MobileMenu from "./MobileMenu.jsx";
+import MobileMenu from "./MobileMenu.astro";
 ---
+
 <nav class="navbar">
   <div class="logo">
     <a href="/">Food Finder & Pantry Management</a>
@@ -11,12 +12,12 @@ import MobileMenu from "./MobileMenu.jsx";
     <li><a href="#"><BsSearch /> Search for item</a></li>
   </ul>
   <div class="mobile-menu-toggle">
-    <MobileMenu client:load />
+    <MobileMenu />
   </div>
 </nav>
 
 <style>
-.navbar {
+  .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,7 +33,7 @@ import MobileMenu from "./MobileMenu.jsx";
     font-size: 1.5rem;
   }
   .nav-links {
-    display: flex;
+    display: none;
     list-style: none;
     gap: 20px;
   }
@@ -41,14 +42,14 @@ import MobileMenu from "./MobileMenu.jsx";
     text-decoration: none;
   }
   .mobile-menu-toggle {
-    display: none;
+    display: block;
   }
-  @media (max-width: 768px) {
+  @media (min-width: 48rem) {
     .nav-links {
-      display: none;
+      display: flex;
     }
     .mobile-menu-toggle {
-      display: block;
+      display: none;
     }
   }
 </style>
