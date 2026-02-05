@@ -1,7 +1,7 @@
 import AppError from "../errors/AppError.js";
 import AuthError from "../errors/AuthError.js";
 import * as userQueries from "../db/queries.js";
-import logger from "./utils/logger.js";
+import logger from "../utils/logger.js";
 
 // needed to hash the password value
 import bcrypt from "bcrypt";
