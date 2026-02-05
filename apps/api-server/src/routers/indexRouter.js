@@ -1,6 +1,6 @@
 import express from "express";
 
-export const indexRouter = express.Router();
+export default const indexRouter = express.Router();
 
 indexRouter.get("/", (req, res) => {
   res.status(200).json({

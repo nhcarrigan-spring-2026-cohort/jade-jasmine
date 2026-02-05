@@ -2,6 +2,7 @@
 import * as userQueries from "../db/queries.js";
 import { body, param, checkExact } from "express-validator";
 
+import logger from "../utils/logger.js";
 
 /**
  * 
@@ -13,11 +14,11 @@ const checkUserId = (isParam) => {
   return ch1.trim().notEmpty().withMessage("A user id is required to complete the request.")
     .custom( async (value) => {
     
-    console.log("try to validate if the user id exists: ", value);
+    logger.info("try to validate if the user id exists: ", value);
     try {
       const userRow = await userQueries.getUserById(value);
 
-      console.log("user row found: ", userRow);
+      logger.info("user row found: ", userRow);
       if (!userRow) {
         throw new Error(
           "This user id is invalid."
@@ -26,8 +27,7 @@ const checkUserId = (isParam) => {
         return true;
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.stack);
+      logger.error(error, { stack: error.stack });
       throw error;
     }
   })
@@ -37,10 +37,32 @@ const checkUsername = (optional) => {
   let ch1 = body("username").trim();
   ch1 = optional ? ch1.optional({ checkFalsy: true }) : ch1;
   return ch1
-  .notEmpty()
-  .withMessage("A username is required.")
-  .isLength({ min: 1, max: 25 })
-  .withMessage("Usernames need to be between 1 and 25 characters long.");
+    .notEmpty()
+    .withMessage("A username is required.")
+    .isLength({ min: 1, max: 25 })
+    .withMessage("Usernames need to be between 1 and 25 characters long.")
+    .custom(async (value, { req }) => {
+      logger.info("try to validate if the username is unique: ", value);
+      try {
+        const userRow = optional
+          ? await userQueries.findOtherUserByUsername(req.user.id, value)
+          : await userQueries.getUserByUsername(value);
+
+        logger.info("user row found: ", userRow);
+        if (userRow) {
+          throw new Error(
+            optional
+              ? "This username cannot be used"
+              : "This username has already been registered. You must login instead.",
+          );
+        } else {
+          return true;
+        }
+      } catch (error) {
+        logger.error(error, {stack: error.stack})
+        throw error;
+      }
+    });
 }
 
 const checkEmail = (optional) => {
@@ -52,12 +74,12 @@ const checkEmail = (optional) => {
   .isEmail()
   .withMessage("Provide a valid email address.")
   .custom(async (value, {req}) => {
-    console.log("try to validate if the email is unique: ", value);
+    logger.info("try to validate if the email is unique: ", value);
     try {
 
       const userRow = optional ? await userQueries.findOtherUser(req.user.id, value) : await userQueries.getUserByEmail(value);
       
-      console.log("user row found: ", userRow);
+      logger.info("user row found: ", userRow);
       if (userRow) {
         throw new Error(
           optional ? "This email address cannot be used" : "This email has already been registered. You must login instead."
@@ -66,8 +88,7 @@ const checkEmail = (optional) => {
         return true;
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.stack);
+        logger.error(error, { stack: error.stack });
       throw error;
     }
   })

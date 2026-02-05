@@ -5,20 +5,23 @@ import AppError from "./errors/AppError.js";
 import ValidationError from "./errors/ValidationError.js";
 import "dotenv/config";
 import { env } from "node:process";
+import logger from "./utils/logger.js";
+import passport from "./middleware/passport.js";
+import indexRouter from "./routers/indexRouter.js";
+import userRouter from "./routers/userRouter.js";
 
-if (!env.SESSION_SECRET) {
-  console.log("found no session secret in .env, so must create one");
+
+if (!env.JWT_SECRET) {
+  logger.error("found no jwt secret in .env, so must create one");
   const b = crypto.randomBytes(40); // any number over 32 is fine
-  console.log(
-    `Setup the SESSION_SECRET value in .env with: ${b.toString("hex")}`,
-  );
+  logger.error(`Setup the JWT_SECRET value in .env with: ${b.toString("hex")}`);
   process.exit(1);
 }
 
 const app = express();
 
 if (env.NODE_ENV === "production") {
-  console.log("This is a production environment");
+  logger.info("This is a production environment");
   app.set("trust proxy", 1); // trust first proxy only because of deployment to Render, remove otherwise
 }
 
@@ -43,16 +46,12 @@ app.use(
 );
 
 // need to initialize passport
-import passport from "./middleware/passport.js";
 app.use(passport.initialize());
 
-
 // just sets up the basic route that describes the api
-import { indexRouter } from "./routers/indexRouter.js";
 app.use("/", indexRouter);
 
 // the router for the user related actions like signup and login etc
-import userRouter from "./routers/userRouter.js";
 app.use("/user", userRouter);
 
 // Catch-all for unhandled routes (must be placed last but before the error handler)
@@ -72,8 +71,8 @@ app.use((err, req, res, next) => {
   const timestamp = new Date().toUTCString();
   res.set({ "Content-Type": "application/problem+json" }); // this type from https://datatracker.ietf.org/doc/html/rfc7807#section-3
   try {
-    console.log("================================================");
-    console.error("in the catch-all: ", timestamp, err, err.stack);
+    logger.error("================================================");
+    logger.error("in the catch-all: ", { timestamp, err,stack: err.stack });
 
     if (err instanceof AppError || err.name === "AppError") {
       {
@@ -107,7 +106,7 @@ app.use((err, req, res, next) => {
       res.status(500).json({ timestamp, message: INTERNAL_ERROR });
     }
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     res.status(500).json({ timestamp, message: INTERNAL_ERROR });
   }
 });
