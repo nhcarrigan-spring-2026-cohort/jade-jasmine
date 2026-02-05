@@ -27,33 +27,86 @@
         display: flex;
         flex-direction: column;
         align-items: center;  
-        
-    }
+        gap: 3rem;
 
-    .advanced-search-button {
-        display: block;
-        margin-top: 1rem;
-        
-    }
-
-    .open-menu {
-        background: none;
-        border: none;
-        cursor: pointer;
-        margin: 1rem;
-    }
-
-    header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        
     }
 
     .search-row {
         display: flex;
         padding: 1rem;
+        gap: 1rem;
     }
+
+    .site-title {
+
+        font-size: 4rem;
+        
+    }
+
+    .description {
+        font-size: 2rem;
+        width: 54ch;
+        color: #696969;
+
+    }
+
+    button, input{
+        border-radius: 10px;
+        padding: 15px;
+        font-weight: bold;
+        
+    }
+
+    .search-button img {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25em; 
+    vertical-align: top;
+   
+
+    }
+
+    .location-button img {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.25em; 
+        vertical-align: top;
+    }
+
+    .search-button {
+        background-color: #2E8B57;
+        color: #FFFFFF;
+        border: none;
+    }
+
+    .location-button {
+        border-color: #3CB371;
+        background-color:  #F0FFF0;
+        color: #2E8B57;
+        border-style: solid;
+        
+    }
+
+    .search-bar {
+        flex: 1;
+        min-width: 300px;    
+        background-image: url("./search-icon2.svg");
+        background-repeat: no-repeat;
+        background-position: .5rem center;
+        background-size: 1.5rem 1.5rem;
+        padding-left: 2.5rem;
+        border: 2px solid lightgrey;
+        box-shadow: 0 2px 5px lightgrey;
+    }
+
+    .website-description {
+        color: #2E8B57;
+        font-size: 1.5rem;
+        background-color: #F5FFFA;
+        padding: 10px;
+    }
+    
+
 
  
     </style>
@@ -63,22 +116,23 @@
 <body>
 
 <div class="home-page">
-    <header>
-        <button class="open-menu">
-        <img src="/menu-button-of-three-horizontal-lines-svgrepo-com.svg" alt="menu" width="48" height="48" />
-        </button>
-    </header>
 
     
 
 
         <form class="search-attributes">
-            <h1 class="site-title">Pantry Finder</h1>
+
+            <p class="website-description">&bull; Helping communities find food assistance</p>
+     
+            <h1 class="site-title">Find your Nearest <span style="color:#2E8B57">Food Bank</span></h1>
+            <p class="description">Everyone deserves access to nutritious food. Enter your location to discover 
+            food banks and pantries ready to help in your community.</p>
             <div class="search-row">
-                <input class="search-entries" type="text" placeholder="Search for pantries" >    
-                <button class="submit" type="submit">Search</button> 
+                <input class="search-bar" type="text" placeholder="Enter your city, ZIP code, or address" >    
+                <button class="search-button" type="submit"> <img src="search-icon.svg" alt="search-icon" width="10" height="10">Search</button> 
+                <button class="location-button"><img src="place-marker.svg" alt="place-marker" height="15" width="15">Use my location</button>
             </div>  
-            <button class="advanced-search-button" type="button">Advanced Search</button>
+            
             
         </form>
 
