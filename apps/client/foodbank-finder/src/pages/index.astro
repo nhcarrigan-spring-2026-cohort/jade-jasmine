@@ -1,11 +1,145 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <style>
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+   
+    .home-page {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-attributes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;  
+        gap: 3rem;
+
+    }
+
+    .search-row {
+        display: flex;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .site-title {
+
+        font-size: 4rem;
+        
+    }
+
+    .description {
+        font-size: 2rem;
+        width: 54ch;
+        color: #696969;
+
+    }
+
+    button, input{
+        border-radius: 10px;
+        padding: 15px;
+        font-weight: bold;
+        
+    }
+
+    .search-button img {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25em; 
+    vertical-align: top;
+   
+
+    }
+
+    .location-button img {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.25em; 
+        vertical-align: top;
+    }
+
+    .search-button {
+        background-color: #2E8B57;
+        color: #FFFFFF;
+        border: none;
+    }
+
+    .location-button {
+        border-color: #3CB371;
+        background-color:  #F0FFF0;
+        color: #2E8B57;
+        border-style: solid;
+        
+    }
+
+    .search-bar {
+        flex: 1;
+        min-width: 300px;    
+        background-image: url("./search-icon2.svg");
+        background-repeat: no-repeat;
+        background-position: .5rem center;
+        background-size: 1.5rem 1.5rem;
+        padding-left: 2.5rem;
+        border: 2px solid lightgrey;
+        box-shadow: 0 2px 5px lightgrey;
+    }
+
+    .website-description {
+        color: #2E8B57;
+        font-size: 1.5rem;
+        background-color: #F5FFFA;
+        padding: 10px;
+    }
+    
+
+
+ 
+    </style>
+
+
+</head>
+<body>
+
+<div class="home-page">
+
+    
+
+
+        <form class="search-attributes">
+
+            <p class="website-description">&bull; Helping communities find food assistance</p>
+     
+            <h1 class="site-title">Find your Nearest <span style="color:#2E8B57">Food Bank</span></h1>
+            <p class="description">Everyone deserves access to nutritious food. Enter your location to discover 
+            food banks and pantries ready to help in your community.</p>
+            <div class="search-row">
+                <input class="search-bar" type="text" placeholder="Enter your city, ZIP code, or address" >    
+                <button class="search-button" type="submit"> <img src="search-icon.svg" alt="search-icon" width="10" height="10">Search</button> 
+                <button class="location-button"><img src="place-marker.svg" alt="place-marker" height="15" width="15">Use my location</button>
+            </div>  
+            
+            
+        </form>
+
+
+
+
+
+    </div>
+</body>
+</html>

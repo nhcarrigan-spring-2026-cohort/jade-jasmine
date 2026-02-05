@@ -1,0 +1,58 @@
+---
+import { BsSearch, BsList, BsX } from "react-icons/bs";
+---
+
+<button class="menu-open-button"><BsList /></button>
+<aside class="mobile-sidebar">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#"><BsSearch />Search</a></li>
+  </ul>
+  <button class="menu-close-button"><BsX /></button>
+</aside>
+
+<style>
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100vh;
+    background-color: ivory;
+    transform: translate(100%);
+    transition: transform 0.3s ease;
+    z-index: 10;
+
+    ul {
+      list-style: none;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 1.25rem;
+      color: #333;
+    }
+  }
+
+  .mobile-sidebar.is-open {
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  const openButton = document.querySelector(".menu-open-button");
+  const closeButton = document.querySelector(".menu-close-button");
+  const sidebar = document.querySelector(".mobile-sidebar");
+
+  openButton?.addEventListener("click", () => {
+    sidebar?.classList.add("is-open");
+  });
+
+  closeButton?.addEventListener("click", () => {
+    sidebar?.classList.remove("is-open");
+  });
+</script>

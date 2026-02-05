@@ -1,0 +1,106 @@
+Project Food_Bank_Finder {
+  database_type: 'PostgreSQL'
+  Note: 'App to find info about nearby food banks and check their food pantry contents'
+  Note: 'Uses metric units for measurements'
+}
+
+Table foodbanks as FB {
+  id int [pk,increment]
+  name varchar(75) [not null, note: "75 length?"]
+  unit_no int [note: "the unit # if it is in a plaza or shared space"]
+  street varchar(50) [not null, note: "example: 1025 Google Way"]
+  city varchar(20) [not null]
+  province varchar(20) [not null, note: "or state depending on country"]
+  country varchar(20) [not null]
+  postal_code varchar(12) [not null, note: "length will change depending on country"]
+  longitude decimal(9,6) [not null]
+  latitude decimal(9,6) [not null]
+  website text 
+  phone varchar(20) [not null]
+  fax varchar(20)
+  charity_registration_no varchar(30) 
+  admin int [not null, ref: <> users.id, note: "admin can modify the food bank info"]
+}
+
+Enum role_type {
+  admin
+  staff
+  volunteer
+}
+
+Table user_role {
+  fb_id int [not null, ref: <> FB.id]
+  user_id int [not null, ref: > users.id ]
+  role role_type [not null, note: "staff can modify inventory but not modify the food bank details themselves"]
+
+  Indexes {
+    (fb_id, user_id, role) [pk]
+  }
+}
+
+Table users {
+  id int [pk, increment]
+  username varchar(25) [unique, not null]
+  email text [unique, not null]
+}
+
+Table hours as rhours {
+  id int [pk, increment]
+  fb_id int [not null, ref: > FB.id]
+  weekday int [not null, note: "Sunday is day 1, Monday day 2, etc"]
+  opening_hr time  [not null, note: "time with timezone in postgresql"]
+  closing_hr time [not null, note: "time with timezone in postgresql"]
+  temporarily_closed boolean [default:false, note: "toggles to true when the user wants to override the hour settings and indicate temporary closure"]
+}
+
+Table food_inventory {
+  fb_id int [not null, ref:   > FB.id]
+  food_id int  [not null, ref: > food.id]
+  quantity int [default: 0]
+
+  Indexes {
+    (fb_id, food_id) [pk]
+  }
+}
+
+Table box_inventory as PB {
+  fb_id int [not null, ref:   - FB.id]
+  box_id int [not null, ref: < boxes.id]
+  quantity int [not null, default: 0]
+
+  Indexes {
+    (fb_id, box_id) [pk]
+  }
+}
+
+Table food {
+  id int [pk, increment]
+  name varchar(30) [not null]
+  description varchar(100)
+  category int [not null, ref: > categories.id]
+  box int [ref: <> boxes.id]
+  barcode varchar(13)
+  min int [not null, default: 0, note: "the minimum amount before we need to order more"]
+}
+
+Table categories {
+  id int [pk, increment]
+  fb_id int [not null, ref: > FB.id]
+  name varchar(25) [not null]
+
+  Indexes {
+    (fb_id, name) [pk]
+  }
+}
+
+Table boxes {
+  id int [increment,pk]
+  fb_id int [ref: > FB.id]
+  name varchar(35) [not null, note: "short desc of this box for display purposes"]
+  min int [not null, default: 0, note: "the minimum amount of boxes before we need to make more"]
+}
+
+Table user_passwords {
+  user_id int [pk, not null, ref: - users.id]
+  password varchar(64) [not null, note: "hashed passwords only"]
+}
