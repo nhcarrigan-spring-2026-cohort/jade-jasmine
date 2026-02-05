@@ -7,8 +7,8 @@ import passport from "passport";
 
 import {
   signUp,
+  login
   /* TODO
-  login,
   getUser,
   updateUser,
   deleteUser,
@@ -22,10 +22,7 @@ import { handleExpressValidationErrors } from "./routerUtil.js";
 const userRouter = Router();
 
 
-import {
-  validateUserFields,
-  //validateOptionalUserFields,
-} from "../validators/userValidator.js";
+import * as userValidator from "../validators/userValidator.js";
 
 
 import AuthError from "../errors/AuthError.js";
@@ -53,11 +50,18 @@ userRouter.get(
 
 userRouter
   .route("/signup")
-  .post(validateUserFields, handleExpressValidationErrors, signUp);
+  .post(userValidator.validateUserFields, handleExpressValidationErrors, signUp);
+
+
+userRouter
+  .route("/login")
+  .post(
+    userValidator.validateUserLoginFields,
+    handleExpressValidationErrors,
+    login,
+  );
 
 /*
-userRouter.route("/login").post(login);
-
 // note that we retrieve the user id from the jwt token so we don't need it specified in the route
 userRouter
   .route("/")

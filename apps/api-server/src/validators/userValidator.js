@@ -38,7 +38,7 @@ const checkUsername = (optional) => {
   ch1 = optional ? ch1.optional({ checkFalsy: true }) : ch1;
   return ch1
   .notEmpty()
-  .withMessage("A username is required for display purposes.")
+  .withMessage("A username is required.")
   .isLength({ min: 1, max: 25 })
   .withMessage("Usernames need to be between 1 and 25 characters long.");
 }
@@ -74,8 +74,8 @@ const checkEmail = (optional) => {
 }
 
 
-const checkPassword = (optional) => {
-  let ch1 = body("new-password").trim()
+const checkPassword = (optional, paramName="new-password") => {
+  let ch1 = body(paramName).trim()
   ch1 = optional ? ch1.optional() : ch1;
   return ch1
   .notEmpty()
@@ -139,3 +139,16 @@ export const validateUserFields = [
   ),
 ];
 
+// used for logging in a  user
+export const validateUserLoginFields = [
+  checkExact(
+    [
+      checkUsername(false),
+      body("password").notEmpty().withMessage("A password is required."),
+      // we don't validate the password at this point for login as we just compare it to the correct one later
+    ],
+    {
+      message: "Too many fields specified.",
+    },
+  ),
+];

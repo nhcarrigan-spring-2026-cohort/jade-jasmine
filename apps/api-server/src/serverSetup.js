@@ -83,7 +83,7 @@ app.use((err, req, res, next) => {
             statusCode: err.statusCode,
             timestamp: err.timestamp,
             message: err.message,
-            details: err.details,
+            data: err.data,
           });
         } else {
           res.json({

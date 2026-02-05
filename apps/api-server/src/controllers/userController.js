@@ -40,17 +40,16 @@ export async function signUp(req, res) {
   }
 }
 
-async function login(req, res) {
-  console.log("in login: ", req.body);
+export async function login(req, res) {
+  console.log("trying to login: ", req.body.username);
   try {
-    // TODO add validation and sanitization and then use the santized value?
     const user = await userQueries.getUserPassword(req.body.username);
     if (!user) {
       console.log("the user's username is not in the db");
       throw new AuthError("Incorrect username or password.");
     }
     // confirm password match?
-    const match = await bcrypt.compare(req.body.password, user.password);
+    const match = await bcrypt.compare(req.body.password, user['user_password']);
     if (!match) {
       // passwords do not match!
       console.log("it's the wrong password");
@@ -58,7 +57,7 @@ async function login(req, res) {
     }
     const token = jwt.sign(
       {
-        exp: "24h",
+        expiresIn: "48h",
         sub: user.id,
       },
       env.JWT_SECRET,
@@ -67,18 +66,17 @@ async function login(req, res) {
     res.set({ Authorization: `Bearer ${token}` });
     res.set("Access-Control-Expose-Headers", "Authorization");
 
+    const { id, username, email } = user; // can't send the whole user back as it contains the pwd
     res
       .status(201)
       .json({
-        status: "success",
-        message: "Login successful.",
-        userid: user.id,
+        data: { id, username, email }
       });
   } catch (error) {
     if (error instanceof AppError) {
       throw error;
     } else {
-      throw new AppError("Failed to update the user record", 500, error);
+      throw new AppError("Failed to login", 500, error);
     }
   }
 }

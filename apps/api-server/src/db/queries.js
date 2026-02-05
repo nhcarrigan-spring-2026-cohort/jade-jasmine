@@ -39,10 +39,10 @@ export async function getUserById(id) {
 export async function getUserPassword(username) {
   console.log("in getUserPassword: ", username);
   const { rows } = await pool.query(
-    "SELECT id,username,email,password FROM users INNER JOIN user_passwords ON users.id=password.user_id WHERE username=$1;",
+    "SELECT id,username,email,pw.user_password FROM users INNER JOIN passwords AS pw ON users.id=pw.user_id WHERE username=$1;",
     [username],
   );
-  return rows;
+  return rows[0]; // return the first row only
 }
 
 export async function addNewUser(username, email, password) {
