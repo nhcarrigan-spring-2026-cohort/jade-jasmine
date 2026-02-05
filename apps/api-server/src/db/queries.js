@@ -1,9 +1,27 @@
-import { pool } from "./db/pool.js";
+import { pool } from "./pool.js";
+
+export async function findOtherUser(userId, email) {
+  console.log("in findOtherUser: ", userId, email);
+  const { rows } = await pool.query(
+    "SELECT id,username,email FROM users WHERE email=$1 AND id<>$2;",
+    [email, userId],
+  );
+  return rows[0]; //return only the first row which hopefully exists
+}
+
+export async function getUserByEmail(email) {
+  console.log("in getUserByEmail: ", email);
+  const { rows } = await pool.query(
+    "SELECT id,username,email FROM users WHERE email=$1;",
+    [email],
+  );
+  return rows[0]; //return only the first row which hopefully exists
+}
 
 export async function getUserByUsername(username) {
   console.log("in getUserByUsername: ", username);
   const { rows } = await pool.query(
-    "SELECT id,username,email FROM users WHERE username=$1;",
+    "SELECT user_id,username,email FROM users WHERE username=$1;",
     [username],
   );
   return rows;
@@ -25,4 +43,38 @@ export async function getUserPassword(username) {
     [username],
   );
   return rows;
+}
+
+export async function addNewUser(username, email, password) {
+  console.log("in addNewUser:", username, email);
+
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const { rows } = await client.query(
+      `INSERT INTO users (username, email)
+       VALUES ($1, $2)
+       RETURNING id, username, email;`,
+      [username, email],
+    );
+
+    const user = rows[0];
+
+    await client.query(
+      `INSERT INTO passwords (user_id, user_password)
+       VALUES ($1, $2);`,
+      [user.id, password],
+    );
+
+    await client.query("COMMIT");
+    return user;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    console.error("Add User Transaction failed:", error);
+    throw error;
+  } finally {
+    client.release();
+  }
 }

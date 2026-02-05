@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE 
 );
 
-CREATE TABLE IF NOT EXISTS user_passwords (
+CREATE TABLE IF NOT EXISTS passwords (
     user_id int PRIMARY KEY REFERENCES users(id), 
     user_password VARCHAR(64) NOT NULL
 );

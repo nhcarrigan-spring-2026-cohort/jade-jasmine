@@ -1,34 +1,34 @@
 // Routes belonging to /user 
 
-const { Router } = require("express");
+import { Router } from "express";
 
-const passport = require("passport");
+import passport from "passport";
 
 
-const {
-  login,
-  getUser,
+import {
   signUp,
   /* TODO
+  login,
+  getUser,
   updateUser,
   deleteUser,
   */
-} = require("../controllers/userController");
+} from "../controllers/userController.js";
 
-/* TODO
-const { handleExpressValidationErrors } = require("./routerUtil");
-*/
+
+import { handleExpressValidationErrors } from "./routerUtil.js";
+
 
 const userRouter = Router();
 
-/* TODO
-const {
-  validateUserFields,
-  validateOptionalUserFields,
-} = require("../validators/userValidator");
- */
 
-const AuthError = require("../errors/AuthError");
+import {
+  validateUserFields,
+  //validateOptionalUserFields,
+} from "../validators/userValidator.js";
+
+
+import AuthError from "../errors/AuthError.js";
 
 userRouter.get(
   "/authenticate",
@@ -50,18 +50,23 @@ userRouter.get(
   },
 );
 
-/* TODO
-userRouter
-  .route("/sign-up")
-  .post(validateUserFields, handleExpressValidationErrors, signUp);
-*/
 
+userRouter
+  .route("/signup")
+  .post(validateUserFields, handleExpressValidationErrors, signUp);
+
+/*
 userRouter.route("/login").post(login);
 
 // note that we retrieve the user id from the jwt token so we don't need it specified in the route
 userRouter
   .route("/")
-  .get(passport.authenticate("jwt", { session: false }), getUser)
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    validateOptionalUserFields,
+    handleExpressValidationErrors,
+    getUser,
+  );
   /* TODO
   .put(
     passport.authenticate("jwt", { session: false }),
@@ -72,4 +77,4 @@ userRouter
   .delete(passport.authenticate("jwt", { session: false }), deleteUser);
   */
 
-module.exports = userRouter;
+export default userRouter;

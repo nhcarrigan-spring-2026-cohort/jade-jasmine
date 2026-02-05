@@ -1,11 +1,10 @@
 import { default as express } from "express";
 import crypto from "node:crypto";
 import cors from "cors";
-import { AppError } from "./errors/AppError.js";
-import { ValidationError } from "./errors/ValidationError.js";
+import AppError from "./errors/AppError.js";
+import ValidationError from "./errors/ValidationError.js";
 import "dotenv/config";
 import { env } from "node:process";
-import { getUserByUsername } from "./db/queries.js";
 
 if (!env.SESSION_SECRET) {
   console.log("found no session secret in .env, so must create one");
@@ -52,7 +51,7 @@ app.use(passport.initialize());
 import { indexRouter } from "./routers/indexRouter.js";
 app.use("/", indexRouter);
 
-// the router for the user related actions
+// the router for the user related actions like signup and login etc
 import userRouter from "./routers/userRouter.js";
 app.use("/user", userRouter);
 

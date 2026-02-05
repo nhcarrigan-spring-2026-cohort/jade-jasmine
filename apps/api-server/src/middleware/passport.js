@@ -1,11 +1,11 @@
 import passport from "passport";
-import { AuthError } from "../errors/AuthError.js";
+import AuthError from "../errors/AuthError.js";
 
 import crypto from "node:crypto";
 
 import "dotenv/config";
 
-import { getUserById } from "./db/queries.js";
+import { getUserById } from "../db/queries.js";
 
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 

@@ -4,7 +4,7 @@
   "description": "Node.js+Express.js server with PostgreSQL db",
   "main": "src/index.js",
   "scripts": {
-    "start": "node --watch src/index.js",
+    "start": "npx nodemon src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "db:start": "docker compose -f ./docker-compose.yml up -d",
