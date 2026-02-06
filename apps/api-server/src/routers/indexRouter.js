@@ -1,6 +1,6 @@
 import express from "express";
 
-export const indexRouter = express.Router();
+const indexRouter = express.Router();
 
 indexRouter.get("/", (req, res) => {
   res.status(200).json({
@@ -8,3 +8,6 @@ indexRouter.get("/", (req, res) => {
       "The jade-jasmine API", //TODO return the api.yml doc?
   });
 });
+
+
+export default indexRouter;

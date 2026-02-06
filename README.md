@@ -9,11 +9,11 @@ Community Pantry Tracker is a centralized platform designed for food banks and c
 
 ### Leadership
 - [Mista Log](https://github.com/Mista-Log)
+- [hayden-110](https://github.com/hayden-html)
 
 ### Participants
 - [ArbitraryPie](https://github.com/ArbitraryPie)
 - [`·.·★𝓱𝓪𝓷𝓪-𝓫𝓪𝓷𝓪𝓷𝓪★·.·´`](https://github.com/hbar1st)
-- [hayden-110](https://github.com/hayden-html)
 - [Nikil D Gr8](https://github.com/Nikil-D-Gr8)
 - [Kabir](https://github.com/builtbykabir)
 - [Autumn/Amanda](https://github.com/amandaw800)
