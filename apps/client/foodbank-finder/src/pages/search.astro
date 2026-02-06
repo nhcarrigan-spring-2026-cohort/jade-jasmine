@@ -48,12 +48,16 @@ const foodBanks = [
 
 <Layout>
   <header>
-    <BsArrowLeft />Back to Search
+    <button>
+      <BsArrowLeft />Back to Search
+    </button>
     <span>{foodBanks.length} locations found</span>
   </header>
   <main>
-    <section>Map</section>
-    <section>
+    <section class="map-section">
+      <img src="/mockup-map.PNG" alt="Map placeholder" />
+    </section>
+    <section class="results-section">
       <h1>Food Banks</h1>
       {
         foodBanks.map((foodBank) => (
@@ -70,3 +74,62 @@ const foodBanks = [
     </section>
   </main>
 </Layout>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  header span {
+    color: #6b7280;
+    font-size: 0.8rem;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .results-section h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 1rem 1rem 0.25rem 1rem;
+  }
+
+  .map-section img {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 48rem) {
+    main {
+      flex-direction: row;
+    }
+
+    .map-section {
+      width: 65%;
+    }
+
+    .results-section {
+      width: 35%;
+    }
+  }
+</style>
