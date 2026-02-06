@@ -5,15 +5,7 @@ import { Router } from "express";
 import passport from "passport";
 
 
-import {
-  signUp,
-  login
-  /* TODO
-  getUser,
-  updateUser,
-  deleteUser,
-  */
-} from "../controllers/userController.js";
+import * as userController from "../controllers/userController.js";
 
 
 import { handleExpressValidationErrors } from "./routerUtil.js";
@@ -49,7 +41,11 @@ userRouter.get(
 
 userRouter
   .route("/signup")
-  .post(userValidator.validateUserFields, handleExpressValidationErrors, signUp);
+  .post(
+    userValidator.validateUserFields,
+    handleExpressValidationErrors,
+    userController.signUp,
+  );
 
 
 userRouter
@@ -57,26 +53,27 @@ userRouter
   .post(
     userValidator.validateUserLoginFields,
     handleExpressValidationErrors,
-    login,
+    userController.login,
   );
 
-/*
+
 // note that we retrieve the user id from the jwt token so we don't need it specified in the route
 userRouter
   .route("/")
-  .get(
-    passport.authenticate("jwt", { session: false }),
-    validateOptionalUserFields,
-    handleExpressValidationErrors,
-    getUser,
-  );
-  /* TODO
   .put(
     passport.authenticate("jwt", { session: false }),
-    validateOptionalUserFields,
+    userValidator.bodyExists,
+    userValidator.validateOptionalUserFields,
     handleExpressValidationErrors,
-    updateUser,
-  )
+    userController.updateUser,
+  );
+  /* TODO
+  .get(
+    passport.authenticate("jwt", { session: false }),
+    userValidator.validateOptionalUserFields,
+    handleExpressValidationErrors,
+    userController.getUser,
+  );
   .delete(passport.authenticate("jwt", { session: false }), deleteUser);
   */
 

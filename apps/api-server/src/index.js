@@ -12,7 +12,7 @@ server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
     logger.error(`Port ${port} is already in use.`);
   } else {
-    logger.error("Server startup error:", err);
+    logger.error(`Server startup error: ${err}`);
   }
   process.exit(1); // Exit the process if a critical error occurs
 });
