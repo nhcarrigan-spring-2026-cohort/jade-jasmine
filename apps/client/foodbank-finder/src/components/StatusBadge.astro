@@ -1,0 +1,28 @@
+---
+const { isOpen } = Astro.props;
+---
+
+<div class={`badge ${isOpen ? "is-open" : "is-closed"}`}>
+  {isOpen ? "Open" : "Closed"}
+</div>
+
+<style>
+  .badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    display: inline-block;
+  }
+
+  .is-open {
+    border: 1px solid darkgreen;
+    color: darkslategray;
+    background-color: lightgreen;
+  }
+
+  .is-closed {
+    border: 1px solid darkslategray;
+    color: darkslategray;
+    background-color: lightgrey;
+  }
+</style>
