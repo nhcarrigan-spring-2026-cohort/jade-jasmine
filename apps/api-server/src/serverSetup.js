@@ -72,7 +72,7 @@ app.use((err, req, res, next) => {
   res.set({ "Content-Type": "application/problem+json" }); // this type from https://datatracker.ietf.org/doc/html/rfc7807#section-3
   try {
     logger.error("================================================");
-    logger.error("in the catch-all: ", { timestamp, err,stack: err.stack });
+    logger.error("in the catch-all: ", err);
 
     if (err instanceof AppError || err.name === "AppError") {
       {

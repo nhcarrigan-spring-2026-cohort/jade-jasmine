@@ -47,6 +47,15 @@ export async function getUserById(id) {
   return rows[0];
 }
 
+export async function getUserPasswordById(id) {
+  logger.info("in getUserPasswordById: ", { id });
+  const { rows } = await pool.query(
+    "SELECT id,username,email,pw.user_password FROM users INNER JOIN passwords AS pw ON users.id=pw.user_id WHERE id=$1;",
+    [id],
+  );
+  return rows[0]; // return the first row only
+}
+
 export async function getUserPassword(username) {
   logger.info("in getUserPassword: ", { username });
   const { rows } = await pool.query(
@@ -54,6 +63,19 @@ export async function getUserPassword(username) {
     [username],
   );
   return rows[0]; // return the first row only
+}
+
+export async function updateUserPwd(id, password) {
+  logger.info(`in updateUserPwd: ${id}`);
+  if (!id) {
+    throw new AppError("Cannot update a user password without the id");
+  }
+
+  const row = await pool.query(
+    `UPDATE passwords SET user_password=$1 WHERE user_id=$2`,
+    [password, id],
+  );
+  return row.rows;
 }
 
 export async function addNewUser(username, email, password) {
@@ -89,6 +111,8 @@ export async function addNewUser(username, email, password) {
     client.release();
   }
 }
+
+
 
 export async function updateUser(id, {
   username,

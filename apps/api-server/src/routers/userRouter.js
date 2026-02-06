@@ -63,6 +63,7 @@ userRouter
   .put(
     passport.authenticate("jwt", { session: false }),
     userValidator.bodyExists,
+    handleExpressValidationErrors,
     userValidator.validateOptionalUserFields,
     handleExpressValidationErrors,
     userController.updateUser,

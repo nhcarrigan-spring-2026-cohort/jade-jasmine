@@ -13,10 +13,10 @@ import "dotenv/config";
 import { env } from "node:process";
 
 export async function signUp(req, res) {
-  logger.info("trying to signUp")
+  logger.info("trying to signUp");
   const hashedPassword = await bcrypt.hash(
-    req.body['new-password'],
-    Number(env.HASH_SALT)
+    req.body["new-password"],
+    Number(env.HASH_SALT),
   );
   const { username, email } = req.body;
   try {
@@ -30,7 +30,7 @@ export async function signUp(req, res) {
       req.user = newUser;
       res.status(201).json({ data: newUser });
     } else {
-      throw new AppError("Failed to create the new user record.", 500)
+      throw new AppError("Failed to create the new user record.", 500);
     }
   } catch (error) {
     if (error instanceof AppError) {
@@ -50,7 +50,10 @@ export async function login(req, res) {
       throw new AuthError("Incorrect username or password.");
     }
     // confirm password match?
-    const match = await bcrypt.compare(req.body.password, user['user_password']);
+    const match = await bcrypt.compare(
+      req.body.password,
+      user["user_password"],
+    );
     if (!match) {
       // passwords do not match!
       logger.warn("it's the wrong password");
@@ -68,11 +71,9 @@ export async function login(req, res) {
     res.set("Access-Control-Expose-Headers", "Authorization");
 
     const { id, username, email } = user; // can't send the whole user back as it contains the pwd
-    res
-      .status(201)
-      .json({
-        data: { id, username, email }
-      });
+    res.status(201).json({
+      data: { id, username, email },
+    });
   } catch (error) {
     if (error instanceof AppError) {
       throw error;
@@ -88,34 +89,65 @@ export async function updateUser(req, res) {
 
   const user = req.user;
   logger.info(`userController.updateUser: `, user);
-  logger.info("req.body", req.body);
+  logger.info("req.body", Object.keys(req.body));
   const userDetails = { ...req.body };
-  if (Object.hasOwn(userDetails, 'confirm-password')) {
-    delete userDetails['confirm-password']
-    delete userDetails['old-password']
+  if (Object.hasOwn(userDetails, "confirm-password")) {
+    delete userDetails["confirm-password"];
+    delete userDetails["old-password"];
   }
-  if (req.body['email'] || req.body['username']) {
+  let updatedUser = null;
+  if (req.body["email"] || req.body["username"]) {
     try {
-      const updatedUser = await userQueries.updateUser(Number(user.id), userDetails)
-      logger.info("updatedUser: ", updatedUser);
-      if (updatedUser) {
-        res
-          .status(200)
-          .json({ data: updatedUser });
-      } else {
+      updatedUser = await userQueries.updateUser(Number(user.id), userDetails);
+      //logger.info("updatedUser: ", updatedUser.rows);
+      if (!updatedUser) {
         throw new AppError("Failed to update the user record", 500);
       }
-
-      // TODO update the password table next if needed (they don't have to be done in a transaction)
     } catch (error) {
       if (error instanceof AppError) {
         throw error;
       } else {
-        throw new AppError("Unexpected error during update of the user record", 500, error);
+        logger.error("UpdateUser failed:", error.stack || error);
+
+        throw new AppError(
+          "Unexpected error during update of the user record",
+          500,
+          error,
+        );
       }
     }
   }
-  if (req.body['new-password']) {
+  if (req.body["new-password"]) {
+      const hashedPassword = await bcrypt.hash(
+        req.body["new-password"],
+        Number(env.HASH_SALT),
+      );
     // update the password
+    logger.info("about to update the user password for: " + user.username);
+    try {
+      const row = await userQueries.updateUserPwd(
+        Number(user.id),
+        hashedPassword,
+      );
+
+      if (row) {
+        updatedUser = user; //just return the same user record since we actually changed the password table not the user table
+      } else {
+        logger.error("the row we failed to update: ", row)
+        throw new AppError("Failed to update the user password record", 500);
+      }
+    } catch (error) {
+      if (error instanceof AppError) {
+        throw error;
+      } else {
+        throw new AppError(
+          "Unexpected error during update of the user password record",
+          500,
+          error,
+        );
+      }
+    }
   }
+
+  res.status(200).json({ data: updatedUser });
 }

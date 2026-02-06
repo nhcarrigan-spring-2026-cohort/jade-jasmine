@@ -20,6 +20,7 @@ const checkUserId = (isParam) => {
     .trim()
     .notEmpty()
     .withMessage("A user id is required to complete the request.")
+    .bail()
     .custom(async (value) => {
       logger.info(`try to validate if the user id exists: ${value}`);
       try {
@@ -44,6 +45,7 @@ const checkUsername = (optional, unique = true) => {
   return ch1
     .notEmpty()
     .withMessage("A username is required.")
+    .bail()
     .isLength({ min: 1, max: 25 })
     .withMessage("Usernames need to be between 1 and 25 characters long.")
     .custom(async (value, { req }) => {
@@ -95,6 +97,7 @@ const checkEmail = (optional) => {
     .withMessage("An email is required.")
     .isEmail()
     .withMessage("Provide a valid email address.")
+    .bail()
     .custom(async (value, { req }) => {
       logger.info(`try to validate if the email is unique: ${value}`);
       try {
@@ -120,26 +123,30 @@ const checkEmail = (optional) => {
 };
 
 // user for user password updates (protected path)
-const validateOldPassword = (optional) => {
-  let oldPwdChk = body("old-password").trim();
+const validateOldPassword = () => {
+  const oldPwdChk = body("old-password").trim();
+  const newPwdChk = body("new-password").trim();
   // if someone provides this, we need to make sure it matches
-  oldPwdChk = optional ? oldPwdChk.optional() : oldPwdChk;
   return oldPwdChk
+    .if(newPwdChk.exists().notEmpty())
+    .notEmpty()
+    .withMessage("You must provide an old-password")
+    .bail()
     .custom(async (value, { req }) => {
-      const user = req.user;
-      if (user) {
+      logger.info("in the old-password custom check");
+      if (req.user) {
         try {
-          const user = await userQueries.getUserPasswordById(req.user.id);
-          if (!user) {
+          const res = await userQueries.getUserPasswordById(req.user.id);
+          if (!res) {
             logger.warn("the user's username is not in the db");
-            throw new AuthError("Incorrect username or password.");
+            throw new AuthError("Unknown user.");
           }
           // confirm password match?
-          const match = await bcrypt.compare(value, user["user_password"]);
+          const match = await bcrypt.compare(value, res["user_password"]);
           if (!match) {
             // passwords do not match!
             logger.warn("it's the wrong password");
-            throw new ValidationError("Please enter the old password.");
+            throw new ValidationError("Old password does not match.");
           }
         } catch (error) {
           logger.error(error);
@@ -149,6 +156,7 @@ const validateOldPassword = (optional) => {
         throw new ValidationError("Unknown or unauthenticated user.");
       }
     })
+    .bail()
     .customSanitizer(async (value) => {
       logger.info("sanitizing the old-password value with bcrypt");
       return await bcrypt.hash(value, Number(process.env.HASH_SALT));
@@ -161,6 +169,22 @@ const checkPassword = (optional, paramName = "new-password") => {
   return ch1
     .notEmpty()
     .withMessage("A password is required.")
+    .bail()
+    .isLength({ min: 8 })
+    .withMessage(
+      "A minimum length of 8 characters is needed for the password. Ideally, aim to use 15 characters at least.",
+    )
+    .hide("*****")
+};
+
+const checkNewPassword = (optional, paramName = "new-password") => {
+  const ch1 = body(paramName).trim();
+  const confirmPwdChk = body("confirm-password").trim();
+  return ch1
+    .if(confirmPwdChk.exists().notEmpty())
+    .notEmpty()
+    .withMessage("A password is required.")
+    .bail()
     .isLength({ min: 8 })
     .withMessage(
       "A minimum length of 8 characters is needed for the password. Ideally, aim to use 15 characters at least.",
@@ -175,6 +199,7 @@ const checkPasswordConfirmation = () => {
   return ch1
     .notEmpty()
     .withMessage("A password confirmation is required.")
+    .bail()
     .custom((value, { req }) => {
       if (value !== req.body["new-password"]) {
         throw new Error(
@@ -191,12 +216,11 @@ const checkPasswordConfirmation = () => {
 export const validateUserId = [checkUserId(true)];
 
 // used for user updates
-export const validateOptionalUserFields = [
+export const validateUserSignupFields = [
   checkExact(
     [
       checkEmail(true),
       checkUsername(true),
-      validateOldPassword(true),
       checkPassword(true),
       checkPasswordConfirmation(),
     ],
@@ -206,8 +230,17 @@ export const validateOptionalUserFields = [
   ),
 ];
 
+// used for user updates
+export const validateOptionalUserFields = [
+  checkEmail(true),
+  checkUsername(true),
+  validateOldPassword(),
+  checkNewPassword(true),
+  checkPasswordConfirmation(),
+];
+
 export const bodyExists = (req, res, next) => {
-  logger.info("validation body:", req.body);
+  logger.info("validation body:", Object.keys(req.body));
 
   if (!req.body || Object.keys(req.body).length === 0) {
     return next(new ValidationError("Request missing required body fields"));
