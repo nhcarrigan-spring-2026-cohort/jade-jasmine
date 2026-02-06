@@ -1,0 +1,14 @@
+---
+import StatusBadge from "./StatusBadge.astro";
+import { BsTelephone, BsGeoAlt, BsCursor, BsClock } from "react-icons/bs";
+const { name, address, schedule, phone, isOpen, coordinates } = Astro.props;
+---
+
+<article>
+  <h2>{name}</h2>
+  <StatusBadge isOpen={isOpen} />
+  <span><BsGeoAlt />{address}</span>
+  <span><BsClock />{schedule}</span>
+  <button data-lat={coordinates.lat} data-lng={coordinates.lng}><BsCursor />Directions</button>
+  <button data-phone={phone}><BsTelephone />Call</button>
+</article>

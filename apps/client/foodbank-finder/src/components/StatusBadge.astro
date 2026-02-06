@@ -1,0 +1,19 @@
+---
+const { isOpen } = Astro.props;
+---
+
+<div class={isOpen ? "is-open" : "is-closed"}>
+  {isOpen ? "Open" : "Closed"}
+</div>
+
+<style>
+  .is-open {
+    background-color: green;
+    color: white;
+  }
+
+  .is-closed {
+    background-color: lightsteelblue;
+    color: darkslategrey;
+  }
+</style>
