@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
+    "@fontsource-variable/roboto": "^5.2.9",
+    "@fontsource/noto-color-emoji": "^5.2.11",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.17.1",
