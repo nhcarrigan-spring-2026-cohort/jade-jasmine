@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Foodbank Page</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+    * {
+   
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .foodbank-information {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .opening-times {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .day-and-time {
+        display: flex;
+        gap: 5rem;
+    }
+
+    dl, dt, dd {
+    margin: 0;
+    padding: 0;
+    }
+
+    .contact-information {
+        margin: 1rem;
+    }
+
+</style>
+
+<body>
+
+    <div class="foodbank-page">
+
+        <div class="foodbank-information">
+            <h1 class="foodbank-name">Community Food Pantry</h1>
+            <p class="address-information">Address of food bank</p>
+
+            <p class="foodbank-description">Description of foodbank</p>
+
+            <div class="button-row">
+
+                <button class="directions-btn" type="button">Get Directions</button>
+                <button class="call-btn" type="button">Call</button>
+                <button class="email-btn" type="button">Email</button>
+                <button class="website-btn" type="button">Website</button>
+
+            </div>
+
+        </div>
+
+        <div class="opening-times">
+            <h2 class="opening-times-header">Opening Times</h2>
+            <div class="day-and-time">
+                <span class="day">Monday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Tuesday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Wednesday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Thursday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Friday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Saturday</span>
+                <span class="time">9AM-5PM</span>
+            </div>
+            <div class="day-and-time">
+                <span class="day">Sunday</span>
+                <span class="time">9AM-5PM</span>
+            </div>            
+        </div>
+
+
+        <div class="contact-information"> 
+            <h2 class="contact-information-header">Contact Information</h2>
+            <dl class="contact-information-list">
+                <div class="address-contact">
+                    <dt>Address</dt>
+                    <dd>123 Main Street Downtown, NY 10001</dd>
+
+                </div>
+
+                <div class="phone-contact">
+                    <dt>Phone</dt>
+                    <dd>(555) 123-4567</dd>
+                </div>
+
+                <div class="email-contact">
+                    <dt>Email</dt>
+                    <dd>info@communityfoodpantry.org</dd>
+                </div>
+
+                <div class="website-contact">
+                    <dt>Website</dt>
+                    <dd>https://communityfoodpantry.org</dd>
+                </div>
+
+            </dl>
+        </div>
+
+
+        <div class="avaliable-items">
+
+            <h2 class="avaliable-items-header">Available Items by Category</h3>
+
+        </div>
+
+        <div class="services-offered">
+            <h2 class="services-offered-header">Services Offered</h2>
+        </div>
+
+    </div>
+
+
+</body>
+</html>
