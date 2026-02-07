@@ -48,8 +48,9 @@ Table hours as rhours {
   id int [pk, increment]
   fb_id int [not null, ref: > FB.id]
   weekday int [not null, note: "Sunday is day 1, Monday day 2, etc"]
-  opening_hr time  [not null, note: "time with timezone in postgresql"]
-  closing_hr time [not null, note: "time with timezone in postgresql"]
+  opening_hr TIME  [not null, note: "time no timezone"]
+  closing_hr TIME [not null, note: "time no timezone"]
+  timezone TEXT  [not null, note: "-- e.g. 'America/Toronto'"]
   temporarily_closed boolean [default:false, note: "toggles to true when the user wants to override the hour settings and indicate temporary closure"]
 }
 

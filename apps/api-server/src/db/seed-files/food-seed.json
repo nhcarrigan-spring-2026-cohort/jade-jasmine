@@ -1,344 +1,110 @@
 [
-  { "name": "milk", "description": "2%", "category": 3, "box": 1, "min": 12 },
-  { "name": "milk", "description": "3.25%", "category": 7, "box": 1, "min": 4 },
   {
-    "name": "spam",
-    "description": "canned meat",
-    "category": 5,
-    "box": 1,
-    "min": 33
-  },
-  {
-    "name": "cacao",
-    "description": "350g powdered",
-    "category": 9,
-    "box": 1,
-    "min": 18
-  },
-  {
-    "name": "rice",
-    "description": "1kg bag",
-    "category": 2,
-    "box": 1,
-    "min": 41
-  },
-  {
-    "name": "pasta",
-    "description": "fusilli 500g",
-    "category": 11,
-    "box": 1,
-    "min": 7
-  },
-  {
-    "name": "beans",
-    "description": "black beans 540ml",
-    "category": 4,
-    "box": 1,
-    "min": 29
-  },
-  {
-    "name": "tuna",
-    "description": "canned in water",
-    "category": 6,
-    "box": 1,
-    "min": 55
-  },
-  {
-    "name": "oats",
-    "description": "rolled oats 1kg",
-    "category": 8,
-    "box": 1,
-    "min": 23
-  },
-  {
-    "name": "cereal",
-    "description": "corn flakes 500g",
-    "category": 10,
-    "box": 1,
-    "min": 14
-  },
-
-  {
-    "name": "soup",
-    "description": "tomato canned",
+    "fb_id": 1,
+    "name": "apple",
+    "description": "fresh red",
     "category": 1,
     "box": 1,
-    "min": 3
-  },
-  {
-    "name": "soup",
-    "description": "chicken noodle",
-    "category": 12,
-    "box": 1,
-    "min": 47
-  },
-  {
-    "name": "flour",
-    "description": "all-purpose 2kg",
-    "category": 14,
-    "box": 1,
-    "min": 9
-  },
-  {
-    "name": "sugar",
-    "description": "white sugar 1kg",
-    "category": 13,
-    "box": 1,
-    "min": 60
-  },
-  {
-    "name": "salt",
-    "description": "iodized 1kg",
-    "category": 2,
-    "box": 1,
-    "min": 1
-  },
-  {
-    "name": "oil",
-    "description": "vegetable oil 1L",
-    "category": 4,
-    "box": 1,
-    "min": 22
-  },
-  {
-    "name": "tea",
-    "description": "black tea 20 bags",
-    "category": 6,
-    "box": 1,
-    "min": 11
-  },
-  {
-    "name": "coffee",
-    "description": "ground 300g",
-    "category": 7,
-    "box": 1,
-    "min": 38
-  },
-  {
-    "name": "lentils",
-    "description": "red lentils 900g",
-    "category": 9,
-    "box": 1,
-    "min": 44
-  },
-  {
-    "name": "chickpeas",
-    "description": "canned 540ml",
-    "category": 3,
-    "box": 1,
-    "min": 19
-  },
-
-  {
-    "name": "peanut butter",
-    "description": "smooth 500g",
-    "category": 5,
-    "box": 1,
-    "min": 26
-  },
-  {
-    "name": "jam",
-    "description": "strawberry 500ml",
-    "category": 8,
-    "box": 1,
-    "min": 13
-  },
-  {
-    "name": "crackers",
-    "description": "salted 200g",
-    "category": 10,
-    "box": 1,
-    "min": 52
-  },
-  {
-    "name": "granola bars",
-    "description": "box of 6",
-    "category": 11,
-    "box": 1,
-    "min": 6
-  },
-  {
-    "name": "tomato sauce",
-    "description": "680ml jar",
-    "category": 12,
-    "box": 1,
-    "min": 34
-  },
-  {
-    "name": "applesauce",
-    "description": "unsweetened 650ml",
-    "category": 14,
-    "box": 1,
-    "min": 17
-  },
-  {
-    "name": "canned corn",
-    "description": "341ml",
-    "category": 1,
-    "box": 1,
-    "min": 8
-  },
-  {
-    "name": "canned peas",
-    "description": "398ml",
-    "category": 4,
-    "box": 1,
-    "min": 21
-  },
-  {
-    "name": "canned carrots",
-    "description": "398ml",
-    "category": 6,
-    "box": 1,
-    "min": 49
-  },
-  {
-    "name": "canned beans",
-    "description": "brown beans 398ml",
-    "category": 7,
-    "box": 1,
-    "min": 32
-  },
-
-  {
-    "name": "macaroni",
-    "description": "900g",
-    "category": 9,
-    "box": 1,
-    "min": 15
-  },
-  {
-    "name": "spaghetti",
-    "description": "900g",
-    "category": 11,
-    "box": 1,
-    "min": 57
-  },
-  {
-    "name": "canned pineapple",
-    "description": "slices 398ml",
-    "category": 13,
-    "box": 1,
-    "min": 24
-  },
-  {
-    "name": "canned peaches",
-    "description": "398ml",
-    "category": 2,
-    "box": 1,
-    "min": 36
-  },
-  {
-    "name": "canned pears",
-    "description": "398ml",
-    "category": 3,
-    "box": 1,
-    "min": 50
-  },
-  {
-    "name": "raisins",
-    "description": "250g",
-    "category": 5,
-    "box": 1,
+    "barcode": null,
     "min": 12
   },
   {
-    "name": "nuts",
-    "description": "mixed nuts 200g",
-    "category": 8,
+    "fb_id": 1,
+    "name": "banana",
+    "description": "ripe yellow",
+    "category": 1,
     "box": 1,
-    "min": 40
+    "barcode": null,
+    "min": 4
   },
   {
-    "name": "canned salmon",
-    "description": "213g",
-    "category": 10,
+    "fb_id": 1,
+    "name": "orange",
+    "description": "navel oranges",
+    "category": 1,
     "box": 1,
-    "min": 28
+    "barcode": null,
+    "min": 33
   },
   {
-    "name": "canned sardines",
-    "description": "in oil",
-    "category": 12,
+    "fb_id": 1,
+    "name": "pear",
+    "description": "bartlett pears",
+    "category": 1,
     "box": 1,
-    "min": 31
+    "barcode": null,
+    "min": 18
   },
   {
-    "name": "canned mackerel",
-    "description": "in brine",
-    "category": 14,
+    "fb_id": 1,
+    "name": "grapes",
+    "description": "seedless 1lb",
+    "category": 1,
     "box": 1,
-    "min": 53
+    "barcode": null,
+    "min": 41
   },
 
   {
-    "name": "instant noodles",
-    "description": "chicken flavor",
-    "category": 1,
-    "box": 1,
-    "min": 16
-  },
-  {
-    "name": "instant oatmeal",
-    "description": "maple flavor",
-    "category": 4,
-    "box": 1,
-    "min": 27
-  },
-  {
-    "name": "hot chocolate",
-    "description": "250g mix",
-    "category": 6,
-    "box": 1,
-    "min": 48
-  },
-  {
-    "name": "canned tomatoes",
-    "description": "diced 796ml",
-    "category": 7,
-    "box": 1,
-    "min": 20
-  },
-  {
-    "name": "canned chickpeas",
-    "description": "540ml",
-    "category": 9,
-    "box": 1,
-    "min": 14
-  },
-  {
-    "name": "canned kidney beans",
-    "description": "540ml",
-    "category": 11,
-    "box": 1,
-    "min": 62
-  },
-  {
-    "name": "canned lentils",
-    "description": "540ml",
-    "category": 13,
-    "box": 1,
-    "min": 35
-  },
-  {
-    "name": "canned soup",
-    "description": "vegetable",
+    "fb_id": 1,
+    "name": "spaghetti",
+    "description": "900g pasta",
     "category": 2,
     "box": 1,
-    "min": 10
+    "barcode": null,
+    "min": 7
   },
   {
-    "name": "canned broth",
-    "description": "chicken 900ml",
-    "category": 3,
+    "fb_id": 1,
+    "name": "penne",
+    "description": "500g pasta",
+    "category": 2,
     "box": 1,
-    "min": 25
+    "barcode": null,
+    "min": 29
   },
   {
-    "name": "canned gravy",
-    "description": "turkey 284ml",
-    "category": 5,
+    "fb_id": 1,
+    "name": "fusilli",
+    "description": "spiral pasta 500g",
+    "category": 2,
     "box": 1,
-    "min": 30
-  }
+    "barcode": null,
+    "min": 55
+  },
+  {
+    "fb_id": 1,
+    "name": "macaroni",
+    "description": "elbow pasta 900g",
+    "category": 2,
+    "box": 1,
+    "barcode": null,
+    "min": 23
+  },
+  {
+    "fb_id": 1,
+    "name": "linguine",
+    "description": "500g",
+    "category": 2,
+    "box": 1,
+    "barcode": null,
+    "min": 14
+  },
+  { "fb_id": 2, "name": "apple puree", "description": "stage 1 baby food", "category": 3, "box": 1, "barcode": null, "min": 12 },
+  { "fb_id": 2, "name": "banana puree", "description": "stage 2 baby food", "category": 3, "box": 1, "barcode": null, "min": 7 },
+  { "fb_id": 2, "name": "mixed veggie puree", "description": "jarred baby food", "category": 3, "box": 1, "barcode": null, "min": 25 },
+  { "fb_id": 2, "name": "oat cereal", "description": "infant cereal 227g", "category": 3, "box": 1, "barcode": null, "min": 9 },
+  { "fb_id": 2, "name": "rice cereal", "description": "infant cereal 227g", "category": 3, "box": 1, "barcode": null, "min": 18 },
+
+  { "fb_id": 2, "name": "corn flakes", "description": "500g cereal", "category": 4, "box": 1, "barcode": null, "min": 33 },
+  { "fb_id": 2, "name": "oatmeal cereal", "description": "instant oats 400g", "category": 4, "box": 1, "barcode": null, "min": 14 },
+  { "fb_id": 2, "name": "bran flakes", "description": "high-fiber cereal", "category": 4, "box": 1, "barcode": null, "min": 52 },
+  { "fb_id": 2, "name": "granola", "description": "honey granola 300g", "category": 4, "box": 1, "barcode": null, "min": 27 },
+  { "fb_id": 2, "name": "rice puffs", "description": "puffed cereal 200g", "category": 4, "box": 1, "barcode": null, "min": 6 },
+
+  { "fb_id": 2, "name": "apples", "description": "fresh red apples", "category": 5, "box": 1, "barcode": null, "min": 41 },
+  { "fb_id": 2, "name": "bananas", "description": "ripe yellow bananas", "category": 5, "box": 1, "barcode": null, "min": 22 },
+  { "fb_id": 2, "name": "oranges", "description": "navel oranges", "category": 5, "box": 1, "barcode": null, "min": 30 },
+  { "fb_id": 2, "name": "pears", "description": "bartlett pears", "category": 5, "box": 1, "barcode": null, "min": 11 },
+  { "fb_id": 2, "name": "grapes", "description": "seedless 1lb", "category": 5, "box": 1, "barcode": null, "min": 19 }
 ]

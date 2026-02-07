@@ -51,7 +51,11 @@ console.log(currentDirname);
 
 async function addUserData() {
   const fbDataFilePath = path.join(currentDirname, "./seed-files/fb-seed.json");
-  const categoryDataFilePath = path.join(currentDirname, "./seed-files/categories-seed.json");
+  const foodDataFilePath = path.join(currentDirname, "./seed-files/food-seed.json");
+  const categoryDataFilePath = path.join(
+    currentDirname,
+    "./seed-files/categories-seed.json",
+  );
   const boxesDataFilePath = path.join(
     currentDirname,
     "./seed-files/boxes-seed.json",
@@ -116,24 +120,33 @@ async function addUserData() {
     );
   }
 
-    const categoryValuesSQL = [];
-    jsonData = fs.readFileSync(categoryDataFilePath, "utf8");
-    data = JSON.parse(jsonData);
+  const categoryValuesSQL = [];
+  jsonData = fs.readFileSync(categoryDataFilePath, "utf8");
+  data = JSON.parse(jsonData);
 
-    for (let i = 0; i < data.length; i++) {
-      categoryValuesSQL.push(
-        `(${data[i].fb_id}, '${data[i].name}')`,
-      );
-    }
-  
-      const boxesValuesSQL = [];
-      jsonData = fs.readFileSync(boxesDataFilePath, "utf8");
-      data = JSON.parse(jsonData);
+  for (let i = 0; i < data.length; i++) {
+    categoryValuesSQL.push(`(${data[i].fb_id}, '${data[i].name}')`);
+  }
 
-      for (let i = 0; i < data.length; i++) {
-        boxesValuesSQL.push(`(${data[i].fb_id}, '${data[i].name}', '${data[i].min}')`);
-      }
-  
+  const boxesValuesSQL = [];
+  jsonData = fs.readFileSync(boxesDataFilePath, "utf8");
+  data = JSON.parse(jsonData);
+
+  for (let i = 0; i < data.length; i++) {
+    boxesValuesSQL.push(
+      `(${data[i].fb_id}, '${data[i].name}', '${data[i].min}')`,
+    );
+  }
+
+  const foodValuesSQL = [];
+  jsonData = fs.readFileSync(foodDataFilePath, "utf8");
+  data = JSON.parse(jsonData);
+
+  for (let i = 0; i < data.length; i++) {
+    foodValuesSQL.push(
+      `(${data[i].fb_id}, '${data[i].name}', '${data[i].description}', ${data[i].category}, ${data[i].box},'${data[i].min}')`,
+    );
+  }
   const TABLES_SETUP_SQL = `
     INSERT INTO users (username,email) VALUES ${userValuesSQL.join(",")};
     INSERT INTO passwords (user_id,user_password) VALUES ${pwdValuesSQL.join(",")};
@@ -142,6 +155,7 @@ async function addUserData() {
     INSERT INTO hours (fb_id,weekday,opening_hr,closing_hr) VALUES ${hourValuesSQL.join(",")};
     INSERT INTO categories (fb_id,name) VALUES ${categoryValuesSQL.join(",")};
     INSERT INTO boxes (fb_id,name,min) VALUES ${boxesValuesSQL.join(",")};
+    INSERT INTO food (fb_id,name,description,category,box,min) VALUES ${foodValuesSQL.join(",")};
   `;
   console.log(TABLES_SETUP_SQL);
   const client = await pool.connect();
@@ -154,22 +168,19 @@ async function addUserData() {
     await client.query(TABLES_SETUP_SQL);
 
     await client.query("COMMIT");
-    
-    console.log(
-      "[Status]: user, user_roles and password tables seeded",
-    );
+
+    console.log("[Status]: user, user_roles and password tables seeded");
 
     console.log("[Status]: foodbank and hours table seeded");
   } catch (err) {
     await client.query("ROLLBACK");
 
     console.error(err);
-    
+
     return;
   } finally {
     client.release();
   }
-
 
   // third pass sets up the food tables and inventory tables
 

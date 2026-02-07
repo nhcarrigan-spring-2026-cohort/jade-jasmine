@@ -112,6 +112,7 @@ DROP TABLE IF EXISTS food CASCADE;
 
 CREATE TABLE food (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
+  fb_id int NOT NULL REFERENCES foodbanks(id),
   name VARCHAR(30) NOT NULL,
   description VARCHAR(100),
   category INT NOT NULL REFERENCES categories(id),
