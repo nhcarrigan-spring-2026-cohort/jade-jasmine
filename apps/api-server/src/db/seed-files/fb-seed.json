@@ -1,0 +1,147 @@
+[
+  {
+    "charity_registration_no": "charity1",
+    "city": "Toronto",
+    "name": "Toronto Food Bank",
+    "phone": "555-555-5555",
+    "postal_code": "S2V E1V",
+    "province": "Ontario",
+    "street": "55 Go St.",
+    "unit_no": "11A",
+    "website": "http://tfb.org",
+    "workers": [
+      {
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "password": "adminpassword"
+      },
+      {
+        "username": "hana",
+        "email": "hana@gmail.com",
+        "password": "hanapassword"
+      },
+      {
+        "username": "rosa",
+        "email": "rosa@gmail.com",
+        "password": "rosapassword"
+      }
+    ]
+  },
+
+  {
+    "admin": "2",
+    "charity_registration_no": "charity2",
+    "city": "Toronto",
+    "name": "Scarborough Food Bank",
+    "phone": "1-555-555-5555",
+    "postal_code": "B2V N5E",
+    "province": "Ontario",
+    "street": "5055 Oblong Ave.",
+    "website": "http://feedme.org",
+    "workers": [
+      {
+        "username": "admin2",
+        "email": "admin2@gmail.com",
+        "password": "admin2password"
+      }
+    ]
+  },
+  {
+    "admin": "3",
+    "charity_registration_no": "charity4",
+    "city": "Atlantida",
+    "name": "Banco de Alimentos Uruguay",
+    "phone": "909-090-9009",
+    "postal_code": "13000",
+    "province": "Canelones",
+    "country": "Uruguay",
+    "street": "Bv. Artigas 1234",
+    "unit_no": "20D",
+    "website": "https://bancodealimentos.org.uy/",
+    "workers": [
+      {
+        "username": "admin3",
+        "email": "admin3@gmail.com",
+        "password": "admin3password"
+      },
+      {
+        "username": "kabir",
+        "email": "kabir@gmail.com",
+        "password": "kabirpassword"
+      },
+      {
+        "username": "nikil",
+        "email": "nikil@gmail.com",
+        "password": "nikilpassword"
+      },
+      {
+        "username": "mista",
+        "email": "mista@gmail.com",
+        "password": "mistapassword"
+      },
+      {
+        "username": "staffer",
+        "email": "staffer@gmail.com",
+        "password": "stafferpassword"
+      }
+    ]
+  },
+  {
+    "admin": "4",
+    "charity_registration_no": "charity3",
+    "city": "Hanoi",
+    "name": "Hanoi Food Bank",
+    "phone": "123-456-7890",
+    "postal_code": "143315",
+    "province": "Hanoi",
+    "country": "Vietnam",
+    "street": "1 TanXuan St.",
+    "unit_no": "24C",
+    "website": "http://hanoifoodbank.org",
+    "workers": [
+      {
+        "username": "admin4",
+        "email": "admin4@gmail.com",
+        "password": "admin4password"
+      },
+      {
+        "username": "kevin",
+        "email": "kevin@gmail.com",
+        "password": "kevinpassword"
+      }
+    ]
+  },
+  {
+    "admin": "5",
+    "charity_registration_no": "charity2",
+    "city": "Washington D.C",
+    "name": "D.C Food Bank",
+    "phone": "222-222-2222",
+    "postal_code": "20001",
+    "province": "-",
+    "street": "925 K St NW",
+    "website": "http://dcfoodbank.org/",
+    "workers": [
+      {
+        "username": "admin5",
+        "email": "admin5@gmail.com",
+        "password": "admin5password"
+      },
+      {
+        "username": "amanda",
+        "email": "amanda@gmail.com",
+        "password": "amandapassword"
+      },
+      {
+        "username": "hayden",
+        "email": "hayden@gmail.com",
+        "password": "haydenpassword"
+      },
+      {
+        "username": "tiana",
+        "email": "tiana@gmail.com",
+        "password": "tianapassword"
+      }
+    ]
+  }
+]

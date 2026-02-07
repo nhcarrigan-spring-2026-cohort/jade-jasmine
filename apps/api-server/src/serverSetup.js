@@ -10,6 +10,8 @@ import passport from "./middleware/passport.js";
 import indexRouter from "./routers/indexRouter.js";
 import userRouter from "./routers/userRouter.js";
 
+const VERSION = "v1"
+const prefix = `/${VERSION}`;
 
 if (!env.JWT_SECRET) {
   logger.error("found no jwt secret in .env, so must create one");
@@ -49,10 +51,10 @@ app.use(
 app.use(passport.initialize());
 
 // just sets up the basic route that describes the api
-app.use("/", indexRouter);
+app.use(`${prefix}/`, indexRouter);
 
 // the router for the user related actions like signup and login etc
-app.use("/user", userRouter);
+app.use(`${prefix}/user`, userRouter);
 
 // Catch-all for unhandled routes (must be placed last but before the error handler)
 app.use((req, res) => {
