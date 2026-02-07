@@ -6,9 +6,13 @@
 
 <style>
     * {
-   
         padding: 0;
         box-sizing: border-box;
+    } 
+
+    .foodbank-page {
+        display: flex;
+        flex-direction: column;
     }
 
     .foodbank-information {
@@ -20,7 +24,10 @@
     .opening-times {
         display: flex;
         flex-direction: column;
+        flex: 1;
         margin: 1rem;
+        border: 2px solid black;
+        
     }
 
     .day-and-time {
@@ -35,7 +42,44 @@
 
     .contact-information {
         margin: 1rem;
+        flex: 1;
+        border: 2px solid black;
     }
+
+    .second-row {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .avaliable-items {
+        margin: 1rem;
+        flex: 1;
+
+        border: 2px solid black;
+
+    }
+
+
+    .services-offered {
+        margin: 1rem;
+        border: 2px solid black;
+
+    }
+
+    .food-category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 15%));
+        gap: 16px;                       
+  
+    }
+
+    .item {
+         border: 2px solid black;
+  
+    }
+
+
 
 </style>
 
@@ -60,6 +104,7 @@
 
         </div>
 
+        <div class="second-row">
         <div class="opening-times">
             <h2 class="opening-times-header">Opening Times</h2>
             <div class="day-and-time">
@@ -119,11 +164,18 @@
 
             </dl>
         </div>
+    </div>
 
 
         <div class="avaliable-items">
 
             <h2 class="avaliable-items-header">Available Items by Category</h3>
+
+            <div class="food-category-grid">
+
+                <div class="food-category-valid item">hi</div>
+                <div class="food-category-invalid item">bye</div>
+            </div>
 
         </div>
 
