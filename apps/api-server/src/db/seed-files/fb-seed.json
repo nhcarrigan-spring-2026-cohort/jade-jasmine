@@ -6,9 +6,9 @@
     "phone": "555-555-5555",
     "postal_code": "S2V E1V",
     "province": "Ontario",
+    "country": "Canada",
     "street": "55 Go St.",
     "unit_no": "11A",
-    "website": "http://tfb.org",
     "workers": [
       {
         "username": "admin",
@@ -33,7 +33,6 @@
     "charity_registration_no": "charity2",
     "city": "Toronto",
     "name": "Scarborough Food Bank",
-    "phone": "1-555-555-5555",
     "postal_code": "B2V N5E",
     "province": "Ontario",
     "street": "5055 Oblong Ave.",
@@ -48,7 +47,6 @@
   },
   {
     "admin": "3",
-    "charity_registration_no": "charity4",
     "city": "Atlantida",
     "name": "Banco de Alimentos Uruguay",
     "phone": "909-090-9009",
