@@ -1,0 +1,91 @@
+[
+  {
+    "fb_id": 1,
+    "weekday": 1,
+    "opening_hr": "09:00:00",
+    "closing_hr": "13:00:00"
+  },
+  {
+    "fb_id": 1,
+    "weekday": 4,
+    "opening_hr": "10:30:00",
+    "closing_hr": "16:00:00"
+  },
+  {
+    "fb_id": 1,
+    "weekday": 6,
+    "opening_hr": "08:00:00",
+    "closing_hr": "12:00:00"
+  },
+
+  {
+    "fb_id": 2,
+    "weekday": 2,
+    "opening_hr": "07:00:00",
+    "closing_hr": "11:00:00"
+  },
+  {
+    "fb_id": 2,
+    "weekday": 5,
+    "opening_hr": "12:00:00",
+    "closing_hr": "18:00:00"
+  },
+
+  {
+    "fb_id": 3,
+    "weekday": 3,
+    "opening_hr": "09:30:00",
+    "closing_hr": "14:00:00"
+  },
+  {
+    "fb_id": 3,
+    "weekday": 7,
+    "opening_hr": "08:00:00",
+    "closing_hr": "12:30:00"
+  },
+
+  {
+    "fb_id": 4,
+    "weekday": 1,
+    "opening_hr": "08:00:00",
+    "closing_hr": "15:00:00"
+  },
+
+  {
+    "fb_id": 4,
+    "weekday": 2,
+    "opening_hr": "09:00:00",
+    "closing_hr": "12:00:00"
+  },
+  {
+    "fb_id": 4,
+    "weekday": 3,
+    "opening_hr": "10:00:00",
+    "closing_hr": "17:00:00"
+  },
+
+  {
+    "fb_id": 4,
+    "weekday": 4,
+    "opening_hr": "13:00:00",
+    "closing_hr": "18:00:00"
+  },
+  {
+    "fb_id": 4,
+    "weekday": 5,
+    "opening_hr": "09:00:00",
+    "closing_hr": "14:00:00"
+  },
+  {
+    "fb_id": 4,
+    "weekday": 6,
+    "opening_hr": "08:30:00",
+    "closing_hr": "20:30:00"
+  },
+  {
+    "fb_id": 4,
+    "weekday": 6,
+    "opening_hr": "08:30:00",
+    "closing_hr": "12:30:00"
+  }
+]

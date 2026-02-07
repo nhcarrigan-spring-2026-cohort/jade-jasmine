@@ -9,6 +9,7 @@
     "country": "Canada",
     "street": "55 Go St.",
     "unit_no": "11A",
+    "timezone": "America/Toronto",
     "workers": [
       {
         "username": "admin",
@@ -37,6 +38,7 @@
     "province": "Ontario",
     "street": "5055 Oblong Ave.",
     "website": "http://feedme.org",
+    "timezone": "America/Toronto",
     "workers": [
       {
         "username": "admin2",
@@ -56,6 +58,7 @@
     "street": "Bv. Artigas 1234",
     "unit_no": "20D",
     "website": "https://bancodealimentos.org.uy/",
+    "timezone": "America/Montevideo",
     "workers": [
       {
         "username": "admin3",
@@ -96,6 +99,7 @@
     "street": "1 TanXuan St.",
     "unit_no": "24C",
     "website": "http://hanoifoodbank.org",
+    "timezone": "Asia/Ho_Chi_Minh",
     "workers": [
       {
         "username": "admin4",
@@ -119,6 +123,7 @@
     "province": "-",
     "street": "925 K St NW",
     "website": "http://dcfoodbank.org/",
+    "timezone": "America/New_York",
     "workers": [
       {
         "username": "admin5",

@@ -1,0 +1,65 @@
+[
+  {
+    "fb_id": 2,
+    "name": "medium box",
+    "min": 11,
+    "quantity": 11
+  },
+  {
+    "fb_id": 2,
+    "name": "small box",
+    "min": 50,
+    "quantity": 11
+  },
+
+  {
+    "fb_id": 3,
+    "name": "large box",
+    "min": 30,
+    "quantity": 11
+  },
+  {
+    "fb_id": 3,
+    "name": "medium box",
+    "min": 100,
+    "quantity": 11
+  },
+  {
+    "fb_id": 3,
+    "name": "small box",
+    "min": 4,
+    "quantity": 11
+  },
+
+  {
+    "fb_id": 4,
+    "name": "small box",
+    "min": 0,
+    "quantity": 11
+  },
+  {
+    "fb_id": 4,
+    "name": "medium box",
+    "min": 2,
+    "quantity": 11
+  },
+
+  {
+    "fb_id": 5,
+    "name": "large box",
+    "min": 3,
+    "quantity": 11
+  },
+  {
+    "fb_id": 5,
+    "name": "medium box",
+    "min": 10,
+    "quantity": 11
+  },
+  {
+    "fb_id": 5,
+    "name": "small box",
+    "min": 5,
+    "quantity": 11
+  }
+]

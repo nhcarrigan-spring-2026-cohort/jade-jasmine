@@ -39,6 +39,7 @@ CREATE TABLE foodbanks (
   phone VARCHAR(20),
   fax VARCHAR(20),
   charity_registration_no VARCHAR(30),
+  timezone TEXT NOT NULL,
   admin INT NOT NULL REFERENCES users(id)
 );
 
@@ -75,7 +76,7 @@ CREATE TABLE hours (
   fb_id INT NOT NULL REFERENCES foodbanks(id),
   weekday t_weekday NOT NULL DEFAULT 1,
   opening_hr TIME NOT NULL,
-  closing_hr TIME NOT NULL,
+  closing_hr TIME NOT NULL,  
   temporarily_closed BOOLEAN DEFAULT FALSE
 );
 
