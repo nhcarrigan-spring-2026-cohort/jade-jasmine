@@ -12,7 +12,7 @@
     "db:logs": "docker compose -f ./docker-compose.yml logs -f db",
     "db:shell": "bash -c 'source .env && PGPASSWORD=\"$PGPASSWORD\" docker compose exec db psql -U \"$PGUSER\" -d \"$PGDATABASE\"'",
     "db:setup": "bash -c 'source .env && PGPASSWORD=\"$PGPASSWORD\" psql -h \"$PG_HOST\" -p \"$PGPORT\" -U \"$PGUSER\" -d \"$PGDATABASE\" < ./src/db/setup-tables.sql'",
-    "clean-n-dev": "npm run lint && npm run db:start && npm run db:setup && npm start",
+    "clean-n-dev": "npm run lint && npm run db:start && npm run db:setup && node src/db/populateTables.js && npm start",
     "dev": "npm run db:start && npm start"
   },
   "keywords": [

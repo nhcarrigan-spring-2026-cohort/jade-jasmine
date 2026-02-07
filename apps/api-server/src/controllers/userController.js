@@ -71,7 +71,7 @@ export async function login(req, res) {
     res.set("Access-Control-Expose-Headers", "Authorization");
 
     const { id, username, email } = user; // can't send the whole user back as it contains the pwd
-    res.status(201).json({
+    res.status(204).json({
       data: { id, username, email },
     });
   } catch (error) {

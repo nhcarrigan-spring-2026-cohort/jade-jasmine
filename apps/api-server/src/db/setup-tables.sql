@@ -1,37 +1,3 @@
--- Note: all this code is to be thrown away if we use jwt bearer tokens instead
--- the next create+alter+create are from table.sql for connect-pg-simple npm module. 
--- I have modified them to run once to avoid errors during setup.
-
-CREATE TABLE IF NOT EXISTS "session" (
-  "sid" varchar NOT NULL COLLATE "default",
-  "sess" json NOT NULL,
-  "expire" timestamp(6) NOT NULL
-)
-WITH (OIDS=FALSE);
-
-DO $$
-BEGIN
-  -- Create primary key only if it doesn't already exist
-  IF NOT EXISTS (
-    SELECT 1
-    FROM pg_constraint
-    WHERE conname = 'session_pkey'
-  ) THEN
-    ALTER TABLE "session"
-      ADD CONSTRAINT session_pkey PRIMARY KEY ("sid");
-  END IF;
-
-  -- Create index only if it doesn't already exist
-  IF NOT EXISTS (
-    SELECT 1
-    FROM pg_class
-    WHERE relname = 'IDX_session_expire'
-  ) THEN
-    CREATE INDEX "IDX_session_expire"
-      ON "session" ("expire");
-  END IF;
-
-END$$;
 
 DROP DOMAIN IF EXISTS t_username CASCADE;
 
@@ -73,6 +39,7 @@ CREATE TABLE foodbanks (
   phone VARCHAR(20),
   fax VARCHAR(20),
   charity_registration_no VARCHAR(30),
+  timezone TEXT NOT NULL,
   admin INT NOT NULL REFERENCES users(id)
 );
 
@@ -86,9 +53,9 @@ CREATE TYPE role_type AS ENUM (
 );
 
 
-DROP TABLE IF EXISTS user_role CASCADE ;
+DROP TABLE IF EXISTS user_roles CASCADE ;
 
-CREATE TABLE user_role (
+CREATE TABLE user_roles (
   fb_id INT NOT NULL REFERENCES foodbanks(id),
   user_id INT NOT NULL REFERENCES users(id),
   role role_type NOT NULL,
@@ -109,7 +76,7 @@ CREATE TABLE hours (
   fb_id INT NOT NULL REFERENCES foodbanks(id),
   weekday t_weekday NOT NULL DEFAULT 1,
   opening_hr TIME NOT NULL,
-  closing_hr TIME NOT NULL,
+  closing_hr TIME NOT NULL,  
   temporarily_closed BOOLEAN DEFAULT FALSE
 );
 
@@ -145,6 +112,7 @@ DROP TABLE IF EXISTS food CASCADE;
 
 CREATE TABLE food (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
+  fb_id int NOT NULL REFERENCES foodbanks(id),
   name VARCHAR(30) NOT NULL,
   description VARCHAR(100),
   category INT NOT NULL REFERENCES categories(id),
