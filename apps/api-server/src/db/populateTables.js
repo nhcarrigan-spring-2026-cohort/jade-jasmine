@@ -52,6 +52,10 @@ console.log(currentDirname);
 async function addUserData() {
   const fbDataFilePath = path.join(currentDirname, "./seed-files/fb-seed.json");
   const foodDataFilePath = path.join(currentDirname, "./seed-files/food-seed.json");
+  const foodQtyDataFilePath = path.join(
+    currentDirname,
+    "./seed-files/food-inventory-seed.json",
+  );
   const categoryDataFilePath = path.join(
     currentDirname,
     "./seed-files/categories-seed.json",
@@ -129,12 +133,16 @@ async function addUserData() {
   }
 
   const boxesValuesSQL = [];
+  const boxesQtyValuesSQL = [];
   jsonData = fs.readFileSync(boxesDataFilePath, "utf8");
   data = JSON.parse(jsonData);
 
   for (let i = 0; i < data.length; i++) {
     boxesValuesSQL.push(
-      `(${data[i].fb_id}, '${data[i].name}', '${data[i].min}')`,
+      `(${data[i].fb_id}, '${data[i].name}', ${data[i].min})`,
+    );
+    boxesQtyValuesSQL.push(
+      `(${data[i].fb_id}, ${i+1}, ${data[i].min})`,
     );
   }
 
@@ -147,6 +155,18 @@ async function addUserData() {
       `(${data[i].fb_id}, '${data[i].name}', '${data[i].description}', ${data[i].category}, ${data[i].box},'${data[i].min}')`,
     );
   }
+
+  ;
+  
+  const foodQtyValuesSQL = [];
+  jsonData = fs.readFileSync(foodQtyDataFilePath, "utf8");
+  data = JSON.parse(jsonData);
+
+  for (let i = 0; i < data.length; i++) {
+    foodQtyValuesSQL.push(
+      `(${data[i].fb_id}, ${data[i].food_id}, ${data[i].quantity})`,
+    );
+  }
   const TABLES_SETUP_SQL = `
     INSERT INTO users (username,email) VALUES ${userValuesSQL.join(",")};
     INSERT INTO passwords (user_id,user_password) VALUES ${pwdValuesSQL.join(",")};
@@ -155,8 +175,12 @@ async function addUserData() {
     INSERT INTO hours (fb_id,weekday,opening_hr,closing_hr) VALUES ${hourValuesSQL.join(",")};
     INSERT INTO categories (fb_id,name) VALUES ${categoryValuesSQL.join(",")};
     INSERT INTO boxes (fb_id,name,min) VALUES ${boxesValuesSQL.join(",")};
+    INSERT INTO box_inventory (fb_id,box_id,quantity) VALUES ${boxesQtyValuesSQL.join(",")};
     INSERT INTO food (fb_id,name,description,category,box,min) VALUES ${foodValuesSQL.join(",")};
+    INSERT INTO food_inventory (fb_id,food_id,quantity) VALUES ${foodQtyValuesSQL.join(",")};
   `;
+  
+    
   console.log(TABLES_SETUP_SQL);
   const client = await pool.connect();
   try {
