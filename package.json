@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Repository for Team Jade Jasmine - Spring 2026 Cohort",
   "main": "index.js",
-  "scripts": {
+  "scripts": {    
+    "start:server": "npm --prefix apps/api-server start",
+    "dev:server": "npm --prefix apps/api-server run dev",
+    "cleandev:server": "npm --prefix apps/api-server run clean-n-dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

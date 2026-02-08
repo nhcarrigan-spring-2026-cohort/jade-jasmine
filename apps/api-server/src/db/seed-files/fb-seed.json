@@ -36,6 +36,7 @@
     "name": "Scarborough Food Bank",
     "postal_code": "B2V N5E",
     "province": "Ontario",
+    "country": "Canada",
     "street": "5055 Oblong Ave.",
     "website": "http://feedme.org",
     "timezone": "America/Toronto",
@@ -121,6 +122,7 @@
     "phone": "222-222-2222",
     "postal_code": "20001",
     "province": "-",
+    "country": "USA",
     "street": "925 K St NW",
     "website": "http://dcfoodbank.org/",
     "timezone": "America/New_York",
@@ -144,6 +146,202 @@
         "username": "tiana",
         "email": "tiana@gmail.com",
         "password": "tianapassword"
+      }
+    ]
+  },
+  {
+    "admin": "6",
+    "charity_registration_no": "charity6",
+    "city": "Mississauga",
+    "name": "The Mississauga Food Bank",
+    "phone": "905-270-5589",
+    "postal_code": "L4Z 1N5",
+    "province": "Ontario",
+    "country": "Canada",
+    "street": "3121 Universal Dr.",
+    "website": "https://www.themississaugafoodbank.org/",
+    "timezone": "America/Toronto",
+    "workers": [
+      { "username": "admin6", "email": "admin6@mfbank.org", "password": "admin6password" },
+      { "username": "sara", "email": "sara@mfbank.org", "password": "sarapassword" }
+    ]
+  },
+  {
+    "admin": "7",
+    "charity_registration_no": "charity7",
+    "city": "Ottawa",
+    "name": "Ottawa Food Bank",
+    "phone": "613-745-7001",
+    "postal_code": "K1B 3V3",
+    "province": "Ontario",
+    "country": "Canada",
+    "street": "1317 Michael St.",
+    "website": "https://www.ottawafoodbank.ca/",
+    "timezone": "America/Toronto",
+    "workers": [
+      { "username": "admin7", "email": "admin7@ofb.org", "password": "admin7password" },
+      { "username": "jason", "email": "jason@ofb.org", "password": "jasonpassword" }
+    ]
+  },
+  {
+    "admin": "8",
+    "charity_registration_no": "charity8",
+    "city": "Montevideo",
+    "name": "Banco de Alimentos Montevideo",
+    "phone": "2308-1234",
+    "postal_code": "11300",
+    "province": "Montevideo",
+    "country": "Uruguay",
+    "street": "Av. Italia 4567",
+    "website": "https://bancodealimentos.org.uy/",
+    "timezone": "America/Montevideo",
+    "workers": [
+      { "username": "admin8", "email": "admin8@bam.org", "password": "admin8password" },
+      { "username": "lucia", "email": "lucia@bam.org", "password": "luciapassword" }
+    ]
+  },
+  {
+    "admin": "9",
+    "charity_registration_no": "charity9",
+    "city": "Pando",
+    "name": "Banco de Alimentos Pando",
+    "phone": "2292-5566",
+    "postal_code": "91000",
+    "province": "Canelones",
+    "country": "Uruguay",
+    "street": "Ruta 8 Km 29",
+    "website": "https://bancodealimentos.org.uy/",
+    "timezone": "America/Montevideo",
+    "workers": [
+      { "username": "admin9", "email": "admin9@pandofood.org", "password": "admin9password" }
+    ]
+  },
+  {
+    "admin": "10",
+    "charity_registration_no": "charity10",
+    "city": "Ho Chi Minh City",
+    "name": "Saigon Food Bank",
+    "phone": "090-123-4567",
+    "postal_code": "700000",
+    "province": "Ho Chi Minh",
+    "country": "Vietnam",
+    "street": "12 Nguyen Hue Blvd.",
+    "website": "http://saigonfoodbank.vn/",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "workers": [
+      { "username": "admin10", "email": "admin10@sfb.vn", "password": "admin10password" },
+      { "username": "linh", "email": "linh@sfb.vn", "password": "linhpassword" }
+    ]
+  },
+  {
+    "admin": "11",
+    "charity_registration_no": "charity11",
+    "city": "Da Nang",
+    "name": "Da Nang Food Relief Center",
+    "phone": "093-888-9999",
+    "postal_code": "550000",
+    "province": "Da Nang",
+    "country": "Vietnam",
+    "street": "88 Tran Phu St.",
+    "website": "http://danangfoodrelief.org/",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "workers": [
+      { "username": "admin11", "email": "admin11@dnfr.vn", "password": "admin11password" }
+    ]
+  },
+  {
+    "admin": "12",
+    "charity_registration_no": "charity12",
+    "city": "Washington D.C.",
+    "name": "Capital Area Food Bank",
+    "phone": "202-644-9800",
+    "postal_code": "20018",
+    "province": "District of Columbia",
+    "country": "USA",
+    "street": "4900 Puerto Rico Ave NE",
+    "website": "https://www.capitalareafoodbank.org/",
+    "timezone": "America/New_York",
+    "workers": [
+      { "username": "admin12", "email": "admin12@cafb.org", "password": "admin12password" },
+      { "username": "maria", "email": "maria@cafb.org", "password": "mariapassword" }
+    ]
+  },
+  {
+    "admin": "13",
+    "charity_registration_no": "charity13",
+    "city": "Arlington",
+    "name": "Arlington Food Assistance Center",
+    "phone": "703-845-8486",
+    "postal_code": "22206",
+    "province": "Virginia",
+    "country": "USA",
+    "street": "2708 S Nelson St.",
+    "website": "https://afac.org/",
+    "timezone": "America/New_York",
+    "workers": [
+      { "username": "admin13", "email": "admin13@afac.org", "password": "admin13password" }
+    ]
+  },
+  {
+    "admin": "14",
+    "charity_registration_no": "charity14",
+    "city": "Brampton",
+    "name": "Knight's Table Food Bank",
+    "phone": "905-454-8725",
+    "postal_code": "L6W 1X9",
+    "province": "Ontario",
+    "country": "Canada",
+    "street": "287 Glidden Rd.",
+    "website": "https://knightstable.org/",
+    "timezone": "America/Toronto",
+    "workers": [
+      { "username": "admin14", "email": "admin14@ktable.org", "password": "admin14password" }
+    ]
+  },
+  {
+    "admin": "15",
+    "charity_registration_no": "charity15",
+    "city": "Windsor",
+    "name": "Windsor Goodfellows Food Bank",
+    "phone": "519-253-5221",
+    "postal_code": "N9A 1H7",
+    "province": "Ontario",
+    "country": "Canada",
+    "street": "401 Park St.",
+    "website": "https://windsorgoodfellows.ca/",
+    "timezone": "America/Toronto",
+    "workers": [
+      { "username": "admin15", "email": "admin15@goodfellows.org", "password": "admin15password" }
+    ]
+  },
+  {
+    "admin": "16",
+    "charity_registration_no": "charity16",
+    "city": "London",
+    "name": "The Trussell Trust Food Bank",
+    "phone": "+44 20 3137 3699",
+    "postal_code": "SE1 7TP",
+    "province": "England",
+    "country": "United Kingdom",
+    "street": "Salisbury House, London Bridge St.",
+    "unit_no": "9",
+    "website": "https://www.trusselltrust.org/",
+    "timezone": "Europe/London",
+    "workers": [
+      {
+        "username": "admin16",
+        "email": "admin16@trussell.org",
+        "password": "admin16password"
+      },
+      {
+        "username": "oliver",
+        "email": "oliver@trussell.org",
+        "password": "oliverpassword"
+      },
+      {
+        "username": "sophie",
+        "email": "sophie@trussell.org",
+        "password": "sophiepassword"
       }
     ]
   }

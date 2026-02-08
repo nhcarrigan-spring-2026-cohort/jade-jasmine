@@ -379,112 +379,6 @@ paths:
           allowReserved: false
       operationId: deleteUser
   /foodbank:
-    get:
-      tags:
-        - food bank
-      summary: Get food bank list
-      security: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - id
-                    - name
-                    - street
-                    - city
-                    - country
-                    - secondary_admin_id
-                    - charity_id
-                    - hours
-                    - admin
-                  properties:
-                    id:
-                      type: integer
-                    fax:
-                      type: integer
-                    city:
-                      type: string
-                    name:
-                      type: string
-                    admin:
-                      $ref: "#/components/schemas/User"
-                    hours:
-                      type: string
-                    phone:
-                      type: integer
-                    staff:
-                      type: array
-                      items:
-                        type: integer
-                        minimum: 1
-                        description: the id of the employee
-                    street:
-                      type: string
-                      examples:
-                        - 555 Food Bank Way
-                        - 55 Pantry St
-                    country:
-                      type: string
-                    unit_no:
-                      type: string
-                      description: Can be a number or a letter
-                    website:
-                      type: string
-                    latitude:
-                      type: number
-                      format: float
-                    province:
-                      type: string
-                    longitude:
-                      type: number
-                      format: float
-                    charity_id:
-                      type: string
-                    postal_code:
-                      type: string
-                    secondary_admin_id:
-                      type: string
-                  description: The food bank or food pantry entity and all its details.
-                title: GetFoodBankListOk
-          description: The request was successful, and the server has returned the
-            requested resource in the response body.
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "500":
-          $ref: "#/components/responses/InternalServerErrror"
-      parameters:
-        - $ref: "#/components/parameters/city"
-        - $ref: "#/components/parameters/fb_name"
-        - in: query
-          name: fb_id
-          style: form
-          schema:
-            type: integer
-          explode: true
-          required: false
-          description: the id of the food bank
-          allowReserved: false
-        - $ref: "#/components/parameters/limit"
-        - $ref: "#/components/parameters/offset"
-      description: >
-        Fetches a comprehensive list of all food banks in our db. Each food bank
-        object includes essential details such as the food bank's ID, name,
-        opening hours etc.
-
-
-        This endpoint is paginated using the 'limit'  and 'offset' syntax.
-        (limit states how many rows we get back and offset is where we want to
-        start counting. Like an offset of 2 will skip the first row)
-
-
-        The query params are mutually exclusive, so use only one at a time (or
-        none to get a list of all food banks)
-      operationId: getFoodBankList
     post:
       tags:
         - food bank
@@ -585,6 +479,109 @@ paths:
         required: true
         description: The food bank's static data. The authorized user will become the
           primary admin for this food bank.
+    get:
+      tags:
+        - food bank
+      summary: Get food bank list
+      security: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - name
+                    - street
+                    - city
+                    - country
+                    - secondary_admin_id
+                    - charity_id
+                    - hours
+                    - admin
+                  properties:
+                    id:
+                      type: integer
+                    fax:
+                      type: integer
+                    city:
+                      type: string
+                    name:
+                      type: string
+                    admin:
+                      $ref: "#/components/schemas/User"
+                    hours:
+                      type: string
+                    phone:
+                      type: integer
+                    staff:
+                      type: array
+                      items:
+                        type: integer
+                        minimum: 1
+                        description: the id of the employee
+                    street:
+                      type: string
+                      examples:
+                        - 555 Food Bank Way
+                        - 55 Pantry St
+                    country:
+                      type: string
+                    unit_no:
+                      type: string
+                      description: Can be a number or a letter
+                    website:
+                      type: string
+                    latitude:
+                      type: number
+                      format: float
+                    province:
+                      type: string
+                    longitude:
+                      type: number
+                      format: float
+                    charity_id:
+                      type: string
+                    postal_code:
+                      type: string
+                    secondary_admin_id:
+                      type: string
+                  description: The food bank or food pantry entity and all its details.
+                title: GetFoodBankListOk
+          description: The request was successful, and the server has returned the
+            requested resource in the response body.
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/InternalServerErrror"
+      parameters:
+        - $ref: "#/components/parameters/city"
+        - $ref: "#/components/parameters/fb_name"
+        - in: query
+          name: fb_id
+          style: form
+          schema:
+            type: integer
+          explode: true
+          required: false
+          description: the id of the food bank
+          allowReserved: false
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/offset"
+      description: >-
+        Fetches a comprehensive list of all food banks in our db. Each food bank
+        object includes essential details but doesn't include hours or staff.
+
+        Also doesn't include the admin id as that is protected information.
+
+
+        If the request is made by an authenticated user who also happens to be
+        the admin of the same food bank, then it will return the admin's
+        username and id as well as their email address.
+      operationId: getFoodBankList
   /user/login:
     post:
       tags:
@@ -661,36 +658,6 @@ paths:
                 they are all considered staff)
         required: true
         description: logs the user in and returns a jwt token
-  /user/logout:
-    get:
-      tags:
-        - user
-      summary: logout
-      security:
-        - BearerJwt: []
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - data
-                properties:
-                  data:
-                    type: object
-                title: LogoutOk
-          description: The request was successful, and the server has returned the
-            requested resource in the response body.
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerErrror"
-      parameters: []
-      description: logs out the user
-      operationId: logout
   /food/{food_id}:
     delete:
       tags:
@@ -2120,10 +2087,9 @@ components:
         - street
         - city
         - country
-        - secondary_admin_id
-        - charity_id
         - hours
         - admin
+        - timzone
       properties:
         id:
           type: integer
@@ -2174,12 +2140,15 @@ components:
         longitude:
           type: number
           format: float
-        charity_id:
-          type: string
         postal_code:
           type: string
-        secondary_admin_id:
+        charity_registration_no:
           type: string
+        timzone:
+          type: string
+          description: this value is the IANA timezone value
+          examples:
+            - America/Toronto
       description: The food bank or food pantry entity and all its details.
   responses:
     Conflict:
@@ -2299,6 +2268,7 @@ components:
       in: path
       name: fb_id
       style: simple
+      required: true
       schema:
         type: integer
         minimum: 1
@@ -2368,6 +2338,7 @@ components:
       in: path
       name: food_id
       style: simple
+      required: true
       schema:
         type: integer
         minimum: 1
@@ -2383,6 +2354,7 @@ components:
       in: path
       name: user_id
       style: simple
+      required: true
       schema:
         type: integer
         minimum: 1

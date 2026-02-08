@@ -1,14 +1,17 @@
 import { default as express } from "express";
 import crypto from "node:crypto";
 import cors from "cors";
-import AppError from "./errors/AppError.js";
-import ValidationError from "./errors/ValidationError.js";
+import path from "node:path";
+import url from "node:url";
 import "dotenv/config";
 import { env } from "node:process";
 import logger from "./utils/logger.js";
 import passport from "./middleware/passport.js";
-import indexRouter from "./routers/indexRouter.js";
+
+import AppError from "./errors/AppError.js";
+import ValidationError from "./errors/ValidationError.js";
 import userRouter from "./routers/userRouter.js";
+import foodBankRouter from "./routers/foodBankRouter.js";
 
 const VERSION = "v1"
 const prefix = `/${VERSION}`;
@@ -47,14 +50,31 @@ app.use(
   }),
 );
 
+// show all files in public folder
+
+// Get the current file's URL
+const currentFileUrl = import.meta.url;
+
+// Convert the URL to a file path
+const currentFilePath = url.fileURLToPath(currentFileUrl);
+
+// Get the directory name from the file path
+const currentDirname = path.dirname(currentFilePath);
+
+const assetsPath = path.join(currentDirname, "../public");
+app.use(express.static(assetsPath));
+
 // need to initialize passport
 app.use(passport.initialize());
 
 // just sets up the basic route that describes the api
-app.use(`${prefix}/`, indexRouter);
+//app.use(`/`, indexRouter);
 
 // the router for the user related actions like signup and login etc
 app.use(`${prefix}/user`, userRouter);
+
+// the router for the foodbank relations actions
+app.use(`${prefix}/foodbank`, foodBankRouter);
 
 // Catch-all for unhandled routes (must be placed last but before the error handler)
 app.use((req, res) => {

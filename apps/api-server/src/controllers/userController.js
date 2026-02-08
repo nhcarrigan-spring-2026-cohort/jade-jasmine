@@ -9,7 +9,7 @@ import bcrypt from "bcrypt";
 // needed to authenticate the requests
 import jwt from "jsonwebtoken";
 
-import "dotenv/config";
+//import "dotenv/config";
 import { env } from "node:process";
 
 export async function signUp(req, res) {
@@ -41,6 +41,8 @@ export async function signUp(req, res) {
   }
 }
 
+
+
 export async function login(req, res) {
   logger.info(`trying to login: ${req.body.username}`);
   try {
@@ -66,7 +68,7 @@ export async function login(req, res) {
       },
       env.JWT_SECRET,
     );
-
+    logger.info("sending back a token")
     res.set({ Authorization: `Bearer ${token}` });
     res.set("Access-Control-Expose-Headers", "Authorization");
 

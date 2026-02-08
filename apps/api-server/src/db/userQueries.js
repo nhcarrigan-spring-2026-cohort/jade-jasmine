@@ -71,11 +71,11 @@ export async function updateUserPwd(id, password) {
     throw new AppError("Cannot update a user password without the id");
   }
 
-  const row = await pool.query(
+  const { rows } = await pool.query(
     `UPDATE passwords SET user_password=$1 WHERE user_id=$2`,
     [password, id],
   );
-  return row.rows;
+  return rows;
 }
 
 export async function addNewUser(username, email, password) {
@@ -138,7 +138,7 @@ export async function updateUser(id, {
   sqlsnip.push("WHERE id=$1 RETURNING id,username,email;");
   logger.info(`Query to be run: ${sqlsnip.join(" ")}`)
 
-  const res = await pool.query(sqlsnip.join(" "), params);
-  logger.info("updateUser query result: ", res);
-  return res.rows[0];
+  const { rows } = await pool.query(sqlsnip.join(" "), params);
+  logger.info("updateUser query result: ", rows);
+  return rows[0];
 }

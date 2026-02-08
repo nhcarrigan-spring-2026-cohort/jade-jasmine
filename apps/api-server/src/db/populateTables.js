@@ -86,7 +86,7 @@ async function addUserData() {
     //name, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, admin
     const fb = data[i];
     fbValuesSQL.push(
-      `('${fb.name}','${fb.unit_no || `NULL`}','${fb.street}','${fb.city}','${fb.province}','${fb.country}','${fb.postal_code}','${fb.website || `NULL`}','${fb.phone || `NULL`}','${fb.charity_registration_no || `NULL`}','${fb.timezone}', '${count}')`,
+      `('${fb.name.replace(/'/g, "''")}','${fb.unit_no || `NULL`}','${fb.street}','${fb.city}','${fb.province}','${fb.country}','${fb.postal_code}','${fb.website || `NULL`}','${fb.phone || `NULL`}','${fb.charity_registration_no || `NULL`}','${fb.timezone}', '${count}')`,
     );
     for (let j = 0; j < data[i].workers.length; j++) {
       // I've setup up the seed json to always list the admin user first and then all the staff after

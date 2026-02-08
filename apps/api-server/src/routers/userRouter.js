@@ -17,8 +17,9 @@ const userRouter = Router();
 import * as userValidator from "../validators/userValidator.js";
 
 
-import AuthError from "../errors/AuthError.js";
+//import AuthError from "../errors/AuthError.js";
 
+/*
 userRouter.get(
   "/authenticate",
   passport.authenticate("jwt", { session: false }),
@@ -37,7 +38,7 @@ userRouter.get(
     }
   },
 );
-
+*/
 
 userRouter
   .route("/signup")
@@ -55,6 +56,7 @@ userRouter
     handleExpressValidationErrors,
     userController.login,
   );
+
 
 
 // note that we retrieve the user id from the jwt token so we don't need it specified in the route
