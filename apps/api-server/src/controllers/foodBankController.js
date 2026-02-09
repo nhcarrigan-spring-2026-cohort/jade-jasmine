@@ -63,7 +63,6 @@ export async function getFoodBankDetails(req, res) {
 
   try {
     const foodbank = await fbQueries.getFoodBankById(id);
-    logger.info("foodbank: ", foodbank);
 
     const authUserId = req.user?.id;
     
@@ -103,7 +102,6 @@ export async function getFoodBankHours(req, res) {
 
   try {
     const hours = await fbQueries.getFoodBankHours(id);
-    logger.info("fb hours: ", hours);
 
     res.status(200).json({ data: hours });
   } catch (error) {
@@ -123,6 +121,10 @@ export async function getFoodBankStaff(req, res) {
   logger.info(`in getFoodBankStaff`);
   const id = Number(req.params.id);
   try {
+    const staff = await fbQueries.getFoodBankStaff(id, req.query?.role);
+    logger.info("fb staff: ", staff)
+    
+    res.status(200).json({ data: staff });
   } catch (error) {
     if (error instanceof AppError) {
       throw error;

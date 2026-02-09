@@ -66,8 +66,11 @@ foodBankRouter.get(
 foodBankRouter.get(
   "/:id/staff",
   passport.authenticate("jwt", { session: false }),
-  fbValidator.checkAdmin,
   fbValidator.checkFoodBankId,
+  handleExpressValidationErrors,
+  fbValidator.checkAdmin,
+  handleExpressValidationErrors,
+  fbValidator.checkRole,
   handleExpressValidationErrors,
   fbController.getFoodBankStaff,
 );
