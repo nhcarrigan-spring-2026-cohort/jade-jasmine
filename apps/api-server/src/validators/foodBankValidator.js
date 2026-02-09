@@ -1,7 +1,10 @@
 import { param, query } from "express-validator";
 
-/*
+import logger from "../utils/logger.js";
+
 import * as fbQueries from "../db/foodBankQueries.js";
+
+/*
 import { AppError } from "../errors/AppError.js";
 import { ValidationError } from "../errors/ValidationError.js";
 */
@@ -40,3 +43,18 @@ export const checkOffset = [
     return ret;
   }),
 ]
+
+/**
+ * tries to confirm the authenticated user is an admin
+ * 
+ * @param {*} req 
+ * @param {*} _res 
+ * @param {*} next 
+ */
+export function checkAdmin(req, _res, next) {
+  const userId = req.user.id;
+  logger.info("in checkAdmin: " + userId);
+  // get the foodbank's admin id to compare it against the authenticated user's id
+
+  next();
+}

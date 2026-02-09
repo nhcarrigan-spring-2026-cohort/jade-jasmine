@@ -114,3 +114,24 @@ export async function getFoodBankHours(req, res) {
     }
   }
 }
+
+/**
+ * protected route for admin only
+ */
+export async function getFoodBankStaff(req, res) {
+  
+  logger.info(`in getFoodBankStaff`);
+  const id = Number(req.params.id);
+  try {
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError(
+        "Failed to get the indicated food bank's staff",
+        500,
+        error,
+      );
+    }
+  }
+}
