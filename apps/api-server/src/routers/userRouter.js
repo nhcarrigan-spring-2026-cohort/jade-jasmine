@@ -62,15 +62,13 @@ userRouter
     handleExpressValidationErrors,
     userValidator.validateOptionalUserFields,
     handleExpressValidationErrors,
-    userController.updateUser,
-  );
-  /* TODO make the get user route work if current auth user is the same user
+    userController.updateUser
+)
   .get(
     passport.authenticate("jwt", { session: false }),
-    userValidator.validateOptionalUserFields,
-    handleExpressValidationErrors,
     userController.getUser,
   );
+  /* TODO
   .delete(passport.authenticate("jwt", { session: false }), deleteUser);
   */
 
