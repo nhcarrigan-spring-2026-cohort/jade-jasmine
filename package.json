@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/nhcarrigan-spring-2026-cohort/jade-jasmine#readme",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "apps/client/foodbank-manager",
+    "apps/client/foodbank-finder"
   ]
 }

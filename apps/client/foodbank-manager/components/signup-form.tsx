@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,11 +17,20 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import Form from "next/form";
+
+import { registerFormAction } from "@/app/signup/actions";
+import { useActionState } from "react";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [data, formAction, isPending] = useActionState(
+    registerFormAction,
+    undefined
+  );
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -30,11 +41,17 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <Form action={formAction}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                <Input id="name" type="text" placeholder="John Doe" required />
+                <FieldLabel htmlFor="name">Username</FieldLabel>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  name="username"
+                  required
+                />
               </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -42,6 +59,7 @@ export function SignupForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  name="email"
                   required
                 />
               </Field>
@@ -49,13 +67,23 @@ export function SignupForm({
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      type="password"
+                      name="password"
+                      required
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
                       Confirm Password
                     </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      name="confirmPassword"
+                      required
+                    />
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -69,7 +97,7 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
             </FieldGroup>
-          </form>
+          </Form>
         </CardContent>
       </Card>
       {/* <FieldDescription className="px-6 text-center">
