@@ -16,46 +16,38 @@ import * as fbValidator from "../validators/foodBankValidator.js";
 
 // this route is not protected and will list only public data
 foodBankRouter.route("/").get(
-  (req, res, next) => {
-    const limit = Number(req.query?.limit);
-    if (!limit) {
-      req.limit = 10;
-    } else {
-      if (limit > 50) {
-        req.limit = 50;
-      } else if (limit < 1) {
-        req.limit = 1;
-      } else {
-        req.limit = limit;
-      }
-    }
-    next();
-  },
-  (req, res, next) => {
-    let offset = Number(req.query?.offset);
-    if (!offset || isNaN(offset)) {
-      offset = 0;
-    } else {
-      if (offset < 0) {
-        offset = 0;
-      }
-    }
-    req.offset = offset;
-    next();
-  },
+  fbValidator.checkLimit,
+  fbValidator.checkOffset,
   fbController.getFoodBank,
 );
+
+
+const silentAuth = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user) => {
+    if (err) {
+      return next(err); // Handle actual server/runtime errors
+    }
+
+    if (user) {
+      // Manual assignment: Passport doesn't do this automatically in a callback
+      req.user = user;
+    }
+
+    // Always call next() to proceed to the route handler,
+    // regardless of whether authentication succeeded or failed.
+    next();
+  })(req, res, next);
+};
 
 // this route is protected. If the current user is an admin it will provide all the available details about the foodbank
 // including a list the admin's id and username (a separate query is needed to get the foodbank staff or hours)
 foodBankRouter.get(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
   fbValidator.checkFoodBankId,
   handleExpressValidationErrors,
+  silentAuth,
   fbController.getFoodBankDetails,
 );
-
 /**
    foodBankRouter.get("/:id/hours)
    

@@ -1,6 +1,7 @@
 import AppError from "../errors/AppError.js";
 import * as fbQueries from "../db/foodBankQueries.js";
 import logger from "../utils/logger.js";
+import { matchedData } from "express-validator";
 
 /**
  * this method returns open data that is not private to the food bank (so no admin or staff info returned)
@@ -10,24 +11,32 @@ import logger from "../utils/logger.js";
 export async function getFoodBank(req, res) {
   logger.info("in getFoodBank");
 
+  const data = matchedData(req, { locations: ["query"] });
+
   const id = req.query.id;
   const name = req.query.name;
   const city = req.query.city;
   const province = req.query.province;
   const country = req.query.country;
-  const limit = req.limit; // <===  this is weird as I have no choice but to use req.limit instead of req.query.limit
-  const offset = req.offset; // same situation as limit
+  const limit = data.limit; // <===  this is weird as I have no choice but to use data.limit instead of req.query.limit
+  const offset = data.offset; // same situation as limit
 
   logger.info("req.query", req.query);
-  logger.info(`id:  ${req.query.id}, limit: ${req.query.limit}, offset: ${req.query.offset}`)
+  logger.info(
+    `id:  ${req.query.id}, limit: ${req.query.limit}, offset: ${req.query.offset}`,
+  );
   try {
-    const foodbanks = await fbQueries.getAllFoodBanks({
-      id,
-      name,
-      city,
-      province,
-      country,
-    }, limit, offset);
+    const foodbanks = await fbQueries.getAllFoodBanks(
+      {
+        id,
+        name,
+        city,
+        province,
+        country,
+      },
+      limit,
+      offset,
+    );
     res.status(200).json({ data: foodbanks });
   } catch (error) {
     if (error instanceof AppError) {
@@ -38,12 +47,11 @@ export async function getFoodBank(req, res) {
   }
 }
 
-
 /**
  * if the logged in user is not the admin of the food bank, then
  * this method returns open data that is not private to the food bank (so no admin data)
  * otherwise, it will return the admin id and username too
- * 
+ *
  * @param {} req
  * @param {*} res
  */
@@ -52,13 +60,15 @@ export async function getFoodBankDetails(req, res) {
 
   //logger.info("req", req);
   const id = Number(req.params.id);
-  
+
   try {
     const foodbank = await fbQueries.getFoodBankById(id);
-    logger.info("foodbank: ", foodbank)
+    logger.info("foodbank: ", foodbank);
+
+    const authUserId = req.user?.id;
     
-  logger.info(`admin.id vs req.user.id:  ${foodbank.admin} ${req.user.id}`)
-    if (Number(foodbank.admin) !== req.user.id) {
+    logger.info(`admin.id vs req.user.id:  ${foodbank.admin} ${authUserId}`);
+    if (Number(foodbank.admin) !== authUserId) {
       // delete the keys that we shouldn't show
       delete foodbank.admin;
       delete foodbank.username;
@@ -66,8 +76,11 @@ export async function getFoodBankDetails(req, res) {
       delete foodbank.user_id;
       delete foodbank.role;
       delete foodbank.email;
-      logger.info("this user is not the admin, so hide some details:", foodbank);
-    } 
+      logger.info(
+        "this user is not the admin, so hide some details:",
+        foodbank,
+      );
+    }
     res.status(200).json({ data: foodbank });
   } catch (error) {
     if (error instanceof AppError) {

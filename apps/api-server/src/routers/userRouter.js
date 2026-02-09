@@ -4,17 +4,14 @@ import { Router } from "express";
 
 import passport from "passport";
 
-
 import * as userController from "../controllers/userController.js";
-
 
 import { handleExpressValidationErrors } from "./routerUtil.js";
 
+import * as userValidator from "../validators/userValidator.js";
 
 const userRouter = Router();
 
-
-import * as userValidator from "../validators/userValidator.js";
 
 
 //import AuthError from "../errors/AuthError.js";
