@@ -90,3 +90,27 @@ export async function getFoodBankDetails(req, res) {
     }
   }
 }
+
+/**
+ *
+ * @param {} req
+ * @param {*} res
+ */
+export async function getFoodBankHours(req, res) {
+  logger.info("in getFoodBankHours");
+
+  const id = Number(req.params.id);
+
+  try {
+    const hours = await fbQueries.getFoodBankHours(id);
+    logger.info("fb hours: ", hours);
+
+    res.status(200).json({ data: hours });
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError("Failed to get the indicated food bank's hours", 500, error);
+    }
+  }
+}

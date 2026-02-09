@@ -2,6 +2,14 @@ import { pool } from "./pool.js";
 import logger from "../utils/logger.js";
 //import AppError from "../errors/AppError.js";
 
+export async function getFoodBankHours(id) {
+  logger.info(`in getFoodBankHours: ${id}`)
+  const { rows } = await pool.query(
+    "SELECT * FROM hours WHERE fb_id=$1 ORDER BY weekday", [id]
+  )
+  return rows;
+}
+
 export async function getAllFoodBanks({id,name,city,province,country}, limit=10, offset=0) {
   logger.info("in getAllFoodBanks:", { id, name, city, province, country, limit, offset });
 

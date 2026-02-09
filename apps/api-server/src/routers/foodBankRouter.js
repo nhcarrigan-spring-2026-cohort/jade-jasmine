@@ -48,9 +48,14 @@ foodBankRouter.get(
   silentAuth,
   fbController.getFoodBankDetails,
 );
-/**
-   foodBankRouter.get("/:id/hours)
+
+foodBankRouter.get(
+  "/:id/hours",
+  fbValidator.checkFoodBankId,
+  handleExpressValidationErrors,
+  fbController.getFoodBankHours
+);
    
-   foodBankRouter.get("/:id/staff)
-   */
+  // foodBankRouter.get("/:id/staff)
+   
 export default foodBankRouter;
