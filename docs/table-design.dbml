@@ -7,7 +7,7 @@ Project Food_Bank_Finder {
 Table foodbanks as FB {
   id int [pk,increment]
   name varchar(75) [not null, note: "75 length?"]
-  unit_no int [note: "the unit # if it is in a plaza or shared space"]
+  unit_no varchar(10) [note: "the unit # if it is in a plaza or shared space"]
   street varchar(50) [not null, note: "example: 1025 Google Way"]
   city varchar(20) [not null]
   province varchar(20) [not null, note: "or state depending on country"]
@@ -16,7 +16,7 @@ Table foodbanks as FB {
   longitude decimal(9,6) [not null]
   latitude decimal(9,6) [not null]
   website text 
-  phone varchar(20) [not null]
+  phone varchar(20)
   fax varchar(20)
   charity_registration_no varchar(30) 
   admin int [not null, ref: <> users.id, note: "admin can modify the food bank info"]
@@ -48,8 +48,9 @@ Table hours as rhours {
   id int [pk, increment]
   fb_id int [not null, ref: > FB.id]
   weekday int [not null, note: "Sunday is day 1, Monday day 2, etc"]
-  opening_hr time  [not null, note: "time with timezone in postgresql"]
-  closing_hr time [not null, note: "time with timezone in postgresql"]
+  opening_hr TIME  [not null, note: "time no timezone"]
+  closing_hr TIME [not null, note: "time no timezone"]
+  timezone TEXT  [not null, note: "-- e.g. 'America/Toronto'"]
   temporarily_closed boolean [default:false, note: "toggles to true when the user wants to override the hour settings and indicate temporary closure"]
 }
 

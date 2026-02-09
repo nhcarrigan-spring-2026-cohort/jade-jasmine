@@ -6,7 +6,7 @@ import crypto from "node:crypto";
 
 import "dotenv/config";
 
-import { getUserById } from "../db/queries.js";
+import { getUserById } from "../db/userQueries.js";
 
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 
@@ -32,18 +32,27 @@ passport.use(
         const user = await getUserById(jwt_payload.sub);
 
         if (user) {
+          
+          logger.info("passport authenticated this user: ", user);
           return done(null, user);
         } else {
+          logger.warn("passport failed to authenticate the user")
           return done(null, false);
-          // or you could create a new account ?
         }
       } catch (err) {
+        
+        logger.warn("passport failed to authenticate the user");
         return done(err);
       }
     } else {
+      
+        logger.warn("passport failed to authenticate the user");
       return done(null, false);
     }
   }),
 );
 
 export default passport;
+
+
+

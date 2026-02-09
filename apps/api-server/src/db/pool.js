@@ -2,9 +2,9 @@ import { Pool } from "pg";
 import { env } from "node:process";
 import logger from "../utils/logger.js";
 
-const connectionString = `postgresql://${env.PGUSER}:${env.PGPASSWORD}@${env.PGHOST}:${env.PGPORT}/${env.PGDATABASE}`;
+const connectionString = `postgresql://${env.PGUSER}:${env.PGPASSWORD}@${env.PG_HOST}:${env.PGPORT}/${env.PGDATABASE}`;
 
-logger.info("connection string: ", connectionString);
+logger.info(`connection string: ${connectionString}`);
 
 // Add logging to see what's happening
 logger.info("Environment check in db/init.ts:", {
