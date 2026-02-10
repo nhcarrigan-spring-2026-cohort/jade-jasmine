@@ -7,6 +7,12 @@ export default class AppError extends Error {
 
     // So the error is neat when stringified. AppError: message instead of Error: message
     this.name = "AppError";
+
+        // If there is a cause with a stack, append it
+    if (cause && cause.stack) {
+      this.stack += `\nCaused by: ${cause.stack}`;
+    }
+
   }
 }
 
