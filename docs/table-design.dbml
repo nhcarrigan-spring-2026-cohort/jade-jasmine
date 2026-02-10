@@ -6,6 +6,7 @@ Project Food_Bank_Finder {
 
 Table foodbanks as FB {
   id int [pk,increment]
+  published boolean [default: true]
   name varchar(75) [not null]
   description varchar(150) [not null]
   unit_no varchar(10) [note: "the unit # if it is in a plaza or shared space"]

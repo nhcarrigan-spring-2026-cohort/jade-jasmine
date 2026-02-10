@@ -95,6 +95,7 @@ async function addUserData() {
     fb.charity_registration_no = fb.charity_registration_no ? `'${fb.charity_registration_no}'` : NULL;
     fbValuesSQL.push(
       `(
+      ${fb.published},
       '${fb.name.replace(/'/g, "''")}',
       ${fb.description},
       ${fb.email},
@@ -189,7 +190,7 @@ async function addUserData() {
   const TABLES_SETUP_SQL = `
     INSERT INTO users (username,email) VALUES ${userValuesSQL.join(",")};
     INSERT INTO passwords (user_id,user_password) VALUES ${pwdValuesSQL.join(",")};
-    INSERT INTO foodbanks (name, description, email, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, timezone, admin) VALUES ${fbValuesSQL.join(",")};
+    INSERT INTO foodbanks (published, name, description, email, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, timezone, admin) VALUES ${fbValuesSQL.join(",")};
     INSERT INTO user_roles (fb_id, user_id, role) VALUES ${roleValuesSQL.join(",")};    
     INSERT INTO hours (fb_id,weekday,opening_hr,closing_hr) VALUES ${hourValuesSQL.join(",")};
     INSERT INTO categories (fb_id,name) VALUES ${categoryValuesSQL.join(",")};

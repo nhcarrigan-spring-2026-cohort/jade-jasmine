@@ -99,7 +99,7 @@ export async function getFoodBankById(id) {
  */
 export async function addNewFoodBank(adminId,body) {
   logger.info("in addNewFoodBank:", body);
-  const {
+  /*const {
     name,
     desc,
     charity_no,
@@ -113,6 +113,6 @@ export async function addNewFoodBank(adminId,body) {
     province,
     country,
     timezone,
-  } = body;
+  } = body;*/
 
 }

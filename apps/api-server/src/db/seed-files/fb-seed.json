@@ -1,6 +1,7 @@
 [
   {
     "charity_registration_no": "charity1",
+    "published": false,
     "description": "Fake charity - we're here for testing only.",
     "email": "tfb@gmail.com",
     "city": "Toronto",
@@ -33,6 +34,7 @@
 
   {
     "admin": "2",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity2",
@@ -54,6 +56,7 @@
   },
   {
     "admin": "3",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "city": "Atlantida",
@@ -96,6 +99,7 @@
   },
   {
     "admin": "4",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity3",
@@ -124,6 +128,7 @@
   },
   {
     "admin": "5",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity2",
@@ -161,6 +166,7 @@
   },
   {
     "admin": "6",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity6",
@@ -188,6 +194,7 @@
   },
   {
     "admin": "7",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity7",
@@ -215,6 +222,7 @@
   },
   {
     "admin": "8",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity8",
@@ -242,6 +250,7 @@
   },
   {
     "admin": "9",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity9",
@@ -264,6 +273,7 @@
   },
   {
     "admin": "10",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity10",
@@ -287,6 +297,7 @@
   },
   {
     "admin": "11",
+    "published": true,
     "description": "Fake charity - we're here for testing only.",
     "email": "foodbank@gmail.com",
     "charity_registration_no": "charity11",
@@ -309,6 +320,7 @@
   },
   {
     "admin": "12",
+    "published": true,
     "charity_registration_no": "charity12",
     "city": "Washington D.C.",
     "name": "Capital Area Food Bank",
@@ -320,12 +332,21 @@
     "website": "https://www.capitalareafoodbank.org/",
     "timezone": "America/New_York",
     "workers": [
-      { "username": "admin12", "email": "admin12@cafb.org", "password": "admin12password" },
-      { "username": "maria", "email": "maria@cafb.org", "password": "mariapassword" }
+      {
+        "username": "admin12",
+        "email": "admin12@cafb.org",
+        "password": "admin12password"
+      },
+      {
+        "username": "maria",
+        "email": "maria@cafb.org",
+        "password": "mariapassword"
+      }
     ]
   },
   {
     "admin": "13",
+    "published": true,
     "charity_registration_no": "charity13",
     "city": "Arlington",
     "name": "Arlington Food Assistance Center",
@@ -337,11 +358,16 @@
     "website": "https://afac.org/",
     "timezone": "America/New_York",
     "workers": [
-      { "username": "admin13", "email": "admin13@afac.org", "password": "admin13password" }
+      {
+        "username": "admin13",
+        "email": "admin13@afac.org",
+        "password": "admin13password"
+      }
     ]
   },
   {
     "admin": "14",
+    "published": true,
     "charity_registration_no": "charity14",
     "city": "Brampton",
     "name": "Knight's Table Food Bank",
@@ -353,11 +379,16 @@
     "website": "https://knightstable.org/",
     "timezone": "America/Toronto",
     "workers": [
-      { "username": "admin14", "email": "admin14@ktable.org", "password": "admin14password" }
+      {
+        "username": "admin14",
+        "email": "admin14@ktable.org",
+        "password": "admin14password"
+      }
     ]
   },
   {
     "admin": "15",
+    "published": true,
     "charity_registration_no": "charity15",
     "city": "Windsor",
     "name": "Windsor Goodfellows Food Bank",
@@ -369,11 +400,16 @@
     "website": "https://windsorgoodfellows.ca/",
     "timezone": "America/Toronto",
     "workers": [
-      { "username": "admin15", "email": "admin15@goodfellows.org", "password": "admin15password" }
+      {
+        "username": "admin15",
+        "email": "admin15@goodfellows.org",
+        "password": "admin15password"
+      }
     ]
   },
   {
     "admin": "16",
+    "published": true,
     "charity_registration_no": "charity16",
     "city": "London",
     "name": "The Trussell Trust Food Bank",
