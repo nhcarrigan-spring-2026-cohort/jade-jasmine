@@ -46,7 +46,7 @@ CREATE TABLE foodbanks (
 
 DROP TYPE IF EXISTS role_type CASCADE ;
 
-CREATE TYPE role_type AS ENUM (
+CREATE TYPE t_role AS ENUM (
   'admin',
   'staff',
   'volunteer'
@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS user_roles CASCADE ;
 CREATE TABLE user_roles (
   fb_id INT NOT NULL REFERENCES foodbanks(id),
   user_id INT NOT NULL REFERENCES users(id),
-  role role_type NOT NULL,
+  role t_role NOT NULL,
   PRIMARY KEY (fb_id, user_id, role)
 );
 

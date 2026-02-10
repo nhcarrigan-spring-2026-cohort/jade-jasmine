@@ -15,26 +15,32 @@ import * as fbValidator from "../validators/foodBankValidator.js";
 //import AuthError from "../errors/AuthError.js";
 
 // this route is not protected and will list only public data
-foodBankRouter.route("/").get(
-  fbValidator.checkLimit,
-  fbValidator.checkOffset,
-  fbController.getFoodBank,
-);
+foodBankRouter
+  .route("/")
+  .get(
+    fbValidator.checkLimit,
+    fbValidator.checkOffset,
+    fbController.getFoodBank,
+  );
 
-
+  /**
+   * this function authenticates the user but doesn't give an error back to the client if the user
+   * is not authenticated. It is silent.
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   * @param {*} next 
+   */
 const silentAuth = (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user) => {
     if (err) {
-      return next(err); // Handle actual server/runtime errors
+      return next(err); 
     }
 
     if (user) {
-      // Manual assignment: Passport doesn't do this automatically in a callback
       req.user = user;
     }
 
-    // Always call next() to proceed to the route handler,
-    // regardless of whether authentication succeeded or failed.
     next();
   })(req, res, next);
 };
@@ -48,9 +54,26 @@ foodBankRouter.get(
   silentAuth,
   fbController.getFoodBankDetails,
 );
-/**
-   foodBankRouter.get("/:id/hours)
-   
-   foodBankRouter.get("/:id/staff)
-   */
+
+foodBankRouter.get(
+  "/:id/hours",
+  fbValidator.checkFoodBankId,
+  handleExpressValidationErrors,
+  fbController.getFoodBankHours,
+);
+
+// this route is protected and retrieves all associated roles including the admin(s)/staffs/volunteers
+foodBankRouter.get(
+  "/:id/staff",
+  passport.authenticate("jwt", { session: false }),
+  fbValidator.checkFoodBankId,
+  handleExpressValidationErrors,
+  fbValidator.checkAdmin,
+  handleExpressValidationErrors,
+  fbValidator.checkRole,
+  handleExpressValidationErrors,
+  fbController.getFoodBankStaff,
+);
+
+
 export default foodBankRouter;

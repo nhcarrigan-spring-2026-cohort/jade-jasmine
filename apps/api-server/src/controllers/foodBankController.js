@@ -63,7 +63,6 @@ export async function getFoodBankDetails(req, res) {
 
   try {
     const foodbank = await fbQueries.getFoodBankById(id);
-    logger.info("foodbank: ", foodbank);
 
     const authUserId = req.user?.id;
     
@@ -87,6 +86,54 @@ export async function getFoodBankDetails(req, res) {
       throw error;
     } else {
       throw new AppError("Failed to get the indicated food bank", 500, error);
+    }
+  }
+}
+
+/**
+ *
+ * @param {} req
+ * @param {*} res
+ */
+export async function getFoodBankHours(req, res) {
+  logger.info("in getFoodBankHours");
+
+  const id = Number(req.params.id);
+
+  try {
+    const hours = await fbQueries.getFoodBankHours(id);
+
+    res.status(200).json({ data: hours });
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError("Failed to get the indicated food bank's hours", 500, error);
+    }
+  }
+}
+
+/**
+ * protected route for admin only
+ */
+export async function getFoodBankStaff(req, res) {
+  
+  logger.info(`in getFoodBankStaff`);
+  const id = Number(req.params.id);
+  try {
+    const staff = await fbQueries.getFoodBankStaff(id, req.query?.role);
+    logger.info("fb staff: ", staff)
+    
+    res.status(200).json({ data: staff });
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError(
+        "Failed to get the indicated food bank's staff",
+        500,
+        error,
+      );
     }
   }
 }

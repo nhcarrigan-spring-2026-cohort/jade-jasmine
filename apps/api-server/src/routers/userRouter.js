@@ -45,7 +45,6 @@ userRouter
     userController.signUp,
   );
 
-
 userRouter
   .route("/login")
   .post(
@@ -53,8 +52,6 @@ userRouter
     handleExpressValidationErrors,
     userController.login,
   );
-
-
 
 // note that we retrieve the user id from the jwt token so we don't need it specified in the route
 userRouter
@@ -67,7 +64,7 @@ userRouter
     handleExpressValidationErrors,
     userController.updateUser,
   );
-  /* TODO
+  /* TODO make the get user route work if current auth user is the same user
   .get(
     passport.authenticate("jwt", { session: false }),
     userValidator.validateOptionalUserFields,
