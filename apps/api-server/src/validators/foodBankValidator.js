@@ -1,4 +1,4 @@
-import { param, query } from "express-validator";
+import { body, param, query } from "express-validator";
 
 import logger from "../utils/logger.js";
 
@@ -58,19 +58,19 @@ export const checkOffset = [
 }
   */
 export async function checkRole(req, _res, next) {
-  logger.info("in checkRole: ", req.query.role)
+  logger.info("in checkRole: ", req.query.role);
   if (req.query.role) {
     try {
       const roles = await fbQueries.getAllRoles();
-      logger.info("all roles found: ", roles)
-    
+      logger.info("all roles found: ", roles);
+
       // check that the query(role) matches one of the enumerated roles we have
       const foundRole = Object.values(roles).reduce((acc, curr) => {
-        return acc || (curr.enumlabel === req.query.role)
-      }, false)
-      
+        return acc || curr.enumlabel === req.query.role;
+      }, false);
+
       if (!foundRole) {
-        throw new ValidationError("Cannot recognize this role value.")
+        throw new ValidationError("Cannot recognize this role value.");
       }
     } catch (error) {
       if (error instanceof AppError) {
@@ -110,3 +110,80 @@ export async function checkAdmin(req, _res, next) {
   }
   next();
 }
+
+const checkName = () => {
+  return body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Name cannot be empty")
+    .bail()
+    .isLength({ max: 75 })
+    .withMessage("Name cannot exceed 75 characters in length")
+    .bail();
+};
+
+const checkCity = () => {
+  return body("city")
+    .trim()
+    .notEmpty()
+    .withMessage("City must be provided")
+    .bail()
+    .isLength({ max: 20 })
+    .withMessage("City cannot exceed 20 characters in length")
+    .bail();
+};
+
+const checkProvince = () => {
+  return body("province")
+    .trim()
+    .notEmpty()
+    .withMessage("Province must be provided")
+    .bail()
+    .isLength({ max: 20 })
+    .withMessage("Province cannot exceed 20 characters in length")
+    .bail();
+};
+
+const checkCountry = () => {
+  return body("country")
+    .trim()
+    .notEmpty()
+    .withMessage("Country must be provided")
+    .bail()
+    .isLength({ max: 20 })
+    .withMessage("Country cannot exceed 20 characters in length")
+    .bail();
+};
+
+const checkStreet = () => {
+  return body("street")
+    .trim()
+    .notEmpty()
+    .withMessage("Street must be provided")
+    .bail()
+    .isLength({ max: 50 })
+    .withMessage("Street cannot exceed 50 characters in length")
+    .bail();
+};
+/*
+const checkWebsite = () => {
+  return body("website").trim().optional()
+}*/
+
+export const checkFoodBankFields = [
+  checkName,
+  checkCity,
+  checkCountry,
+  checkProvince,
+  checkStreet,
+  /*
+  checkEmail,
+  checkDesc,
+  checkUnitNo,
+  checkWebsite,
+  checkPhone,
+  checkFax,
+  checkCharityNum,
+  checkTimezone,
+  checkPostalCode,*/
+];

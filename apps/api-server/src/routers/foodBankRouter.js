@@ -21,6 +21,12 @@ foodBankRouter
     fbValidator.checkLimit,
     fbValidator.checkOffset,
     fbController.getFoodBank,
+  )
+  .post(
+    passport.authenticate("jwt", { session: false }),
+    fbValidator.checkFoodBankFields,
+    handleExpressValidationErrors,
+    fbController.createFoodBank,
   );
 
   /**

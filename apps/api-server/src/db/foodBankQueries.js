@@ -69,7 +69,7 @@ export async function getAllFoodBanks(
         : `WHERE ${whereClause.join(" AND ")}`;
 
   const { rows } = await pool.query(
-    `SELECT id,name,unit_no,street,city,province,country,postal_code,longitude,latitude,website,phone,fax,charity_registration_no,timezone FROM foodbanks  ${whereClause} ORDER BY country,province,city LIMIT ${limit} OFFSET ${offset};`,
+    `SELECT id,name,description,email,unit_no,street,city,province,country,postal_code,longitude,latitude,website,phone,fax,charity_registration_no,timezone FROM foodbanks  ${whereClause} ORDER BY country,province,city LIMIT ${limit} OFFSET ${offset};`,
     whereParams,
   );
   return rows;

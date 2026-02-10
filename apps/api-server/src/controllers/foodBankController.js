@@ -137,3 +137,7 @@ export async function getFoodBankStaff(req, res) {
     }
   }
 }
+
+export async function createFoodBank(req,res) {
+  res.send(201).json({ data: {fb: 'fake'} });
+}

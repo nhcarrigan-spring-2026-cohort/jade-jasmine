@@ -1,6 +1,8 @@
 [
   {
     "charity_registration_no": "charity1",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "tfb@gmail.com",
     "city": "Toronto",
     "name": "Toronto Food Bank",
     "phone": "555-555-5555",
@@ -31,6 +33,8 @@
 
   {
     "admin": "2",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity2",
     "city": "Toronto",
     "name": "Scarborough Food Bank",
@@ -50,6 +54,8 @@
   },
   {
     "admin": "3",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "city": "Atlantida",
     "name": "Banco de Alimentos Uruguay",
     "phone": "909-090-9009",
@@ -90,6 +96,8 @@
   },
   {
     "admin": "4",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity3",
     "city": "Hanoi",
     "name": "Hanoi Food Bank",
@@ -116,6 +124,8 @@
   },
   {
     "admin": "5",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity2",
     "city": "Washington D.C",
     "name": "D.C Food Bank",
@@ -151,6 +161,8 @@
   },
   {
     "admin": "6",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity6",
     "city": "Mississauga",
     "name": "The Mississauga Food Bank",
@@ -162,12 +174,22 @@
     "website": "https://www.themississaugafoodbank.org/",
     "timezone": "America/Toronto",
     "workers": [
-      { "username": "admin6", "email": "admin6@mfbank.org", "password": "admin6password" },
-      { "username": "sara", "email": "sara@mfbank.org", "password": "sarapassword" }
+      {
+        "username": "admin6",
+        "email": "admin6@mfbank.org",
+        "password": "admin6password"
+      },
+      {
+        "username": "sara",
+        "email": "sara@mfbank.org",
+        "password": "sarapassword"
+      }
     ]
   },
   {
     "admin": "7",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity7",
     "city": "Ottawa",
     "name": "Ottawa Food Bank",
@@ -179,12 +201,22 @@
     "website": "https://www.ottawafoodbank.ca/",
     "timezone": "America/Toronto",
     "workers": [
-      { "username": "admin7", "email": "admin7@ofb.org", "password": "admin7password" },
-      { "username": "jason", "email": "jason@ofb.org", "password": "jasonpassword" }
+      {
+        "username": "admin7",
+        "email": "admin7@ofb.org",
+        "password": "admin7password"
+      },
+      {
+        "username": "jason",
+        "email": "jason@ofb.org",
+        "password": "jasonpassword"
+      }
     ]
   },
   {
     "admin": "8",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity8",
     "city": "Montevideo",
     "name": "Banco de Alimentos Montevideo",
@@ -196,12 +228,22 @@
     "website": "https://bancodealimentos.org.uy/",
     "timezone": "America/Montevideo",
     "workers": [
-      { "username": "admin8", "email": "admin8@bam.org", "password": "admin8password" },
-      { "username": "lucia", "email": "lucia@bam.org", "password": "luciapassword" }
+      {
+        "username": "admin8",
+        "email": "admin8@bam.org",
+        "password": "admin8password"
+      },
+      {
+        "username": "lucia",
+        "email": "lucia@bam.org",
+        "password": "luciapassword"
+      }
     ]
   },
   {
     "admin": "9",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity9",
     "city": "Pando",
     "name": "Banco de Alimentos Pando",
@@ -213,11 +255,17 @@
     "website": "https://bancodealimentos.org.uy/",
     "timezone": "America/Montevideo",
     "workers": [
-      { "username": "admin9", "email": "admin9@pandofood.org", "password": "admin9password" }
+      {
+        "username": "admin9",
+        "email": "admin9@pandofood.org",
+        "password": "admin9password"
+      }
     ]
   },
   {
     "admin": "10",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity10",
     "city": "Ho Chi Minh City",
     "name": "Saigon Food Bank",
@@ -229,12 +277,18 @@
     "website": "http://saigonfoodbank.vn/",
     "timezone": "Asia/Ho_Chi_Minh",
     "workers": [
-      { "username": "admin10", "email": "admin10@sfb.vn", "password": "admin10password" },
+      {
+        "username": "admin10",
+        "email": "admin10@sfb.vn",
+        "password": "admin10password"
+      },
       { "username": "linh", "email": "linh@sfb.vn", "password": "linhpassword" }
     ]
   },
   {
     "admin": "11",
+    "description": "Fake charity - we're here for testing only.",
+    "email": "foodbank@gmail.com",
     "charity_registration_no": "charity11",
     "city": "Da Nang",
     "name": "Da Nang Food Relief Center",
@@ -246,7 +300,11 @@
     "website": "http://danangfoodrelief.org/",
     "timezone": "Asia/Ho_Chi_Minh",
     "workers": [
-      { "username": "admin11", "email": "admin11@dnfr.vn", "password": "admin11password" }
+      {
+        "username": "admin11",
+        "email": "admin11@dnfr.vn",
+        "password": "admin11password"
+      }
     ]
   },
   {

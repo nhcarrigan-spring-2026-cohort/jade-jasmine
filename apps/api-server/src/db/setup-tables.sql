@@ -27,6 +27,8 @@ DROP TABLE IF EXISTS foodbanks CASCADE ;
 CREATE TABLE foodbanks (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name VARCHAR(75) NOT NULL,
+  description VARCHAR(150),
+  email VARCHAR(50),
   unit_no VARCHAR(10),
   street VARCHAR(50) NOT NULL,
   city VARCHAR(20) NOT NULL,

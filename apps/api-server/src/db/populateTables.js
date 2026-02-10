@@ -83,10 +83,29 @@ async function addUserData() {
   // we assume seeding data does not define duplicate users at all
   let count = 1;
   for (let i = 0; i < data.length; i++) {
-    //name, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, admin
+    //name, description, email, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, admin
     const fb = data[i];
+    const NULL = 'NULL';
+    fb.unit_no = fb.unit_no ? `'${fb.unit_no.replace(/'/g, "''")}'` : NULL;
+    fb.description = fb.description
+      ? `'${fb.description.replace(/'/g, "''")}'`
+      : NULL;
+    fb.email = fb.email ? `'${fb.email}'` : NULL;
+    fb.website = fb.website ? `'${fb.website}'` : NULL;
+    fb.charity_registration_no = fb.charity_registration_no ? `'${fb.charity_registration_no}'` : NULL;
     fbValuesSQL.push(
-      `('${fb.name.replace(/'/g, "''")}','${fb.unit_no || `NULL`}','${fb.street}','${fb.city}','${fb.province}','${fb.country}','${fb.postal_code}','${fb.website || `NULL`}','${fb.phone || `NULL`}','${fb.charity_registration_no || `NULL`}','${fb.timezone}', '${count}')`,
+      `(
+      '${fb.name.replace(/'/g, "''")}',
+      ${fb.description},
+      ${fb.email},
+      ${fb.unit_no},
+      '${fb.street}','${fb.city}','${fb.province}',
+      '${fb.country}','${fb.postal_code}',
+      ${fb.website},
+      '${fb.phone}',
+      ${fb.charity_registration_no},
+      '${fb.timezone}',
+      '${count}')`,
     );
     for (let j = 0; j < data[i].workers.length; j++) {
       // I've setup up the seed json to always list the admin user first and then all the staff after
@@ -170,7 +189,7 @@ async function addUserData() {
   const TABLES_SETUP_SQL = `
     INSERT INTO users (username,email) VALUES ${userValuesSQL.join(",")};
     INSERT INTO passwords (user_id,user_password) VALUES ${pwdValuesSQL.join(",")};
-    INSERT INTO foodbanks (name, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, timezone, admin) VALUES ${fbValuesSQL.join(",")};
+    INSERT INTO foodbanks (name, description, email, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, timezone, admin) VALUES ${fbValuesSQL.join(",")};
     INSERT INTO user_roles (fb_id, user_id, role) VALUES ${roleValuesSQL.join(",")};    
     INSERT INTO hours (fb_id,weekday,opening_hr,closing_hr) VALUES ${hourValuesSQL.join(",")};
     INSERT INTO categories (fb_id,name) VALUES ${categoryValuesSQL.join(",")};
