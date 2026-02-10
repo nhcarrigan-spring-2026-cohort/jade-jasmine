@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useActionState } from "react";
+import { redirect } from "next/navigation";
 
 type FormState = {
   message: string;
@@ -33,22 +34,43 @@ async function signUpAction(
   const confirmPassword = formData.get("confirm-password") as string;
 
   if (username === "") {
-    return {message: "Error", error:"The Full Name field can't be empty."};
+    return { message: "Error", error: "The Full Name field can't be empty." };
   }
 
   if (email === "") {
-    return {message: "Error", error: "The Email field can't be empty."}
+    return { message: "Error", error: "The Email field can't be empty." };
   }
 
   if (newPassword.length < 8) {
-    return {message: "Error", error: "Password must be at least 8 characters."};
+    return {
+      message: "Error",
+      error: "Password must be at least 8 characters.",
+    };
   }
 
   if (newPassword !== confirmPassword) {
-    return {message: "Error", error: "Passwords do not match."};
+    return { message: "Error", error: "Passwords do not match." };
   }
 
-  return {message: "Proceeding to register..."};
+  const response = await fetch("http://localhost:3003/v1/user/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: username,
+      email: email,
+      "new-password": newPassword,
+      "confirm-password": confirmPassword,
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    return {message: "Error", error: `${data.message}` };
+  }
+
+  return redirect("/dashboard");
 }
 
 export function SignupForm({
@@ -128,7 +150,9 @@ export function SignupForm({
                   </p>
                 )}
                 {!state.error && state.message && (
-                  <p className="text-muted-foreground text-sm text-center">{state.message}</p>
+                  <p className="text-muted-foreground text-sm text-center">
+                    {state.message}
+                  </p>
                 )}
                 <FieldDescription className="text-center">
                   Already have an account? <Link href="/">Sign in</Link>
