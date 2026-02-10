@@ -90,3 +90,29 @@ export async function getFoodBankById(id) {
   );
   return rows[0];
 }
+
+/**
+ * the authenticated user becomes the admin of this new food bank
+ * Three tables are modified. The foodbanks, the user_roles and the hours
+ * 
+ * @param {} body 
+ */
+export async function addNewFoodBank(adminId,body) {
+  logger.info("in addNewFoodBank:", body);
+  const {
+    name,
+    desc,
+    charity_no,
+    phone,
+    fax,
+    email,
+    website,
+    unit_no,
+    street,
+    city,
+    province,
+    country,
+    timezone,
+  } = body;
+
+}

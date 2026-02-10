@@ -6,7 +6,8 @@ Project Food_Bank_Finder {
 
 Table foodbanks as FB {
   id int [pk,increment]
-  name varchar(75) [not null, note: "75 length?"]
+  name varchar(75) [not null]
+  description varchar(150) [not null]
   unit_no varchar(10) [note: "the unit # if it is in a plaza or shared space"]
   street varchar(50) [not null, note: "example: 1025 Google Way"]
   city varchar(20) [not null]
@@ -16,6 +17,7 @@ Table foodbanks as FB {
   longitude decimal(9,6) [not null]
   latitude decimal(9,6) [not null]
   website text 
+  email varchar(50) 
   phone varchar(20)
   fax varchar(20)
   charity_registration_no varchar(30) 

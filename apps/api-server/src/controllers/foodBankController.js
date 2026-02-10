@@ -138,6 +138,25 @@ export async function getFoodBankStaff(req, res) {
   }
 }
 
-export async function createFoodBank(req,res) {
-  res.send(201).json({ data: {fb: 'fake'} });
+export async function createFoodBank(req, res) {
+  logger.info("in createFoodBank")
+  const authUserId = req.user.id;
+  try {
+    const foodbank = await fbQueries.addNewFoodBank(Number(authUserId),req.body);
+    if (foodbank) {
+      res.send(201).json({ data: foodbank });
+    } else {
+      throw new AppError("Failed to create a new food bank")
+    }
+  } catch (error) {
+        if (error instanceof AppError) {
+      throw error;
+    } else {
+      throw new AppError(
+        "Failed to create food bank record",
+        500,
+        error,
+      );
+    }
+  }
 }

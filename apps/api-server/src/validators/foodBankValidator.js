@@ -44,19 +44,7 @@ export const checkOffset = [
       return ret;
     }),
 ];
-/*
-{
-  "0": {
-    "enumlabel": "admin"
-  },
-  "1": {
-    "enumlabel": "staff"
-  },
-  "2": {
-    "enumlabel": "volunteer"
-  }
-}
-  */
+
 export async function checkRole(req, _res, next) {
   logger.info("in checkRole: ", req.query.role);
   if (req.query.role) {
@@ -119,7 +107,6 @@ const checkName = () => {
     .bail()
     .isLength({ max: 75 })
     .withMessage("Name cannot exceed 75 characters in length")
-    .bail();
 };
 
 const checkCity = () => {
@@ -130,7 +117,6 @@ const checkCity = () => {
     .bail()
     .isLength({ max: 20 })
     .withMessage("City cannot exceed 20 characters in length")
-    .bail();
 };
 
 const checkProvince = () => {
@@ -141,7 +127,6 @@ const checkProvince = () => {
     .bail()
     .isLength({ max: 20 })
     .withMessage("Province cannot exceed 20 characters in length")
-    .bail();
 };
 
 const checkCountry = () => {
@@ -152,7 +137,6 @@ const checkCountry = () => {
     .bail()
     .isLength({ max: 20 })
     .withMessage("Country cannot exceed 20 characters in length")
-    .bail();
 };
 
 const checkStreet = () => {
@@ -163,27 +147,88 @@ const checkStreet = () => {
     .bail()
     .isLength({ max: 50 })
     .withMessage("Street cannot exceed 50 characters in length")
-    .bail();
 };
-/*
-const checkWebsite = () => {
-  return body("website").trim().optional()
-}*/
 
+const checkWebsite = () => {
+  return body("website")
+    .trim()
+    .optional()
+    .isURL()
+    .withMessage("The website address does not appear to be valid")
+};
+
+const checkEmail = () => {
+  return body("email")
+    .trim()
+    .optional()
+    .isEmail()
+    .withMessage("Provide a valid email address.")
+};
+
+const checkDesc = () => {
+  return body("description")
+    .trim()
+    .optional()
+    .isLength({ max: 150 })
+    .withMessage("Description cannot exceed 150 characters in length");
+};
+
+const checkCharityNum = () => {
+  return body('charity_no').trim()
+  .optional().isLength({max: 30}).withMessage("Charity registration number cannot exceed 30 characters in length")
+}
+
+const checkUnitNo = () => {
+  return body('unit_no').trim().optional()
+  .isLength({max: 10}).withMessage("Unit no. cannot exceed 10 characters in length")
+}
+
+function isValidIANAZone(timeZone) {
+  try {
+    Intl.DateTimeFormat(undefined, { timeZone: timeZone });
+    return true;
+  // eslint-disable-next-line no-unused-vars
+  } catch (e) {
+    return false;
+  }
+}
+
+const checkTimezone = () => {
+  return body('timezone').trim().notEmpty().withMessage("Timezone is required").bail()
+    .custom(value => {
+      if (isValidIANAZone(value)) {
+        return true;
+      } else {
+        throw new ValidationError("The timezone value is not a valid IANA zone")
+    }
+  })
+}
+
+const checkPhone = () => {
+  return body('phone').trim().optional().isMobilePhone('any').withMessage("Phone number does not appear to be valid")
+}
+
+const checkFax = () => {
+  return body('fax').trim().optional().isMobilePhone('any').withMessage("Fax number does not appear to be valid")
+}
+
+const checkPostalCode = () => {
+  return body('postal_code').trim().notEmpty().withMessage("Postal code is required").bail()
+  .isPostalCode('any').withMessage("Invalid postal code")
+}
 export const checkFoodBankFields = [
-  checkName,
-  checkCity,
-  checkCountry,
-  checkProvince,
-  checkStreet,
-  /*
-  checkEmail,
-  checkDesc,
-  checkUnitNo,
-  checkWebsite,
-  checkPhone,
-  checkFax,
-  checkCharityNum,
-  checkTimezone,
-  checkPostalCode,*/
+  checkName(),
+  checkCity(),
+  checkCountry(),
+  checkProvince(),
+  checkStreet(),
+  checkWebsite(),
+  checkEmail(),
+  checkDesc(),
+  checkUnitNo(),
+  checkPhone(),
+  checkFax(),
+  checkCharityNum(),
+  checkTimezone(),
+  checkPostalCode(),
 ];
