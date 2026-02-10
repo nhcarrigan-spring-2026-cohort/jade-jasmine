@@ -23,7 +23,7 @@ export async function getFoodBank(req, res) {
 
   logger.info("req.query", req.query);
   logger.info(
-    `id:  ${req.query.id}, limit: ${req.query.limit}, offset: ${req.query.offset}`,
+    `id:  ${req.query.id}, limit: ${data.limit}, offset: ${data.offset}`,
   );
   try {
     const foodbanks = await fbQueries.getAllFoodBanks(
