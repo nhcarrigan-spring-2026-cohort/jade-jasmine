@@ -8,6 +8,7 @@ import ClockIcon from "../components/icons/ClockIcon.jsx";
 import CheckMarkIcon from "../components/icons/CheckMarkIcon.jsx";
 import CircleWithXIcon from "../components/icons/CircleWithX.jsx";
 import PackageIcon from "../components/icons/PackageIcon.jsx";
+import FaxIcon from "../components/icons/FaxIcon.jsx";
 ---
 
 <!DOCTYPE html>
@@ -40,7 +41,8 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
     .foodbank-top {
         display: flex;
         align-items: center;
-        justify-content: space-between;     
+        gap: 3rem;
+   
     }
     .open-widget {
     display: inline-block;    
@@ -293,6 +295,8 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
         display: flex;
         gap: .5rem;
         flex-wrap: wrap;
+        max-height: 150px;
+        overflow-y: auto;
     }
 
     .empty-food-item-widget {
@@ -306,8 +310,21 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
     .out-of-stock {
     color: #696969; 
     }
-    
-   
+
+    .contact-information-fax-and-phone{
+        display: flex;
+        
+
+
+    }
+
+    .phone-contact {
+        padding-right: 2rem;
+        margin-right: 2rem;
+        border-right: 1px solid #ccc;   
+    }
+
+
 
 
 
@@ -320,7 +337,7 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
         <div class="foodbank-information">
             <div class="foodbank-top">
                 <h1 class="foodbank-name">Community Food Pantry</h1>
-                <div class="open-widget">Open Now</div>
+                <h1 class="foodbank-id">ID: 1</h1>
                 
             </div>
 
@@ -348,6 +365,7 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
             <div class="opening-times-header"> 
                         <ClockIcon client:load size={24} />
                         <h2>Opening Times</h2>
+                        
             </div>
             <div class="opening-times-values">
             <div class="day-and-time">
@@ -385,7 +403,7 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
         <div class="contact-information"> 
         
             <div class="contact-information-header">
-                <PhoneIcon size={24} />
+                <PhoneIcon client:load size={24} />
                 <h2>Contact Information</h2>
             </div>
             <dl class="contact-information-list">
@@ -394,24 +412,36 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
                         <MapPinIcon /> 
                         <dt> Address</dt>
                     </div>
-                    <dd>123 Main Street Downtown, NY 10001</dd>
+                    <dd>123 Main Street Downtown, NY, United States 10001</dd>
 
                 </div>
 
+            <div class="contact-information-fax-and-phone">
                 <div class="phone-contact contact-row">
                     <div class="icon-row">
                         <PhoneIcon />
                         <dt>Phone</dt>
                     </div>
-                        <dd>(555) 123-4567</dd>
+                        <dd><a href="tel:+15551234567">(555) 123-4567</a></dd>
                 </div>
+
+                <div class="fax-contact contact-row">
+                    <div class="icon-row">
+                        <FaxIcon client:load size={16} />
+                        <dt>Fax</dt>
+                    </div>
+                        <dd>+1 (555) 123-4567</dd>
+                </div>
+            </div>
 
                 <div class="email-contact contact-row">
                     <div class="icon-row">
                         <EmailIcon />
                         <dt>Email</dt>
                     </div>
-                        <dd>info@communityfoodpantry.org</dd>
+                        <dd>
+                         <a href="mailto:info@example.com">info@communityfoodpantry.org</a>
+                        </dd>
                 </div>
 
                 <div class="website-contact contact-row">
@@ -419,7 +449,9 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
                         <GlobeIcon /> 
                         <dt>Website</dt>
                     </div>
-                    <dd><a href="https://communityfoodpantry.org" target="_blank" rel="noopener noreferrer">https://communityfoodpantry.org</a></dd>
+                    <dd><a href="https://communityfoodpantry.org" target="_blank" rel="noopener noreferrer">https://communityfoodpantry.org
+                    </a>
+                    </dd>
                     
                 </div>
 
@@ -444,11 +476,13 @@ import PackageIcon from "../components/icons/PackageIcon.jsx";
                         <div class="food-item-widget">Vegetables</div>
                         <div class="food-item-widget">Soup</div>
                         <div class="food-item-widget">Fruit</div>
-    
+
                     </div>
 
-                    
+    
                 </div>
+
+                
                 <div class="food-category-invalid item">
                     <div class="food-category-row"><CircleWithXIcon client:load size={24}/> <span>Fresh Produce</span></div>
 
