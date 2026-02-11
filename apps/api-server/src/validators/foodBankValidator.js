@@ -18,25 +18,23 @@ export const checkFoodBankId = [
 ];
 
 export const checkLimit = [
-  query("limit")
-    .customSanitizer((value = 10) => {
-      const limit = Number(value);
-      switch (limit) {
-        case true:
-          return 10; 
-        case false:
-          return limit < 1 ? 1 : (limit > 50 ?  50 : limit);
-      }
-    }),
+  query("limit").customSanitizer((value = 10) => {
+    const limit = Number(value);
+    switch (limit) {
+      case true:
+        return 10;
+      case false:
+        return limit < 1 ? 1 : limit > 50 ? 50 : limit;
+    }
+  }),
 ];
 
 export const checkOffset = [
-  query("offset")
-    .customSanitizer((value) => {
-      const offset = Number(value);
-      const ret = value ? (isNaN(offset) ? 0 : offset) : 0;
-      return ret;
-    }),
+  query("offset").customSanitizer((value) => {
+    const offset = Number(value);
+    const ret = value ? (isNaN(offset) ? 0 : offset) : 0;
+    return ret;
+  }),
 ];
 
 export async function checkRole(req, _res, next) {
@@ -74,15 +72,17 @@ export async function checkRole(req, _res, next) {
  */
 export async function checkAdmin(req, _res, next) {
   const authUserId = req.user.id;
-  logger.info("in checkAdmin: " + authUserId);
-  // get the foodbank's admin id to compare it against the authenticated user's id
+  logger.info(`in checkAdmin: ${authUserId}`, req.param);
   try {
-    const foodbank = await fbQueries.getFoodBankById(authUserId);
-    if (Number(foodbank.admin) !== authUserId) {
+    const isAdmin = fbQueries.isAdmin(authUserId, req.params.id); //is this user an admin for this food bank?
+
+    if (!isAdmin) {
       throw new ValidationError(
         "This user is not this food bank's administrator.",
       );
     }
+
+    next();
   } catch (error) {
     if (error instanceof AppError) {
       throw error;
@@ -90,7 +90,6 @@ export async function checkAdmin(req, _res, next) {
       throw new AppError("Failed to get the food bank admin id", 500, error);
     }
   }
-  next();
 }
 
 const checkName = () => {
@@ -100,7 +99,7 @@ const checkName = () => {
     .withMessage("Name cannot be empty")
     .bail()
     .isLength({ max: 75 })
-    .withMessage("Name cannot exceed 75 characters in length")
+    .withMessage("Name cannot exceed 75 characters in length");
 };
 
 const checkCity = () => {
@@ -110,7 +109,7 @@ const checkCity = () => {
     .withMessage("City must be provided")
     .bail()
     .isLength({ max: 20 })
-    .withMessage("City cannot exceed 20 characters in length")
+    .withMessage("City cannot exceed 20 characters in length");
 };
 
 const checkProvince = () => {
@@ -120,7 +119,7 @@ const checkProvince = () => {
     .withMessage("Province must be provided")
     .bail()
     .isLength({ max: 20 })
-    .withMessage("Province cannot exceed 20 characters in length")
+    .withMessage("Province cannot exceed 20 characters in length");
 };
 
 const checkCountry = () => {
@@ -130,7 +129,7 @@ const checkCountry = () => {
     .withMessage("Country must be provided")
     .bail()
     .isLength({ max: 20 })
-    .withMessage("Country cannot exceed 20 characters in length")
+    .withMessage("Country cannot exceed 20 characters in length");
 };
 
 const checkStreet = () => {
@@ -140,7 +139,7 @@ const checkStreet = () => {
     .withMessage("Street must be provided")
     .bail()
     .isLength({ max: 50 })
-    .withMessage("Street cannot exceed 50 characters in length")
+    .withMessage("Street cannot exceed 50 characters in length");
 };
 
 const checkWebsite = () => {
@@ -148,7 +147,7 @@ const checkWebsite = () => {
     .trim()
     .optional()
     .isURL()
-    .withMessage("The website address does not appear to be valid")
+    .withMessage("The website address does not appear to be valid");
 };
 
 const checkEmail = () => {
@@ -156,7 +155,7 @@ const checkEmail = () => {
     .trim()
     .optional()
     .isEmail()
-    .withMessage("Provide a valid email address.")
+    .withMessage("Provide a valid email address.");
 };
 
 const checkDesc = () => {
@@ -168,48 +167,92 @@ const checkDesc = () => {
 };
 
 const checkCharityNum = () => {
-  return body('charity_no').trim()
-  .optional().isLength({max: 30}).withMessage("Charity registration number cannot exceed 30 characters in length")
-}
+  return body("charity_no")
+    .trim()
+    .optional()
+    .isLength({ max: 30 })
+    .withMessage(
+      "Charity registration number cannot exceed 30 characters in length",
+    )
+    .custom(async (value) => {
+      //confirm it is unique, so we don't get the same charity twice in the db
+      try {
+        const res = fbQueries.isNewCharity(value);
+        if (!res) {
+          throw new ValidationError(
+            "This charity number has already been registered here",
+          );
+        }
+      } catch (error) {
+        throw new AppError(
+          "Failed to check if the charity was already registered",
+          500,
+          error,
+        );
+      }
+    });
+};
 
 const checkUnitNo = () => {
-  return body('unit_no').trim().optional()
-  .isLength({max: 10}).withMessage("Unit no. cannot exceed 10 characters in length")
-}
+  return body("unit_no")
+    .trim()
+    .optional()
+    .isLength({ max: 10 })
+    .withMessage("Unit no. cannot exceed 10 characters in length");
+};
 
 function isValidIANAZone(timeZone) {
   try {
     Intl.DateTimeFormat(undefined, { timeZone: timeZone });
     return true;
-  // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line no-unused-vars
   } catch (e) {
     return false;
   }
 }
 
 const checkTimezone = () => {
-  return body('timezone').trim().notEmpty().withMessage("Timezone is required").bail()
-    .custom(value => {
+  return body("timezone")
+    .trim()
+    .notEmpty()
+    .withMessage("Timezone is required")
+    .bail()
+    .custom((value) => {
       if (isValidIANAZone(value)) {
         return true;
       } else {
-        throw new ValidationError("The timezone value is not a valid IANA zone")
-    }
-  })
-}
+        throw new ValidationError(
+          "The timezone value is not a valid IANA zone",
+        );
+      }
+    });
+};
 
 const checkPhone = () => {
-  return body('phone').trim().optional().isMobilePhone('any').withMessage("Phone number does not appear to be valid")
-}
+  return body("phone")
+    .trim()
+    .optional()
+    .isMobilePhone("any")
+    .withMessage("Phone number does not appear to be valid");
+};
 
 const checkFax = () => {
-  return body('fax').trim().optional().isMobilePhone('any').withMessage("Fax number does not appear to be valid")
-}
+  return body("fax")
+    .trim()
+    .optional()
+    .isMobilePhone("any")
+    .withMessage("Fax number does not appear to be valid");
+};
 
 const checkPostalCode = () => {
-  return body('postal_code').trim().notEmpty().withMessage("Postal code is required").bail()
-  .isPostalCode('any').withMessage("Invalid postal code")
-}
+  return body("postal_code")
+    .trim()
+    .notEmpty()
+    .withMessage("Postal code is required")
+    .bail()
+    .isPostalCode("any")
+    .withMessage("Invalid postal code");
+};
 export const checkFoodBankFields = [
   checkName(),
   checkCity(),

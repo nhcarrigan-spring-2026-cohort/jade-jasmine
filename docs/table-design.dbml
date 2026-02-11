@@ -21,7 +21,7 @@ Table foodbanks as FB {
   email varchar(50) 
   phone varchar(20)
   fax varchar(20)
-  charity_registration_no varchar(30) 
+  charity_registration_no varchar(30) [unique]
   admin int [not null, ref: <> users.id, note: "admin can modify the food bank info"]
 }
 

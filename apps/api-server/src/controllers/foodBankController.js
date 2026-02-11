@@ -61,33 +61,41 @@ export async function getFoodBankDetails(req, res) {
   //logger.info("req", req);
   const id = Number(req.params.id);
 
-  try {
-    const foodbank = await fbQueries.getFoodBankById(id);
+  const authUserId = req.user?.id;
 
-    const authUserId = req.user?.id;
-    
-    logger.info(`admin.id vs req.user.id:  ${foodbank.admin} ${authUserId}`);
-    if (Number(foodbank.admin) !== authUserId) {
-      // delete the keys that we shouldn't show
-      delete foodbank.admin;
-      delete foodbank.username;
-      delete foodbank.fb_id;
-      delete foodbank.user_id;
-      delete foodbank.role;
-      delete foodbank.email;
-      logger.info(
-        "this user is not the admin, so hide some details:",
-        foodbank,
-      );
-    }
-    res.status(200).json({ data: foodbank });
-  } catch (error) {
-    if (error instanceof AppError) {
-      throw error;
-    } else {
-      throw new AppError("Failed to get the indicated food bank", 500, error);
-    }
-  }
+  const getFoodBankById = fbQueries.getFoodBankById(id);
+
+  const isAdmin = fbQueries.isAdmin(authUserId, id);
+  Promise.all([getFoodBankById, isAdmin])
+    .then((responses) => {
+      const [foodbank, isAdmin] = responses;
+      logger.info(`admin.id vs req.user.id:  ${foodbank.admin} ${authUserId}`);
+      if (!isAdmin) {
+        if (foodbank.published) {
+          // delete the keys that we shouldn't show
+          delete foodbank.admin;
+          delete foodbank.username;
+          delete foodbank.fb_id;
+          delete foodbank.user_id;
+          delete foodbank.role;
+          delete foodbank.email;
+          logger.info(
+            "this user is not the admin, so hide some details:",
+            foodbank,
+          );
+        } else {
+          foodbank = {}; //return blank as this food bank is not published yet for non-admins
+        }
+      }
+      res.status(200).json({ data: foodbank });
+    })
+    .catch((error) => {
+      if (error instanceof AppError) {
+        throw error;
+      } else {
+        throw new AppError("Failed to get the indicated food bank", 500, error);
+      }
+    });
 }
 
 /**
@@ -108,7 +116,11 @@ export async function getFoodBankHours(req, res) {
     if (error instanceof AppError) {
       throw error;
     } else {
-      throw new AppError("Failed to get the indicated food bank's hours", 500, error);
+      throw new AppError(
+        "Failed to get the indicated food bank's hours",
+        500,
+        error,
+      );
     }
   }
 }
@@ -117,13 +129,12 @@ export async function getFoodBankHours(req, res) {
  * protected route for admin only
  */
 export async function getFoodBankStaff(req, res) {
-  
   logger.info(`in getFoodBankStaff`);
   const id = Number(req.params.id);
   try {
     const staff = await fbQueries.getFoodBankStaff(id, req.query?.role);
-    logger.info("fb staff: ", staff)
-    
+    logger.info("fb staff: ", staff);
+
     res.status(200).json({ data: staff });
   } catch (error) {
     if (error instanceof AppError) {
@@ -139,24 +150,23 @@ export async function getFoodBankStaff(req, res) {
 }
 
 export async function createFoodBank(req, res) {
-  logger.info("in createFoodBank")
+  logger.info("in createFoodBank");
   const authUserId = req.user.id;
   try {
-    const foodbank = await fbQueries.addNewFoodBank(Number(authUserId),req.body);
+    const foodbank = await fbQueries.addNewFoodBank(
+      Number(authUserId),
+      req.body,
+    );
     if (foodbank) {
       res.send(201).json({ data: foodbank });
     } else {
-      throw new AppError("Failed to create a new food bank")
+      throw new AppError("Failed to create a new food bank");
     }
   } catch (error) {
-        if (error instanceof AppError) {
+    if (error instanceof AppError) {
       throw error;
     } else {
-      throw new AppError(
-        "Failed to create food bank record",
-        500,
-        error,
-      );
+      throw new AppError("Failed to create food bank record", 500, error);
     }
   }
 }

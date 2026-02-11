@@ -75,6 +75,27 @@ export async function getAllFoodBanks(
   return rows;
 }
 
+export async function isNewCharity(charity_no) {
+  logger.info(`in isNewCharity: charity_no: ${charity_no}`);
+  const { rows } = await pool.query(
+    "SELECT id FROM foodbanks WHERE charity_registration_no=$1;",[charity_no]
+  )
+  return Object.keys(rows).length === 0; // none found means this is indeed a new charity
+}
+
+/**
+ * returns true if the userId is one of the admins of this foodbank
+ * checks the user_roles table for that info
+ * @param {*} userId 
+ * @param {*} fbId 
+ */
+export async function isAdmin(userId, fbId) {
+  logger.info(`in isAdmin: ${userId}, ${fbId}`)
+  const { rows } = await pool.query(
+    "SELECT fb_id FROM user_roles WHERE fb_id=$1 AND user_id=$2 AND role='admin'", [fbId, userId]
+  )
+  return Object.keys(rows).length > 0;
+}
 /**
  * returns a detailed view of the foodbank and its admin/staff
  * use only if authorized!

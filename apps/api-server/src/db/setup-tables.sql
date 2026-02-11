@@ -41,7 +41,7 @@ CREATE TABLE foodbanks (
   website TEXT,
   phone VARCHAR(20),
   fax VARCHAR(20),
-  charity_registration_no VARCHAR(30),
+  charity_registration_no VARCHAR(30) UNIQUE,
   timezone TEXT NOT NULL,
   admin INT NOT NULL REFERENCES users(id)
 );
