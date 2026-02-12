@@ -1,5 +1,7 @@
 ---
 import { BsSearch, BsList, BsX } from "react-icons/bs";
+const managerUrl =
+  import.meta.env.PUBLIC_MANAGER_URL || "http://localhost:3000";
 ---
 
 <button class="menu-open-button"><BsList /></button>
@@ -7,6 +9,8 @@ import { BsSearch, BsList, BsX } from "react-icons/bs";
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="#"><BsSearch />Search</a></li>
+    <li><a href={managerUrl}>Partner Login</a></li>
+    <li><a href=`${managerUrl}/signup`>Register Food Bank</a></li>
   </ul>
   <button class="menu-close-button"><BsX /></button>
 </aside>

@@ -1,6 +1,8 @@
 ---
 import { BsSearch } from "react-icons/bs";
 import MobileMenu from "./MobileMenu.astro";
+const managerUrl =
+  import.meta.env.PUBLIC_MANAGER_URL || "http://localhost:3000";
 ---
 
 <nav class="navbar">
@@ -10,6 +12,10 @@ import MobileMenu from "./MobileMenu.astro";
   <ul class="nav-links">
     <li><a href="#">Home</a></li>
     <li><a href="#"><BsSearch /> Search for item</a></li>
+    <li><a href=`${managerUrl}` class="login-btn">Partner Login</a></li>
+    <li>
+      <a href=`${managerUrl}/signup` class="signup-btn">Register Food Bank</a>
+    </li>
   </ul>
   <div class="mobile-menu-toggle">
     <MobileMenu />
@@ -36,13 +42,39 @@ import MobileMenu from "./MobileMenu.astro";
     display: none;
     list-style: none;
     gap: 1.25rem;
+    align-items: center;
   }
   .nav-links a {
     color: #333;
     text-decoration: none;
   }
+  .login-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  .login-btn:hover {
+    background-color: #f5f5f5;
+  }
+  .signup-btn {
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white !important;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .signup-btn:hover {
+    opacity: 0.9;
+  }
   .mobile-menu-toggle {
     display: block;
+  }
+  .signup-btn, .login-btn {
+    white-space: nowrap;
+    text-align: center;
   }
   @media (min-width: 48rem) {
     .nav-links {
