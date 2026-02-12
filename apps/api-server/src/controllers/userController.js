@@ -27,7 +27,7 @@ export async function signUp(req, res) {
     );
 
     if (newUser) {
-      req.user = newUser;
+      req.user = newUser; // maybe i don't need this?
       res.status(201).json({ data: newUser });
     } else {
       throw new AppError("Failed to create the new user record.", 500);
@@ -43,12 +43,12 @@ export async function signUp(req, res) {
 
 /**
  * gets the user record for the currently authenticated user
- * @param {} req 
- * @param {*} res 
+ * @param {} req
+ * @param {*} res
  */
 export async function getUser(req, res) {
-  logger.info("in getUser:")
-  
+  logger.info("in getUser:");
+
   const authUserId = req.user.id;
   try {
     const user = await userQueries.getUserById(authUserId);
@@ -65,7 +65,6 @@ export async function getUser(req, res) {
       throw new AppError("Failed to get the user record", 500, error);
     }
   }
-  
 }
 
 export async function login(req, res) {
@@ -93,7 +92,7 @@ export async function login(req, res) {
       },
       env.JWT_SECRET,
     );
-    logger.info("sending back a token")
+    logger.info("sending back a token");
     res.set({ Authorization: `Bearer ${token}` });
     res.set("Access-Control-Expose-Headers", "Authorization");
 
@@ -145,10 +144,10 @@ export async function updateUser(req, res) {
     }
   }
   if (req.body["new-password"]) {
-      const hashedPassword = await bcrypt.hash(
-        req.body["new-password"],
-        Number(env.HASH_SALT),
-      );
+    const hashedPassword = await bcrypt.hash(
+      req.body["new-password"],
+      Number(env.HASH_SALT),
+    );
     // update the password
     logger.info("about to update the user password for: " + user.username);
     try {
@@ -160,7 +159,7 @@ export async function updateUser(req, res) {
       if (row) {
         updatedUser = user; //just return the same user record since we actually changed the password table not the user table
       } else {
-        logger.error("the row we failed to update: ", row)
+        logger.error("the row we failed to update: ", row);
         throw new AppError("Failed to update the user password record", 500);
       }
     } catch (error) {

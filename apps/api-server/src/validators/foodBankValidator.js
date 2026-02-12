@@ -92,11 +92,11 @@ export async function checkAdmin(req, _res, next) {
   }
 }
 
-const checkName = () => {
-  return body("name")
+const checkFBName = () => {
+  return body("fbname")
     .trim()
     .notEmpty()
-    .withMessage("Name cannot be empty")
+    .withMessage("Name is required")
     .bail()
     .isLength({ max: 75 })
     .withMessage("Name cannot exceed 75 characters in length");
@@ -106,7 +106,7 @@ const checkCity = () => {
   return body("city")
     .trim()
     .notEmpty()
-    .withMessage("City must be provided")
+    .withMessage("City is required")
     .bail()
     .isLength({ max: 20 })
     .withMessage("City cannot exceed 20 characters in length");
@@ -116,7 +116,7 @@ const checkProvince = () => {
   return body("province")
     .trim()
     .notEmpty()
-    .withMessage("Province must be provided")
+    .withMessage("Province is required")
     .bail()
     .isLength({ max: 20 })
     .withMessage("Province cannot exceed 20 characters in length");
@@ -126,7 +126,7 @@ const checkCountry = () => {
   return body("country")
     .trim()
     .notEmpty()
-    .withMessage("Country must be provided")
+    .withMessage("Country is required")
     .bail()
     .isLength({ max: 20 })
     .withMessage("Country cannot exceed 20 characters in length");
@@ -136,7 +136,7 @@ const checkStreet = () => {
   return body("street")
     .trim()
     .notEmpty()
-    .withMessage("Street must be provided")
+    .withMessage("Street is required")
     .bail()
     .isLength({ max: 50 })
     .withMessage("Street cannot exceed 50 characters in length");
@@ -253,8 +253,15 @@ const checkPostalCode = () => {
     .isPostalCode("any")
     .withMessage("Invalid postal code");
 };
+
+const checkPublished = () => {
+  return body("published").trim().optional({ checkFalsy: true })
+    .isBoolean().withMessage("Published should be set to true or false")
+  .bail().toBoolean()
+}
+
 export const checkFoodBankFields = [
-  checkName(),
+  checkFBName(),
   checkCity(),
   checkCountry(),
   checkProvince(),
@@ -268,4 +275,31 @@ export const checkFoodBankFields = [
   checkCharityNum(),
   checkTimezone(),
   checkPostalCode(),
+  checkPublished(),
+  checkForDuplicate
 ];
+
+async function checkForDuplicate(req,_res,next) {
+  const name = req.body.fbname.trim();
+  const street = req.body.street.trim();
+  const city = req.body.city.trim();
+  const province = req.body.province.trim();
+  const country = req.body.country.trim();
+
+  try {
+    const rows = await fbQueries.findByNameAndAddress(name, street, city, province, country);
+    logger.info("result of find duplicate: ", rows);
+    if (rows.length > 0) {
+      throw new ValidationError("The name and address are duplicates of another charity.")
+    }
+    
+    next();
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      logger.error(error);
+      throw new AppError("Failed to check for duplicate food bank entries.", 500, error)
+    }
+  }
+}

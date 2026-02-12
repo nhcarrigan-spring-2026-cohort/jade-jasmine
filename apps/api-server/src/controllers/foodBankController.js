@@ -83,11 +83,17 @@ export async function getFoodBankDetails(req, res) {
             "this user is not the admin, so hide some details:",
             foodbank,
           );
+          
+          res.status(200).json({ data: foodbank });
         } else {
-          foodbank = {}; //return blank as this food bank is not published yet for non-admins
+          res
+            .status(403)
+            .json({ data: "You are not authorized to access this resource" }); //return blank as this food bank is not published yet for non-admins
         }
+      } else {
+        
+          res.status(200).json({ data: foodbank });
       }
-      res.status(200).json({ data: foodbank });
     })
     .catch((error) => {
       if (error instanceof AppError) {
@@ -158,9 +164,10 @@ export async function createFoodBank(req, res) {
       req.body,
     );
     if (foodbank) {
-      res.send(201).json({ data: foodbank });
+      logger.info("created the food bank record");
+      res.status(201).json({ data: foodbank });
     } else {
-      throw new AppError("Failed to create a new food bank");
+      throw new AppError("Failed to create a new food bank", 500);
     }
   } catch (error) {
     if (error instanceof AppError) {

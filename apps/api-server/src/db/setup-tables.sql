@@ -41,11 +41,12 @@ CREATE TABLE foodbanks (
   website TEXT,
   phone VARCHAR(20),
   fax VARCHAR(20),
-  charity_registration_no VARCHAR(30) UNIQUE,
+  charity_registration_no VARCHAR(30) UNIQUE NULLS DISTINCT,
   timezone TEXT NOT NULL,
-  admin INT NOT NULL REFERENCES users(id)
-);
+  admin INT NOT NULL REFERENCES users(id),
 
+  UNIQUE (name, street, city, province, country)
+);
 
 DROP TYPE IF EXISTS role_type CASCADE ;
 
@@ -64,6 +65,36 @@ CREATE TABLE user_roles (
   role t_role NOT NULL,
   PRIMARY KEY (fb_id, user_id, role)
 );
+
+
+DROP FUNCTION IF EXISTS insert_admin_user_role();
+
+CREATE OR REPLACE FUNCTION insert_admin_user_role()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM user_roles
+    WHERE fb_id = NEW.id
+      AND user_id = NEW.admin
+      AND role = 'admin'
+  ) THEN
+    INSERT INTO user_roles (fb_id, user_id, role)
+    VALUES (NEW.id, NEW.admin, 'admin');
+  END IF;
+
+  RETURN NEW;
+
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS create_admin_role ON foodbanks;
+
+CREATE TRIGGER create_admin_role
+    AFTER INSERT ON foodbanks
+    FOR EACH ROW
+    EXECUTE FUNCTION insert_admin_user_role();
+
 
 DROP DOMAIN IF EXISTS t_weekday CASCADE;
 

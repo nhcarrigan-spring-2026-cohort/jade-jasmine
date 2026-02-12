@@ -14,6 +14,7 @@ import url from "url";
 
 // needed to hash the password value
 import bcrypt from "bcrypt";
+import logger from "../utils/logger.js";
 
 const CLEAR_OLD_DATA_SQL = `
 TRUNCATE TABLE box_inventory CASCADE;
@@ -191,7 +192,7 @@ async function addUserData() {
     INSERT INTO users (username,email) VALUES ${userValuesSQL.join(",")};
     INSERT INTO passwords (user_id,user_password) VALUES ${pwdValuesSQL.join(",")};
     INSERT INTO foodbanks (published, name, description, email, unit_no, street, city, province, country, postal_code, website, phone, charity_registration_no, timezone, admin) VALUES ${fbValuesSQL.join(",")};
-    INSERT INTO user_roles (fb_id, user_id, role) VALUES ${roleValuesSQL.join(",")};    
+    INSERT INTO user_roles (fb_id, user_id, role) VALUES ${roleValuesSQL.join(",")} ON CONFLICT DO NOTHING;    
     INSERT INTO hours (fb_id,weekday,opening_hr,closing_hr) VALUES ${hourValuesSQL.join(",")};
     INSERT INTO categories (fb_id,name) VALUES ${categoryValuesSQL.join(",")};
     INSERT INTO boxes (fb_id,name,min) VALUES ${boxesValuesSQL.join(",")};
@@ -221,7 +222,7 @@ async function addUserData() {
 
     console.error(err);
 
-    return;
+    return 15; //just something that says it didn't work?
   } finally {
     client.release();
   }
@@ -233,6 +234,9 @@ async function addUserData() {
 console.log("Starting seeding process which will take a couple of minutes:");
 try {
   await addUserData();
+} catch (error) {
+  logger.error(error);
+  process.exit(20);
 } finally {
   console.log("Seeding process has completed.");
   await pool.end();
