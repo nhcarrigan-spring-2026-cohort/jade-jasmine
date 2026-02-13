@@ -172,3 +172,5 @@ out
 # yarn v3
 .yarn/sdks
 
+#VS code settings
+.vscode
