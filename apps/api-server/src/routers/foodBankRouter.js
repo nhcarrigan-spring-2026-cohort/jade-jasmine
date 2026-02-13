@@ -21,6 +21,12 @@ foodBankRouter
     fbValidator.checkLimit,
     fbValidator.checkOffset,
     fbController.getFoodBank,
+  )
+  .post(
+    passport.authenticate("jwt", { session: false }), //anyone who is signed in can create a unique food bank
+    fbValidator.checkFoodBankFields,
+    handleExpressValidationErrors,
+    fbController.createFoodBank,
   );
 
   /**
@@ -47,6 +53,7 @@ const silentAuth = (req, res, next) => {
 
 // this route is protected. If the current user is an admin it will provide all the available details about the foodbank
 // including a list the admin's id and username (a separate query is needed to get the foodbank staff or hours)
+// if the current user is not the admin, and the published field is false, this route will return nothing
 foodBankRouter.get(
   "/:id",
   fbValidator.checkFoodBankId,

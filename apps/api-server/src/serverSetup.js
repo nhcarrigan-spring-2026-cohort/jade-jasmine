@@ -30,7 +30,9 @@ if (env.NODE_ENV === "production") {
   app.set("trust proxy", 1); // trust first proxy only because of deployment to Render, remove otherwise
 }
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); //for normal form body
+
+// accepts json body and parses it out
 app.use(express.json());
 
 app.use(
