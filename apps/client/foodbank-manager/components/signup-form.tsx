@@ -21,7 +21,12 @@ import { redirect } from "next/navigation";
 
 type FormState = {
   message: string;
-  error?: string;
+  errors?: { [key: string]: string };
+};
+
+type ValidationError = {
+  path: string;
+  msg: string;
 };
 
 async function signUpAction(
@@ -33,24 +38,26 @@ async function signUpAction(
   const newPassword = formData.get("new-password") as string;
   const confirmPassword = formData.get("confirm-password") as string;
 
-  if (username === "") {
-    return { message: "Error", error: "The Full Name field can't be empty." };
-  }
+  // const errors = {};
 
-  if (email === "") {
-    return { message: "Error", error: "The Email field can't be empty." };
-  }
+  // if (username === "") {
+  //   errors.username = "message";
+  // }
 
-  if (newPassword.length < 8) {
-    return {
-      message: "Error",
-      error: "Password must be at least 8 characters.",
-    };
-  }
+  // if (email === "") {
+  //   return { message: "Error", error: "The Email field can't be empty." };
+  // }
 
-  if (newPassword !== confirmPassword) {
-    return { message: "Error", error: "Passwords do not match." };
-  }
+  // if (newPassword.length < 8) {
+  //   return {
+  //     message: "Error",
+  //     error: "Password must be at least 8 characters.",
+  //   };
+  // }
+
+  // if (newPassword !== confirmPassword) {
+  //   return { message: "Error", error: "Passwords do not match." };
+  // }
 
   const response = await fetch("http://localhost:3003/v1/user/signup", {
     method: "POST",
@@ -66,11 +73,17 @@ async function signUpAction(
   });
 
   if (!response.ok) {
-    const data = await response.json();
-    return {message: "Error", error: `${data.message}` };
+    const dataFromServer = await response.json();
+    const serverErrors: { [key: string]: string } = {};
+    if (dataFromServer.data) {
+      dataFromServer.data.forEach((err: ValidationError) => {
+        serverErrors[err.path] = err.msg;
+      });
+    }
+    return { message: "Error", errors: serverErrors };
   }
 
-  return redirect("/dashboard");
+  return redirect("/login");
 }
 
 export function SignupForm({
@@ -94,14 +107,19 @@ export function SignupForm({
           <form action={formAction}>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                <FieldLabel htmlFor="name">Username</FieldLabel>
                 <Input
                   id="name"
                   type="text"
                   name="username"
-                  placeholder="John Doe"
+                  placeholder="littleduckie"
                   required
                 />
+                {state.errors?.username && (
+                  <p className="text-destructive text-sm font-medium text-center">
+                    {state.errors.username}
+                  </p>
+                )}
               </Field>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -112,6 +130,11 @@ export function SignupForm({
                   placeholder="m@example.com"
                   required
                 />
+                {state.errors?.email && (
+                  <p className="text-destructive text-sm font-medium text-center">
+                    {state.errors.email}
+                  </p>
+                )}
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
@@ -123,6 +146,11 @@ export function SignupForm({
                       name="new-password"
                       required
                     />
+                    {state.errors?.["new-password"] && (
+                      <p className="text-destructive text-sm font-medium text-center">
+                        {state.errors["new-password"]}
+                      </p>
+                    )}
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
@@ -134,6 +162,11 @@ export function SignupForm({
                       name="confirm-password"
                       required
                     />
+                    {state.errors?.["confirm-password"] && (
+                      <p className="text-destructive text-sm font-medium text-center">
+                        {state.errors["confirm-password"]}
+                      </p>
+                    )}
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -144,16 +177,6 @@ export function SignupForm({
                 <Button type="submit" disabled={isPending}>
                   Create Account
                 </Button>
-                {state.error && (
-                  <p className="text-destructive text-sm font-medium text-center">
-                    {state.error}
-                  </p>
-                )}
-                {!state.error && state.message && (
-                  <p className="text-muted-foreground text-sm text-center">
-                    {state.message}
-                  </p>
-                )}
                 <FieldDescription className="text-center">
                   Already have an account? <Link href="/">Sign in</Link>
                 </FieldDescription>
